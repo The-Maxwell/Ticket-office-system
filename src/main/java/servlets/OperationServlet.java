@@ -23,7 +23,7 @@ public class OperationServlet extends HttpServlet {
         ticketOfficeDao = new TicketOfficeDao();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = null;
         String path = null;
         boolean result = false;
@@ -35,8 +35,9 @@ public class OperationServlet extends HttpServlet {
                 request.setAttribute("entities", list);
                 request.setAttribute("title", request.getParameter("table"));
                 IEntity entity = list.get(0);
+                request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
-                path = "views/viewTable.jsp";
+                path = "index.jsp";
                 break;
             case "Add":
                 result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
@@ -48,22 +49,23 @@ public class OperationServlet extends HttpServlet {
                 path = "/work_with_db?act=Show";
                 break;
             case "Delete":
-                result = ticketOfficeDao.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
+                System.out.println(request.getParameter("entityString") + " " + request.getParameter("table"));
+//                result = ticketOfficeDao.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if(!result){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Delete Error</h2>");
                     return;
                 }
-                path = "/work_with_db?act=Show";
+                path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Update":
-                result = ticketOfficeDao.updateEntity(request.getParameter("entityString"), request.getParameter("table"));
+                //result = ticketOfficeDao.updateEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if(!result){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Update Error</h2>");
                     return;
                 }
-                path = "/work_with_db?act=Show";
+                path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
         }
 

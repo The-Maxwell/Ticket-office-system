@@ -126,7 +126,7 @@ public class PassengerEntity implements IEntity {
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Passenger_code","Last_name","First_name","Surname","Category"};
+        return new String[]{"Код пасажира","Прізвище","Ім'я","По батькові","Категорія"};
     }
 
     @Override

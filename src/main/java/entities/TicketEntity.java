@@ -128,7 +128,7 @@ public class TicketEntity implements IEntity {
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Ticket_number","Category","Cost","Sequence_number","Reciept_id","Journary_id"};
+        return new String[]{"Номер квитка","Категорія","Вартість","Порядковий номер","Код чека","Номер рейсу"};
     }
 
     @Override

@@ -144,7 +144,7 @@ public class JournaryEntity implements IEntity{
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Journary_number","Departure_point","Destination","Date_and_time_of_arrival","Date_and_time_of_departure","Vehicle_id"};
+        return new String[]{"Номер рейсу","Місце відправки","Місце прибуття","Дата і час відправки","Дата і час прибуття","Номер транспортного засобу"};
     }
     @Override
     public String recieveStringInfo() {

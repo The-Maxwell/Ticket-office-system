@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-@NamedQuery(name="SelectAllVehicle", query="SELECT v FROM VehicleEntity v")
+@NamedQuery(name = "SelectAllVehicle", query = "SELECT v FROM VehicleEntity v")
 @Entity
 @Table(name = "vehicle", schema = "ticketoffice")
 public class VehicleEntity implements IEntity {
@@ -138,11 +138,15 @@ public class VehicleEntity implements IEntity {
         row.add(vechileCompany);
         return row;
     }
-    public VehicleEntity(){}
+
+    public VehicleEntity() {
+    }
+
     public VehicleEntity(String vehicleCode, String vehicleType, String numberOfSeats, String numberOfEconomyClassSeats, String numberOfMediumClassSeats,
                          String numberOfLuxuryClassSeats, String vechileCompany) throws Exception {
         this.vehicleCode = Integer.parseInt(vehicleCode);
-        if (!vehicleType.equals("train") && !vehicleType.equals("bus") && !vehicleType.equals("airplane")) throw new Exception("vehicleType can take only following values: train, bus, airplane");
+        if (!vehicleType.equals("train") && !vehicleType.equals("bus") && !vehicleType.equals("airplane"))
+            throw new Exception("vehicleType can take only following values: train, bus, airplane");
         this.vehicleType = vehicleType;
         this.numberOfSeats = Integer.parseInt(numberOfSeats);
         this.numberOfEconomyClassSeats = Integer.parseInt(numberOfEconomyClassSeats);
@@ -153,12 +157,12 @@ public class VehicleEntity implements IEntity {
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Vehicle_code","Vehicle_type","Number_of_seats","Number_of_economy_class_seats","Number_of_medium_class_seats","Number_of_luxury_class_seats","Vechile_company"};
+        return new String[]{"Код транспортного засобу", "Тип", "К-сть місць", "К-сть економ. місць", "К-сть серед. місць", "К-сть люкс. місць", "Транспортна компанія"};
     }
 
     @Override
     public String recieveStringInfo() {
-        return String.valueOf(vehicleCode)+","+vehicleType+","+String.valueOf(numberOfSeats)+","+String.valueOf(numberOfEconomyClassSeats)
-                +","+String.valueOf(numberOfMediumClassSeats)+","+String.valueOf(numberOfLuxuryClassSeats)+","+vechileCompany;
+        return String.valueOf(vehicleCode) + "," + vehicleType + "," + String.valueOf(numberOfSeats) + "," + String.valueOf(numberOfEconomyClassSeats)
+                + "," + String.valueOf(numberOfMediumClassSeats) + "," + String.valueOf(numberOfLuxuryClassSeats) + "," + vechileCompany;
     }
 }

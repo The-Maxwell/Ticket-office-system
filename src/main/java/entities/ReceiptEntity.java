@@ -128,7 +128,7 @@ public class ReceiptEntity implements IEntity{
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Receipt_code","Data_and_time_of_sale","Data_and_time_of_booking","Total_price","Passenger_id"};
+        return new String[]{"Код чека","Дата і час продажі","Дата і час бронювання","Загальна ціна","Код пасажира"};
     }
 
     @Override
