@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="views/stylesIndex.css"/>
     <link rel="stylesheet" href="styles/css/style.css">
     <link rel="stylesheet" href="styles/css/styleAd.css">
-
 </head>
 <body>
-<div style="width: 100%; height: 100%">
+<div class="wrapper">
     <section class="container">
         <nav>
             <ul class="nav">
@@ -44,10 +43,11 @@
             <input type="button" value="Додати" id="add">
         </c:if>
         <script>
-            function onAdd(event){
+            function onAdd(event) {
                 var element = document.getElementsByClassName("containerAdd")[0];
                 element.style.display = "block";
             }
+
             var buttonAdd = document.getElementById("add");
             buttonAdd.onclick = onAdd;
 
@@ -82,13 +82,14 @@
                 function onDelete({target: el}) {
                     var el2 = el.parentNode;
                     var el3 = el2.parentElement;
-                    var formData = new FormData();
-                    formData.append('entityString', el3.children[0].textContent);
+                    let formData = new FormData();
+                    formData.set('entityString', el3.children[0].textContent);
                     var table = document.getElementsByClassName("active")[0];
                     formData.append('table', table.getAttribute("title"));
-                    var request = new XMLHttpRequest();
-                    request.open("GET", "http://localhost:8082/work_with_db&act=Delete");
-                    request.send(formData);
+                    formData.append('act', 'Delete');
+                    var req = new XMLHttpRequest();
+                    req.open("POST", "http://localhost:8082/work_with_db", true);
+                    req.send(formData);
                 }
 
                 function onEdit({target: el}) {
@@ -100,13 +101,14 @@
                         if (i + 1 != el3.children.length) entityString += ",";
                     }
                     console.log(entityString);
-                    var formData = new FormData();
+                    let formData = new FormData();
                     formData.append('entityString', entityString);
                     var table = document.getElementsByClassName("active")[0];
                     formData.append('table', table.getAttribute("title"));
-                    var request = new XMLHttpRequest();
-                    request.open("GET", "http://localhost:8082/work_with_db&act=Update");
-                    request.send(formData);
+                    formData.append('act', 'Update');
+                    var req = new XMLHttpRequest();
+                    req.open("POST", "http://localhost:8082/work_with_db");
+                    req.send(formData);
                 }
 
                 var deleteElems = document.getElementsByClassName("delete");

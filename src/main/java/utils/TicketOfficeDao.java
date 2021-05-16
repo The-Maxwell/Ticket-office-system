@@ -40,29 +40,29 @@ public class TicketOfficeDao {
         }
         return result;
     }
-    public IEntity searchEntity(String ID, String table) {
-        IEntity entity = null;
-        int id;
-        try {
-            id = Integer.parseInt(ID);
-        }
-        catch (Exception e){
-            return entity;
-        }
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            session.beginTransaction();
-            entity = (IEntity) session.load(getEntityClass(table),id);
-            session.getTransaction().commit();
-        }
-        catch (Exception e){
-            session.getTransaction().rollback();
-        }
-        finally {
-            session.close();
-        }
-        return entity;
-    }
+//    public IEntity searchEntity(String ID, String table) {
+//        IEntity entity = null;
+//        int id;
+//        try {
+//            id = Integer.parseInt(ID);
+//        }
+//        catch (Exception e){
+//            return entity;
+//        }
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        try {
+//            session.beginTransaction();
+//            entity = (IEntity) session.load(getEntityClass(table),id);
+//            session.getTransaction().commit();
+//        }
+//        catch (Exception e){
+//            session.getTransaction().rollback();
+//        }
+//        finally {
+//            session.close();
+//        }
+//        return entity;
+//    }
     public boolean insertEntity(String entityString, String table) {
         boolean result = false;
         entityString = entityString.trim();

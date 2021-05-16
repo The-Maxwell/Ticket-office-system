@@ -5,6 +5,7 @@ import utils.TicketOfficeDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "MyServlet")
+@MultipartConfig
 public class OperationServlet extends HttpServlet {
 
     private TicketOfficeDao ticketOfficeDao;
@@ -29,6 +31,7 @@ public class OperationServlet extends HttpServlet {
         boolean result = false;
         String action = request.getParameter("act");
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("Action= " +action);
         switch (action){
             case "Show":
                 List<IEntity> list = ticketOfficeDao.selectEntities(request.getParameter("table"));
@@ -40,7 +43,7 @@ public class OperationServlet extends HttpServlet {
                 path = "index.jsp";
                 break;
             case "Add":
-                result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
+                //result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if(!result){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Insert Error</h2>");
@@ -71,5 +74,16 @@ public class OperationServlet extends HttpServlet {
 
         requestDispatcher = request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = null;
+        String path = null;
+        boolean result = false;
+        String action = req.getParameter("act");
+        resp.setContentType("text/html;charset=UTF-8");
+        System.out.println("Action= " +action);
+        doGet(req, resp);
     }
 }
