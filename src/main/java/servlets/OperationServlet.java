@@ -1,5 +1,6 @@
 package servlets;
 
+import entities.FormDataParser;
 import entities.IEntity;
 import utils.TicketOfficeDao;
 
@@ -31,25 +32,30 @@ public class OperationServlet extends HttpServlet {
         boolean result = false;
         String action = request.getParameter("act");
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("Action= " +action);
+        System.out.println("Action= " + action);
         switch (action){
             case "Show":
                 List<IEntity> list = ticketOfficeDao.selectEntities(request.getParameter("table"));
                 request.setAttribute("entities", list);
-                request.setAttribute("title", request.getParameter("table"));
+                request.setAttribute("table", request.getParameter("table"));
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
                 path = "index.jsp";
                 break;
             case "Add":
+                FormDataParser.getStringEntity(request.getParameter("vehicleCode"),request.getParameter("vehicleType"),request.getParameter("numberOfSeats"),
+                        request.getParameter("numberOfEconomyClassSeats"),request.getParameter("numberOfMediumClassSeats"),request.getParameter("numberOfLuxuryClassSeats"),
+                        request.getParameter("vechileCompany"));
+                System.out.println("Table= " + request.getParameter("table"));
                 //result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if(!result){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Insert Error</h2>");
                     return;
                 }
-                path = "/work_with_db?act=Show";
+                path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+                System.out.println(path);
                 break;
             case "Delete":
                 System.out.println(request.getParameter("entityString") + " " + request.getParameter("table"));
@@ -71,7 +77,6 @@ public class OperationServlet extends HttpServlet {
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
         }
-
         requestDispatcher = request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);
     }

@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,8 @@ public class JournaryEntity implements IEntity{
     private Collection<TicketEntity> ticketsByJournaryNumber;
 
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "Journary_number", nullable = false)
     public int getJournaryNumber() {
         return journaryNumber;

@@ -41,22 +41,28 @@
     <main>
         <c:if test="${requestScope.columnsName != null}">
             <input type="button" value="Додати" id="add">
+            <c:set var="t" scope="session" value="${requestScope.table}"/>
+            <script>
+                function onAdd(event) {
+                    <%
+                    out.println("var table = '" + request.getParameter("table") + "';");
+                    %>
+                    var element = document.getElementsByClassName("containerAdd" + table.substr(0,1) + table.substr(1,table.length - 1))[0];
+                    console.log(table.substr(0,1) + table.substr(1,table.length - 1));
+                    element.style.display = "block";
+                    var elBlur = document.getElementsByClassName("wrapper")[0];
+                    elBlur.style.filter = "blur(2px)";
+                }
+                var buttonAdd = document.getElementById("add");
+                buttonAdd.onclick = onAdd;
+
+            </script>
         </c:if>
-        <script>
-            function onAdd(event) {
-                var element = document.getElementsByClassName("containerAdd")[0];
-                element.style.display = "block";
-            }
-
-            var buttonAdd = document.getElementById("add");
-            buttonAdd.onclick = onAdd;
-
-        </script>
         <table>
             <thead>
             <tr>
-                <c:forEach var="name" items="${requestScope.columnsName}">
-                    <th>${name}</th>
+                <c:forEach var="colName" items="${requestScope.columnsName}">
+                    <th>${colName}</th>
                 </c:forEach>
             </tr>
             </thead>
@@ -88,7 +94,7 @@
                     formData.append('table', table.getAttribute("title"));
                     formData.append('act', 'Delete');
                     var req = new XMLHttpRequest();
-                    req.open("POST", "http://localhost:8082/work_with_db", true);
+                    req.open("POST", "http://localhost:8082/work_with_db");
                     req.send(formData);
                 }
 
@@ -119,33 +125,99 @@
                 }
             </script>
         </table>
-        <%--  <form method="post" target="_blank">--%>
-        <%--    <p>--%>
-        <%--    <select id="table" name="table">--%>
-        <%--      <option selected value="vehicle">vehicle</option>--%>
-        <%--      <option value="journary">journary</option>--%>
-        <%--      <option value="ticket">ticket</option>--%>
-        <%--      <option value="receipt">receipt</option>--%>
-        <%--      <option value="passenger">passenger</option>--%>
-        <%--    </select>--%>
-        <%--    <div>--%>
-        <%--      <button name="act" value="Show" type="submit" formaction="/work_with_db">Show table</button>--%>
-        <%--      <button name="act" value="Add" type="submit" formaction="/redirect">Add</button>--%>
-        <%--      <button name="act" value="Delete" type="submit" formaction="/redirect">Delete</button>--%>
-        <%--      <button name="act" value="Update" type="submit" formaction="/redirect">Update</button>--%>
-        <%--    </div>--%>
-        <%--  </form>--%>
     </main>
 </div>
-
-<section class="containerAdd">
-    <div class="login">
-        <h1>Login to Web App</h1>
-        <form method="post" action="index.html">
-            <p><input type="text" name="login" value="" placeholder="Username or Email"></p>
-            <p><input type="datetime-local" name="login" value="" placeholder="Date"></p>
-            <p><input type="password" name="password" value="" placeholder="Password"></p>
-            <p class="submit"><input type="submit" name="commit" value="Додати"></p>
+<section class="containerAddVehicle">
+    <div class="add">
+        <h1>Додавання нового транспортного засобу</h1>
+        <form>
+            <p><input type="number" name="vehicleCode" value="" placeholder="Код транспортного засобу"></p>
+            <p><select id="vehicleType" name="vehicleType">
+                <option disabled selected>Тип</option>
+                <option value="bus" selected>Автобус</option>
+                <option value="train">Потяг</option>
+                <option value="airplane">Літак</option>
+            </select></p>
+            <p><input type="number" name="numberOfSeats" value="" placeholder="К-сть місць"></p>
+            <p><input type="number" name="numberOfEconomyClassSeats" value="" placeholder="К-сть економ. місць"></p>
+            <p><input type="number" name="numberOfMediumClassSeats" value="" placeholder="К-сть серед. місць"></p>
+            <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць"></p>
+            <p><input type="text" name="vechileCompany" value="" placeholder="Транспортна компанія"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+        </form>
+        <script>
+            function onAdd(event){
+                let form = new FormData(event.target.parentNode.parentNode);
+                var table = document.getElementsByClassName("active")[0];
+                form.append('table', table.getAttribute("title"));
+                form.append('act', 'Add');
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/work_with_db", true);
+                xhr.send(form);
+            }
+        </script>
+    </div>
+</section>
+<section class="containerAddJournary">
+    <div class="add">
+        <h1>Додавання нового рейсу</h1>
+        <form method="post" action="/work_with_db">
+            <p><input type="text" name="departurePoint" value="" placeholder="Місце відправки"></p>
+            <p><input type="text" name="destination" value="" placeholder="Місце прибуття"></p>
+            <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"></p>
+            <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття"></p>
+            <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+        </form>
+    </div>
+</section>
+<section class="containerAddTicket">
+    <div class="add">
+        <h1>Додавання нового квитка</h1>
+        <form method="post" action="/work_with_db">
+            <p><select id="category" name="category">
+                <option disabled selected>Категорія</option>
+                <option value="econom" selected>Економний</option>
+                <option value="medium">Середній</option>
+                <option value="luxe">Люкс</option>
+            </select></p>
+            <p><input type="number" name="cost" value="" placeholder="Вартість"></p>
+            <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер"></p>
+            <p><input type="number" name="receiptId" value="" placeholder="Код чека"></p>
+            <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+        </form>
+    </div>
+</section>
+<section class="containerAddReceipt">
+    <div class="add">
+        <h1>Додавання нового чека</h1>
+        <form method="post" action="/work_with_db">
+            <p><input type="datetime-local" name="dataAndTimeOfSale" value="" placeholder="Дата і час продажі"></p>
+            <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання"></p>
+            <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна"></p>
+            <p><input type="number" name="passengerId" value="" placeholder="Код пасажира"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+        </form>
+    </div>
+</section>
+<section class="containerAddPassenger">
+    <div class="add">
+        <h1>Додавання нового пасажира</h1>
+        <form method="post" action="/work_with_db">
+            <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
+            <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
+            <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
+            <p><select id="categoryPassenger" name="category">
+                <option disabled selected>Категорія</option>
+                <option value="Дитина до 4 років" selected>Дитина до 4 років</option>
+                <option value="Школяр" selected>Школяр</option>
+                <option value="Студент" selected>Студент</option>
+                <option value="Без пільг" selected>Без пільг</option>
+                <option value="Пенсіонер" selected>Пенсіонер</option>
+                <option value="Людина з інвалідністю" selected>Людина з інвалідністю</option>
+            </select></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
         </form>
     </div>
 </section>
