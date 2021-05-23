@@ -143,7 +143,7 @@
             <p><input type="number" name="numberOfMediumClassSeats" value="" placeholder="К-сть серед. місць"></p>
             <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць"></p>
             <p><input type="text" name="vechileCompany" value="" placeholder="Транспортна компанія"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
         </form>
         <script>
             function onAdd(event){
@@ -154,6 +154,16 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/work_with_db", true);
                 xhr.send(form);
+            }
+            function onReset(event){
+                <%
+                    out.println("var table = '" + request.getParameter("table") + "';");
+                %>
+                var element = document.getElementsByClassName("containerAdd" + table.substr(0,1) + table.substr(1,table.length - 1))[0];
+                console.log(table.substr(0,1) + table.substr(1,table.length - 1));
+                element.style.display = "none";
+                var elBlur = document.getElementsByClassName("wrapper")[0];
+                elBlur.style.filter = "blur(0px)";
             }
         </script>
     </div>
@@ -167,7 +177,7 @@
             <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"></p>
             <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття"></p>
             <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
         </form>
     </div>
 </section>
@@ -185,7 +195,7 @@
             <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер"></p>
             <p><input type="number" name="receiptId" value="" placeholder="Код чека"></p>
             <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
         </form>
     </div>
 </section>
@@ -197,7 +207,7 @@
             <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання"></p>
             <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна"></p>
             <p><input type="number" name="passengerId" value="" placeholder="Код пасажира"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
         </form>
     </div>
 </section>
@@ -217,7 +227,7 @@
                 <option value="Пенсіонер" selected>Пенсіонер</option>
                 <option value="Людина з інвалідністю" selected>Людина з інвалідністю</option>
             </select></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
         </form>
     </div>
 </section>
