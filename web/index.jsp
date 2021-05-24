@@ -48,12 +48,13 @@
                     <%
                     out.println("var table = '" + request.getParameter("table") + "';");
                     %>
-                    var element = document.getElementsByClassName("containerAdd" + table.substr(0,1) + table.substr(1,table.length - 1))[0];
-                    console.log(table.substr(0,1) + table.substr(1,table.length - 1));
+                    var element = document.getElementsByClassName("containerAdd" + table.substr(0, 1) + table.substr(1, table.length - 1))[0];
+                    console.log(table.substr(0, 1) + table.substr(1, table.length - 1));
                     element.style.display = "block";
                     var elBlur = document.getElementsByClassName("wrapper")[0];
                     elBlur.style.filter = "blur(2px)";
                 }
+
                 var buttonAdd = document.getElementById("add");
                 buttonAdd.onclick = onAdd;
             </script>
@@ -128,18 +129,38 @@
 
         <c:if test="${requestScope.statistics == true}">
             <div class="reports">
-<%--                <c:forEach var="repName" items="${requestScope.reportsName}">--%>
-<%--                    <iframe src="${repName}"--%>
-<%--                            style="width: 400px; height: 400px;" frameborder="0">Ваш браузер не підтримує фрейми</iframe>--%>
-<%--                </c:forEach>--%>
-    <div class="flex-item item1">Flex Item 1</div>
-    <div class="flex-item item2">Flex Item 2</div>
-    <div class="flex-item item3">Flex Item 3</div>
-    <div class="flex-item item4">Flex Item 4</div>
-    <div class="flex-item item5">Flex Item 5</div>
-    <div class="flex-item item1">Flex Item 6</div>
-    <div class="flex-item item2">Flex Item 7</div>
-    <div class="flex-item item3">Flex Item 8</div>
+                    <%--                <c:forEach var="repName" items="${requestScope.reportsName}">--%>
+                    <%--                    <iframe src="${repName}"--%>
+                    <%--                            style="width: 400px; height: 400px;" frameborder="0">Ваш браузер не підтримує фрейми</iframe>--%>
+                    <%--                </c:forEach>--%>
+                <div class="flex-item">
+                    <form action="post">
+                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт" onclick="onView(event)"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                    </form>
+                    <script>
+                        function onView(event) {
+                            event.preventDefault();
+                            console.log("onView");
+
+                        }
+                    </script>
+                </div>
+                <div class="flex-item">
+                    <form action="post">
+                        <a href="" title="Натисніть, щоб переглянути звіт"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                    </form>
+                </div>
+                <div class="flex-item">
+                    <form action="post">
+                        <a href="" title="Натисніть, щоб переглянути звіт"><img src="styles/img/diagram.svg" alt="Category Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                    </form>
+                </div>
             </div>
         </c:if>
     </main>
@@ -160,10 +181,14 @@
             <p><input type="number" name="numberOfMediumClassSeats" value="" placeholder="К-сть серед. місць"></p>
             <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць"></p>
             <p><input type="text" name="vechileCompany" value="" placeholder="Транспортна компанія"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
         </form>
         <script>
-            function onAdd(event){
+            function onAdd(event) {
                 let form = new FormData(event.target.parentNode.parentNode);
                 var table = document.getElementsByClassName("active")[0];
                 form.append('table', table.getAttribute("title"));
@@ -172,12 +197,13 @@
                 xhr.open("POST", "/work_with_db", true);
                 xhr.send(form);
             }
-            function onReset(event){
+
+            function onReset(event) {
                 <%
                     out.println("var table = '" + request.getParameter("table") + "';");
                 %>
-                var element = document.getElementsByClassName("containerAdd" + table.substr(0,1) + table.substr(1,table.length - 1))[0];
-                console.log(table.substr(0,1) + table.substr(1,table.length - 1));
+                var element = document.getElementsByClassName("containerAdd" + table.substr(0, 1) + table.substr(1, table.length - 1))[0];
+                console.log(table.substr(0, 1) + table.substr(1, table.length - 1));
                 element.style.display = "none";
                 var elBlur = document.getElementsByClassName("wrapper")[0];
                 elBlur.style.filter = "blur(0px)";
@@ -192,9 +218,14 @@
             <p><input type="text" name="departurePoint" value="" placeholder="Місце відправки"></p>
             <p><input type="text" name="destination" value="" placeholder="Місце прибуття"></p>
             <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"></p>
-            <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття"></p>
+            <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття">
+            </p>
             <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
         </form>
     </div>
 </section>
@@ -212,7 +243,11 @@
             <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер"></p>
             <p><input type="number" name="receiptId" value="" placeholder="Код чека"></p>
             <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
         </form>
     </div>
 </section>
@@ -221,10 +256,15 @@
         <h1>Додавання нового чека</h1>
         <form method="post" action="/work_with_db">
             <p><input type="datetime-local" name="dataAndTimeOfSale" value="" placeholder="Дата і час продажі"></p>
-            <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання"></p>
+            <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання">
+            </p>
             <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна"></p>
             <p><input type="number" name="passengerId" value="" placeholder="Код пасажира"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
         </form>
     </div>
 </section>
@@ -244,7 +284,11 @@
                 <option value="Пенсіонер" selected>Пенсіонер</option>
                 <option value="Людина з інвалідністю" selected>Людина з інвалідністю</option>
             </select></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset" name="reset" onclick="onReset(event)" value="Відмінити"></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
         </form>
     </div>
 </section>

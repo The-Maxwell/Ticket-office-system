@@ -172,21 +172,32 @@ th, td {
   width: 100%;
   height: 100%;
 }
+main {
+  display: flex;
+  justify-content: center;
+}
  .reports {
    display: flex;
    border:1px #ccc solid;
    flex-wrap: wrap;
-   height:200px;
-   align-content: flex-start;
+   width: 1200px;
+   height: 400px;
+   justify-content: center;
+   overflow: auto;
  }
 .flex-item {
   text-align:center;
   font-size: 16px;
   padding: 10px;
+  height: max-content;
+  margin: 40px;
+  border: 2px #8AD9DF dashed;
   color: white;
 }
-.item1 {background-color: #675BA7;}
-.item2 {background-color: #9BC850;}
-.item3 {background-color: #A62E5C;}
-.item4 {background-color: #2A9FBC;}
-.item5 {background-color: #F15B2A;}
+a img {
+  width: 100px;
+  height: 100px;
+}
+.statistics input[type=button]{
+  margin-top: 5px;
+}

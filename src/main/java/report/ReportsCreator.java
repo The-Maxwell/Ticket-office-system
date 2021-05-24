@@ -33,6 +33,9 @@ public class ReportsCreator {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
     private HttpServletRequest request;
 
+    public static String lastVehicheReportPath = null;
+    public static String lastVehicheJournaryTicketReportPath = null;
+    public static String lastCategoryReportPath = null;
     public void setRequest(HttpServletRequest request) {
         this.request = request;
     }
@@ -76,21 +79,9 @@ public class ReportsCreator {
             try {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
-//                String appPath = request.getServletContext().getRealPath("");
-//                //указываю путь к директории, куда хочу сохранить файл
-//                String savePath = appPath + File.separator + "created_reports\\VehicheReport_" + dateTime + ".pdf";
-//                //создаю директорию, если она не существует
-//                File fileSaveDir = new File(savePath);
-//                if (!fileSaveDir.exists()) {
-//                    fileSaveDir.mkdir();
-//                }
-                String serverHomeDir = System.getenv("CATALINA_HOME");
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-                //String relativePath = resource.getPath();
-                System.out.println(relativePath);
                 report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
-                System.out.println(relativePath.substring(1, relativePath.length()-1)+"\\VehicheReport_" + dateTime + ".pdf");
-//                return path + "/VehicheReport" + dateTime + ".pdf";
+                lastVehicheReportPath = relativePath + "\\VehicheReport_" + dateTime + ".pdf";
                 return relativePath + "\\VehicheReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -164,8 +155,10 @@ public class ReportsCreator {
             try {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
-                report.toPdf(new FileOutputStream("src/main/resources/reports/VehicheJournaryTicketReport" + dateTime + ".pdf"));
-                return "src/main/resources/reports/VehicheJournaryTicketReport" + dateTime + ".pdf";
+                String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
+                report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
+                lastVehicheJournaryTicketReportPath = relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
+                return relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -212,8 +205,10 @@ public class ReportsCreator {
             try {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
-                report.toPdf(new FileOutputStream("src/main/resources/reports/CategoryReport" + dateTime + ".pdf"));
-                return "src/main/resources/reports/CategoryReport" + dateTime + ".pdf";
+                String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
+                report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
+                lastCategoryReportPath = relativePath + "\\CategoryReport_" + dateTime + ".pdf";
+                return relativePath + "\\CategoryReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }

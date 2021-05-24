@@ -83,8 +83,8 @@ public class OperationServlet extends HttpServlet {
                 reportsCreator.setRequest(request);
                 System.out.println("Statistics");
                 request.setAttribute("statistics", true);
-                String [] arr = reportsCreator.createReports();
-                request.setAttribute("reportsName", arr);
+                //String [] arr = reportsCreator.createReports();
+                //request.setAttribute("reportsName", arr);
                 path = "index.jsp";
                 break;
         }

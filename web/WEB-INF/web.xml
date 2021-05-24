@@ -20,6 +20,11 @@
         <servlet-class>servlets.RedirectServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>PDFViewerServlet</servlet-name>
+        <servlet-class>servlets.PDFViewerServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>OperationServlet</servlet-name>
         <url-pattern>/work_with_db</url-pattern>
@@ -28,6 +33,11 @@
     <servlet-mapping>
         <servlet-name>RedirectServlet</servlet-name>
         <url-pattern>/redirect</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PDFViewerServlet</servlet-name>
+        <url-pattern>/statistics</url-pattern>
     </servlet-mapping>
 
     <filter>
