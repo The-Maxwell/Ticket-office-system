@@ -34,7 +34,8 @@
                 <li title="passenger" <c:if test="${requestScope.passenger == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Show&table=passenger" title="passenger">Пасажири</a></li>
                 <li><a href="index.jsp" title="Contact">Працівники</a></li>
-                <li><a href="index.jsp" title="Contact">Статистика</a></li>
+                <li title="statistics" <c:if test="${requestScope.statistics == true}">class="active"</c:if>><a
+                        href="/work_with_db?act=Statistics" title="statistics">Статистика</a></li>
             </ul>
         </nav>
     </section>
@@ -55,76 +56,92 @@
                 }
                 var buttonAdd = document.getElementById("add");
                 buttonAdd.onclick = onAdd;
-
             </script>
-        </c:if>
-        <table>
-            <thead>
-            <tr>
-                <c:forEach var="colName" items="${requestScope.columnsName}">
-                    <th>${colName}</th>
-                </c:forEach>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="entity" items="${requestScope.entities}">
+            <table>
+                <thead>
                 <tr>
-                    <c:set var="noEdit" scope="session" value="${true}"/>
-                    <c:forEach var="column" items="${entity.recieveEntityInfo()}">
-                        <c:if test="${noEdit == false}">
-                            <td contenteditable="true">${column}</td>
-                        </c:if>
-                        <c:if test="${noEdit == true}">
-                            <c:set var="noEdit" scope="session" value="${false}"/>
-                            <td>${column}</td>
-                        </c:if>
+                    <c:forEach var="colName" items="${requestScope.columnsName}">
+                        <th>${colName}</th>
                     </c:forEach>
-                    <td><input type="button" class="delete" value="Видалити"/></td>
-                    <td><input type="button" class="edit" value="Редагувати"/></td>
                 </tr>
-            </c:forEach>
-            </tbody>
-            <script>
-                function onDelete({target: el}) {
-                    var el2 = el.parentNode;
-                    var el3 = el2.parentElement;
-                    let formData = new FormData();
-                    formData.set('entityString', el3.children[0].textContent);
-                    var table = document.getElementsByClassName("active")[0];
-                    formData.append('table', table.getAttribute("title"));
-                    formData.append('act', 'Delete');
-                    var req = new XMLHttpRequest();
-                    req.open("POST", "http://localhost:8082/work_with_db");
-                    req.send(formData);
-                }
-
-                function onEdit({target: el}) {
-                    var el2 = el.parentNode;
-                    var el3 = el2.parentElement;
-                    var entityString = "";
-                    for (var i = 0; i < el3.children.length; i++) {
-                        entityString += el3.children[i].textContent;
-                        if (i + 1 != el3.children.length) entityString += ",";
+                </thead>
+                <tbody>
+                <c:forEach var="entity" items="${requestScope.entities}">
+                    <tr>
+                        <c:set var="noEdit" scope="session" value="${true}"/>
+                        <c:forEach var="column" items="${entity.recieveEntityInfo()}">
+                            <c:if test="${noEdit == false}">
+                                <td contenteditable="true">${column}</td>
+                            </c:if>
+                            <c:if test="${noEdit == true}">
+                                <c:set var="noEdit" scope="session" value="${false}"/>
+                                <td>${column}</td>
+                            </c:if>
+                        </c:forEach>
+                        <td><input type="button" class="delete" value="Видалити"/></td>
+                        <td><input type="button" class="edit" value="Редагувати"/></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+                <script>
+                    function onDelete({target: el}) {
+                        var el2 = el.parentNode;
+                        var el3 = el2.parentElement;
+                        let formData = new FormData();
+                        formData.set('entityString', el3.children[0].textContent);
+                        var table = document.getElementsByClassName("active")[0];
+                        formData.append('table', table.getAttribute("title"));
+                        formData.append('act', 'Delete');
+                        var req = new XMLHttpRequest();
+                        req.open("POST", "http://localhost:8082/work_with_db");
+                        req.send(formData);
                     }
-                    console.log(entityString);
-                    let formData = new FormData();
-                    formData.append('entityString', entityString);
-                    var table = document.getElementsByClassName("active")[0];
-                    formData.append('table', table.getAttribute("title"));
-                    formData.append('act', 'Update');
-                    var req = new XMLHttpRequest();
-                    req.open("POST", "http://localhost:8082/work_with_db");
-                    req.send(formData);
-                }
 
-                var deleteElems = document.getElementsByClassName("delete");
-                var editElems = document.getElementsByClassName("edit");
-                for (var i = 0; i < deleteElems.length; i++) {
-                    deleteElems[i].onclick = onDelete;
-                    editElems[i].onclick = onEdit;
-                }
-            </script>
-        </table>
+                    function onEdit({target: el}) {
+                        var el2 = el.parentNode;
+                        var el3 = el2.parentElement;
+                        var entityString = "";
+                        for (var i = 0; i < el3.children.length; i++) {
+                            entityString += el3.children[i].textContent;
+                            if (i + 1 != el3.children.length) entityString += ",";
+                        }
+                        console.log(entityString);
+                        let formData = new FormData();
+                        formData.append('entityString', entityString);
+                        var table = document.getElementsByClassName("active")[0];
+                        formData.append('table', table.getAttribute("title"));
+                        formData.append('act', 'Update');
+                        var req = new XMLHttpRequest();
+                        req.open("POST", "http://localhost:8082/work_with_db");
+                        req.send(formData);
+                    }
+
+                    var deleteElems = document.getElementsByClassName("delete");
+                    var editElems = document.getElementsByClassName("edit");
+                    for (var i = 0; i < deleteElems.length; i++) {
+                        deleteElems[i].onclick = onDelete;
+                        editElems[i].onclick = onEdit;
+                    }
+                </script>
+            </table>
+        </c:if>
+
+        <c:if test="${requestScope.statistics == true}">
+            <div class="reports">
+<%--                <c:forEach var="repName" items="${requestScope.reportsName}">--%>
+<%--                    <iframe src="${repName}"--%>
+<%--                            style="width: 400px; height: 400px;" frameborder="0">Ваш браузер не підтримує фрейми</iframe>--%>
+<%--                </c:forEach>--%>
+    <div class="flex-item item1">Flex Item 1</div>
+    <div class="flex-item item2">Flex Item 2</div>
+    <div class="flex-item item3">Flex Item 3</div>
+    <div class="flex-item item4">Flex Item 4</div>
+    <div class="flex-item item5">Flex Item 5</div>
+    <div class="flex-item item1">Flex Item 6</div>
+    <div class="flex-item item2">Flex Item 7</div>
+    <div class="flex-item item3">Flex Item 8</div>
+            </div>
+        </c:if>
     </main>
 </div>
 <section class="containerAddVehicle">

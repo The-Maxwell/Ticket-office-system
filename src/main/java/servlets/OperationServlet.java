@@ -2,6 +2,7 @@ package servlets;
 
 import entities.FormDataParser;
 import entities.IEntity;
+import report.ReportsCreator;
 import utils.TicketOfficeDao;
 
 import javax.servlet.RequestDispatcher;
@@ -20,10 +21,12 @@ import java.util.List;
 public class OperationServlet extends HttpServlet {
 
     private TicketOfficeDao ticketOfficeDao;
+    private ReportsCreator reportsCreator;
     @Override
     public void init() throws ServletException {
         super.init();
         ticketOfficeDao = new TicketOfficeDao();
+        reportsCreator = new ReportsCreator();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,6 +78,14 @@ public class OperationServlet extends HttpServlet {
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+                break;
+            case "Statistics":
+                reportsCreator.setRequest(request);
+                System.out.println("Statistics");
+                request.setAttribute("statistics", true);
+                String [] arr = reportsCreator.createReports();
+                request.setAttribute("reportsName", arr);
+                path = "index.jsp";
                 break;
         }
         requestDispatcher = request.getRequestDispatcher(path);
