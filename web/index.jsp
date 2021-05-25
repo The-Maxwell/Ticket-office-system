@@ -141,7 +141,7 @@
                     </form>
                     <script>
                         function onView(event) {
-                            event.preventDefault();
+                            // event.preventDefault();
                             console.log("onView");
 
                         }
@@ -149,14 +149,14 @@
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="" title="Натисніть, щоб переглянути звіт"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
+                        <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank" title="Натисніть, щоб переглянути звіт"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
                         <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
                         <p class="submit statistics"><input type="button" value="Згенерувати"></p>
                     </form>
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="" title="Натисніть, щоб переглянути звіт"><img src="styles/img/diagram.svg" alt="Category Report"></a>
+                        <a href="/statistics?report=CategoryReport" target="_blank" title="Натисніть, щоб переглянути звіт"><img src="styles/img/diagram.svg" alt="Category Report"></a>
                         <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
                         <p class="submit statistics"><input type="button" value="Згенерувати"></p>
                     </form>

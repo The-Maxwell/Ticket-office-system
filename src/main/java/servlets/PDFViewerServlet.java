@@ -3,6 +3,7 @@ package servlets;
 import report.ReportsCreator;
 import utils.TicketOfficeDao;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,28 +25,37 @@ public class PDFViewerServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String report = request.getParameter("report");
+        response.setContentType("text/html;charset=UTF-8");
+        reportsCreator.setRequest(request);
+        reportsCreator.createReports();
         String path = null;
         switch (report){
             case "VehicheReport":
                 path = ReportsCreator.lastVehicheReportPath;
                 break;
             case "VehicheJournaryTicketReport":
+                path = ReportsCreator.lastVehicheJournaryTicketReportPath;
                 break;
             case "CategoryReport":
+                path = ReportsCreator.lastCategoryReportPath;
                 break;
         }
-        System.out.println("Path= " + path);
-        FileInputStream fis = new FileInputStream(new File(path));
+        if(path == null)
+            path = reportsCreator.getLastReportsPath(report);
 
-        // Fast way to copy a bytearray from InputStream to OutputStream
+        FileInputStream fis = new FileInputStream(new File(path));
         org.apache.commons.io.IOUtils.copy(fis, response.getOutputStream());
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + report);
         response.flushBuffer();
+//        System.out.println("REQ PATH ="+path);
+//        int index = path.indexOf("\\WEB-INF");
+//        String iPath = path.substring(index);
+//        RequestDispatcher rd = request.getRequestDispatcher(iPath);
+//        rd.include(request, response);
     }
 }

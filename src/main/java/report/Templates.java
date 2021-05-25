@@ -64,7 +64,8 @@ public class Templates {
                 .setBackgroundColor(new Color(140, 140, 140));
         StyleBuilder crosstabCellStyle       = stl.style(columnStyle)
                 .setBorder(stl.pen1Point());
-
+        StyleBuilder fontStyle = stl.style()
+                .setFontName("DejaVu Serif");
         TableOfContentsCustomizerBuilder tableOfContentsCustomizer = tableOfContentsCustomizer()
                 .setHeadingStyle(0, stl.style(rootStyle).bold());
 
@@ -81,7 +82,8 @@ public class Templates {
                 .setCrosstabGroupTotalStyle(crosstabGroupTotalStyle)
                 .setCrosstabGrandTotalStyle(crosstabGrandTotalStyle)
                 .setCrosstabCellStyle(crosstabCellStyle)
-                .setTableOfContentsCustomizer(tableOfContentsCustomizer);
+                .setTableOfContentsCustomizer(tableOfContentsCustomizer)
+                .setTextStyle(fontStyle);
 
         currencyType = new CurrencyType();
 

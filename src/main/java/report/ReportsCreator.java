@@ -13,18 +13,15 @@ import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigDecimal;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
-public class ReportsCreator {
+public class ReportsCreator{
 
     private String url = "jdbc:mysql://localhost/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false";
     private String username = "root";
@@ -36,12 +33,16 @@ public class ReportsCreator {
     public static String lastVehicheReportPath = null;
     public static String lastVehicheJournaryTicketReportPath = null;
     public static String lastCategoryReportPath = null;
+
+    private StyleBuilder fontStyle = stl.style().setFontName("DejaVu Serif");
+
     public void setRequest(HttpServletRequest request) {
         this.request = request;
     }
 
     public String[] createReports(){
-        return new String[]{createVehicleReport()};
+        return new String[]{createVehicleReport(), createVehicheJournaryTicketReport(), createCategoryReport()};
+
     }
 
     private String createVehicleReport() {
@@ -80,8 +81,10 @@ public class ReportsCreator {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-                report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
+//                report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
+                report.toHtml(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
                 lastVehicheReportPath = relativePath + "\\VehicheReport_" + dateTime + ".pdf";
+                saveLastReportsPath("VehicheReport");
                 return relativePath + "\\VehicheReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,8 +159,10 @@ public class ReportsCreator {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-                report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
+//                report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
+                report.toHtml(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
                 lastVehicheJournaryTicketReportPath = relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
+                saveLastReportsPath("VehicheJournaryTicketReport");
                 return relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,14 +211,75 @@ public class ReportsCreator {
                 //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-                report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
+//                report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
+                report.toHtml(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
                 lastCategoryReportPath = relativePath + "\\CategoryReport_" + dateTime + ".pdf";
+                saveLastReportsPath("CategoryReport");
                 return relativePath + "\\CategoryReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public void saveLastReportsPath(String reportName){
+        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
+        System.out.println("SAVE " + relativePath);
+        LastReportsPath p;
+        if(new File(relativePath + "/reports_path.obj").exists()) {
+            System.out.println("EXIST " + new File(relativePath + "/reports_path.obj").exists());
+            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
+            {
+                p=(LastReportsPath)ois.readObject();
+                System.out.println("File 1");
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                System.out.println("KEK");
+                p = new LastReportsPath();
+            }
+        }
+        else p = new LastReportsPath();
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(relativePath + "/reports_path.obj")))
+        {
+            switch (reportName){
+                case "VehicheReport":
+                    p.setLastVehicheReportPath(lastVehicheReportPath);
+                    break;
+                case "VehicheJournaryTicketReport":
+                    p.setLastVehicheJournaryTicketReportPath(lastVehicheJournaryTicketReportPath);
+                    break;
+                case "CategoryReport":
+                    p.setLastCategoryReportPath(lastCategoryReportPath);
+                    break;
+            }
+            oos.writeObject(p);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    public String getLastReportsPath(String reportName){
+        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
+        System.out.println("GET " + relativePath);
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
+        {
+            LastReportsPath p = (LastReportsPath)ois.readObject();
+            switch (reportName){
+                case "VehicheReport":
+                    return p.getLastVehicheReportPath();
+                case "VehicheJournaryTicketReport":
+                    return p.getLastVehicheJournaryTicketReportPath();
+                case "CategoryReport":
+                    return p.getLastCategoryReportPath();
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
