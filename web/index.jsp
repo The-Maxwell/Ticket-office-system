@@ -44,7 +44,7 @@
             <input type="button" value="Додати" id="add">
             <c:set var="t" scope="session" value="${requestScope.table}"/>
             <script>
-                function onAdd(event) {
+                function onAddButton(event) {
                     <%
                     out.println("var table = '" + request.getParameter("table") + "';");
                     %>
@@ -56,7 +56,7 @@
                 }
 
                 var buttonAdd = document.getElementById("add");
-                buttonAdd.onclick = onAdd;
+                buttonAdd.onclick = onAddButton;
             </script>
             <table>
                 <thead>
@@ -129,36 +129,49 @@
 
         <c:if test="${requestScope.statistics == true}">
             <div class="reports">
-                    <%--                <c:forEach var="repName" items="${requestScope.reportsName}">--%>
-                    <%--                    <iframe src="${repName}"--%>
-                    <%--                            style="width: 400px; height: 400px;" frameborder="0">Ваш браузер не підтримує фрейми</iframe>--%>
-                    <%--                </c:forEach>--%>
                 <div class="flex-item">
-                    <form action="post">
-                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт по транспортним засобам" onclick="onView(event)"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                    <form>
+                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт по транспортним засобам"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="VehicheReport" onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateVehicleReport"></p>
                     </form>
                     <script>
-                        function onView(event) {
-                            // event.preventDefault();
-                            console.log("onView");
-
+                        function onGenerate(event) {
+                            event.preventDefault();
+                            console.log("onGenerate");
+                            var el = event.target;
+                            console.log(el.getAttribute("id"));
+                            let form = new FormData();
+                            form.append('act', 'Generate');
+                            form.append('generateReport', el.getAttribute("id"));
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "/statistics", true);
+                            xhr.send(form);
+                        }
+                        function onOpenSendForm(event) {
+                            var element = document.getElementsByClassName("containerSendEmail")[0];
+                            element.style.display = "block";
+                            var target = event.target;
+                            var el = document.getElementById("sendReport");
+                            el.value = target.id;
+                            console.log(el.value);
+                            var elBlur = document.getElementsByClassName("wrapper")[0];
+                            elBlur.style.filter = "blur(2px)";
                         }
                     </script>
                 </div>
                 <div class="flex-item">
                     <form action="post">
                         <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank" title="Натисніть, щоб переглянути звіт по трансп. засобам, рейсам та квиткам"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="VehicheJournaryTicketReport" onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateVehicheJournaryTicketReport"></p>
                     </form>
                 </div>
                 <div class="flex-item">
                     <form action="post">
                         <a href="/statistics?report=CategoryReport" target="_blank" title="Натисніть, щоб переглянути звіт по категоріям пасажирів"><img src="styles/img/diagram.svg" alt="Category Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати"></p>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="CategoryReport" onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateCategoryReport"></p>
                     </form>
                 </div>
             </div>
@@ -235,7 +248,7 @@
         <form method="post" action="/work_with_db">
             <p><select id="category" name="category">
                 <option disabled selected>Категорія</option>
-                <option value="econom" selected>Економний</option>
+                <option value="econom">Економний</option>
                 <option value="medium">Середній</option>
                 <option value="luxe">Люкс</option>
             </select></p>
@@ -277,12 +290,12 @@
             <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
             <p><select id="categoryPassenger" name="category">
                 <option disabled selected>Категорія</option>
-                <option value="Дитина до 4 років" selected>Дитина до 4 років</option>
-                <option value="Школяр" selected>Школяр</option>
-                <option value="Студент" selected>Студент</option>
-                <option value="Без пільг" selected>Без пільг</option>
-                <option value="Пенсіонер" selected>Пенсіонер</option>
-                <option value="Людина з інвалідністю" selected>Людина з інвалідністю</option>
+                <option value="Дитина до 4 років">Дитина до 4 років</option>
+                <option value="Школяр">Школяр</option>
+                <option value="Студент">Студент</option>
+                <option value="Без пільг">Без пільг</option>
+                <option value="Пенсіонер">Пенсіонер</option>
+                <option value="Людина з інвалідністю">Людина з інвалідністю</option>
             </select></p>
             <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
@@ -291,6 +304,43 @@
             </p>
         </form>
     </div>
+</section>
+<section class="containerSendEmail">
+    <div class="add">
+        <h1>Відправка звіту на електрону адресу</h1>
+        <form method="post" action="/statistics">
+            <p><input type="email" name="email" value="" placeholder="Email"></p>
+            <p><textarea name="message" placeholder="Повідомлення в Email. Не більше 500 символів." maxlength="500"></textarea></p>
+            <p><input type="hidden" name="act" value="Mail"></p>
+            <p><input type="hidden" name="sendReport" id="sendReport"></p>
+            <p class="submit"><input type="submit" name="add" value="Відправити">
+                <input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onResetSendEmail(event)"
+                                                                                                           value="Відмінити">
+            </p>
+        </form>
+    </div>
+    <script>
+        // function onSendEmail(event){
+        //     event.preventDefault();
+        //     let currentForm = event.target.parentNode.parentNode;
+        //     console.log(currentForm.getAttribute("id"));
+        //     let form = new FormData(event.target.parentNode.parentNode);
+        //     var table = document.getElementsByClassName("active")[0];
+        //     form.append('table', table.getAttribute("title"));
+        //     form.append('act', 'Add');
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open("POST", "/work_with_db", true);
+        //     xhr.send(form);
+        // }
+        function onResetSendEmail(event) {
+            var element = document.getElementsByClassName("containerSendEmail")[0];
+            element.style.display = "none";
+            var elBlur = document.getElementsByClassName("wrapper")[0];
+            elBlur.style.filter = "blur(0px)";
+        }
+    </script>
 </section>
 </body>
 </html>

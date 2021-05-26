@@ -41,12 +41,14 @@ public class ReportsCreator{
         this.request = request;
     }
 
-    public String[] createReports(){
-        return new String[]{createVehicleReport(), createVehicheJournaryTicketReport(), createCategoryReport()};
+    public void createReports(){
+        createVehicleReport();
+        createVehicheJournaryTicketReport();
+        createCategoryReport();
 
     }
 
-    private String createVehicleReport() {
+    public void createVehicleReport() {
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> vehicleCodeColumn = col.column("Vehicle code", "Vehicle_code", DataTypes.stringType());
@@ -85,16 +87,14 @@ public class ReportsCreator{
                 report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
                 lastVehicheReportPath = relativePath + "\\VehicheReport_" + dateTime + ".pdf";
                 saveLastReportsPath("VehicheReport");
-                return relativePath + "\\VehicheReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
     }
-    private String createVehicheJournaryTicketReport() {
+    public void createVehicheJournaryTicketReport() {
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             StyleBuilder groupStyle = stl.style().bold().setFontName("DejaVu Serif");;
             CustomGroupBuilder vehicleGroup = grp.group("Vehicle_code", String.class)
@@ -162,17 +162,15 @@ public class ReportsCreator{
                 report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
                 lastVehicheJournaryTicketReportPath = relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
                 saveLastReportsPath("VehicheJournaryTicketReport");
-                return relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
     }
 
-    private String createCategoryReport(){
+    public void createCategoryReport(){
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> categoryColumn = DynamicReports.col.column("Category", "Category", DataTypes.stringType());
@@ -214,14 +212,12 @@ public class ReportsCreator{
                 report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
                 lastCategoryReportPath = relativePath + "\\CategoryReport_" + dateTime + ".pdf";
                 saveLastReportsPath("CategoryReport");
-                return relativePath + "\\CategoryReport_" + dateTime + ".pdf";
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
     }
 
     public void saveLastReportsPath(String reportName){
