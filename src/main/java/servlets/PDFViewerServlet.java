@@ -29,9 +29,8 @@ public class PDFViewerServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String report = request.getParameter("report");
-        response.setContentType("text/html;charset=UTF-8");
         reportsCreator.setRequest(request);
-        reportsCreator.createReports();
+        //reportsCreator.createReports();
         String path = null;
         switch (report){
             case "VehicheReport":
@@ -52,10 +51,5 @@ public class PDFViewerServlet extends HttpServlet {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + report);
         response.flushBuffer();
-//        System.out.println("REQ PATH ="+path);
-//        int index = path.indexOf("\\WEB-INF");
-//        String iPath = path.substring(index);
-//        RequestDispatcher rd = request.getRequestDispatcher(iPath);
-//        rd.include(request, response);
     }
 }

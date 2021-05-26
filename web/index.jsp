@@ -135,7 +135,7 @@
                     <%--                </c:forEach>--%>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт" onclick="onView(event)"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
+                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт по транспортним засобам" onclick="onView(event)"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
                         <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
                         <p class="submit statistics"><input type="button" value="Згенерувати"></p>
                     </form>
@@ -149,14 +149,14 @@
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank" title="Натисніть, щоб переглянути звіт"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
+                        <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank" title="Натисніть, щоб переглянути звіт по трансп. засобам, рейсам та квиткам"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
                         <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
                         <p class="submit statistics"><input type="button" value="Згенерувати"></p>
                     </form>
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="/statistics?report=CategoryReport" target="_blank" title="Натисніть, щоб переглянути звіт"><img src="styles/img/diagram.svg" alt="Category Report"></a>
+                        <a href="/statistics?report=CategoryReport" target="_blank" title="Натисніть, щоб переглянути звіт по категоріям пасажирів"><img src="styles/img/diagram.svg" alt="Category Report"></a>
                         <p class="submit statistics"><input type="button" value="Відправити через Email"></p>
                         <p class="submit statistics"><input type="button" value="Згенерувати"></p>
                     </form>

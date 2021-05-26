@@ -10,6 +10,7 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.builder.subtotal.AggregationSubtotalBuilder;
 import net.sf.dynamicreports.report.constant.GroupHeaderLayout;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +51,7 @@ public class ReportsCreator{
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> vehicleCodeColumn = col.column("Vehicle code", "Vehicle_code", DataTypes.stringType());
             TextColumnBuilder<String> vehicleTypeColomn = col.column("Vehicle type", "Vehicle_type", DataTypes.stringType());
+            vehicleTypeColomn.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
             TextColumnBuilder<Integer> numberSeatColumn = col.column("Number of seats", "Number_of_seats", DataTypes.integerType());
             TextColumnBuilder<Integer> numberSeatEconomColumn = col.column("Number of economy class seats", "Number_of_economy_class_seats", DataTypes.integerType());
             TextColumnBuilder<Integer> numberSeatMediumColumn = col.column("Number of medium class seats", "Number_of_medium_class_seats", DataTypes.integerType());
@@ -67,7 +69,7 @@ public class ReportsCreator{
                             numberSeatEconomColumn,
                             numberSeatMediumColumn,
                             numberSeatLuxuryColumn,
-                            vehicleCompanyColumn
+                            vehicleCompanyColumn.setStyle(fontStyle)
                     ).subtotalsAtSummary(
                     vehicleSum,
                     vehicleCompanyDistSum,
@@ -78,11 +80,9 @@ public class ReportsCreator{
                     ).pageFooter(Components.pageXofY())
                     .setDataSource("SELECT * FROM vehicle", connection);
             try {
-                //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-//                report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
-                report.toHtml(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
+                report.toPdf(new FileOutputStream(relativePath+"\\VehicheReport_" + dateTime + ".pdf"));
                 lastVehicheReportPath = relativePath + "\\VehicheReport_" + dateTime + ".pdf";
                 saveLastReportsPath("VehicheReport");
                 return relativePath + "\\VehicheReport_" + dateTime + ".pdf";
@@ -96,7 +96,7 @@ public class ReportsCreator{
     }
     private String createVehicheJournaryTicketReport() {
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
-            StyleBuilder groupStyle = stl.style().bold();
+            StyleBuilder groupStyle = stl.style().bold().setFontName("DejaVu Serif");;
             CustomGroupBuilder vehicleGroup = grp.group("Vehicle_code", String.class)
                     .setStyle(groupStyle)
                     .setTitle("Номер транспортного засобу:")
@@ -120,6 +120,7 @@ public class ReportsCreator{
 
             TextColumnBuilder<Integer> ticketNumberColumn = col.column("Ticket number", "Ticket_number", DataTypes.integerType());
             TextColumnBuilder<String> categoryColomn = col.column("Category", "Category", DataTypes.stringType());
+            categoryColomn.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
             TextColumnBuilder<BigDecimal> costColomn = col.column("Cost", "Cost", DataTypes.bigDecimalType());
             TextColumnBuilder<Integer> sequenceNumberColumn = col.column("Sequence_number", "Sequence_number", DataTypes.integerType());
 
@@ -156,11 +157,9 @@ public class ReportsCreator{
                             "WHERE v.Vehicle_code=j.Vechile_id AND j.Journary_number=t.Journary_id\n" +
                             "ORDER BY v.Vehicle_code, j.Journary_number\n", connection);
             try {
-                //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-//                report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
-                report.toHtml(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
+                report.toPdf(new FileOutputStream(relativePath+"\\VehicheJournaryTicketReport_" + dateTime + ".pdf"));
                 lastVehicheJournaryTicketReportPath = relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
                 saveLastReportsPath("VehicheJournaryTicketReport");
                 return relativePath + "\\VehicheJournaryTicketReport_" + dateTime + ".pdf";
@@ -177,6 +176,8 @@ public class ReportsCreator{
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> categoryColumn = DynamicReports.col.column("Category", "Category", DataTypes.stringType());
+            categoryColumn.setStyle(fontStyle);
+            categoryColumn.setHorizontalTextAlignment(HorizontalTextAlignment.CENTER);
             TextColumnBuilder<Integer> categoryCountColumn = DynamicReports.col.column("Count", "categoryCount", DataTypes.integerType());
 
             report.setTemplate(Templates.reportTemplate)
@@ -208,11 +209,9 @@ public class ReportsCreator{
                             "FROM passenger\n" +
                             "GROUP BY Category", connection);
             try {
-                //report.show(false);
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-//                report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
-                report.toHtml(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
+                report.toPdf(new FileOutputStream(relativePath+"\\CategoryReport_" + dateTime + ".pdf"));
                 lastCategoryReportPath = relativePath + "\\CategoryReport_" + dateTime + ".pdf";
                 saveLastReportsPath("CategoryReport");
                 return relativePath + "\\CategoryReport_" + dateTime + ".pdf";
@@ -227,18 +226,14 @@ public class ReportsCreator{
 
     public void saveLastReportsPath(String reportName){
         String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-        System.out.println("SAVE " + relativePath);
         LastReportsPath p;
         if(new File(relativePath + "/reports_path.obj").exists()) {
-            System.out.println("EXIST " + new File(relativePath + "/reports_path.obj").exists());
             try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
             {
                 p=(LastReportsPath)ois.readObject();
-                System.out.println("File 1");
             }
             catch(Exception ex){
                 System.out.println(ex.getMessage());
-                System.out.println("KEK");
                 p = new LastReportsPath();
             }
         }
@@ -264,7 +259,6 @@ public class ReportsCreator{
     }
     public String getLastReportsPath(String reportName){
         String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-        System.out.println("GET " + relativePath);
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
         {
             LastReportsPath p = (LastReportsPath)ois.readObject();

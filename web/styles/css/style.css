@@ -188,7 +188,7 @@ main {
 .flex-item {
   text-align:center;
   font-size: 16px;
-  padding: 10px;
+  padding: 20px;
   height: max-content;
   margin: 40px;
   border: 2px #8AD9DF dashed;
