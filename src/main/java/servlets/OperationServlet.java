@@ -1,7 +1,6 @@
 package servlets;
 
-import entities.FormDataParser;
-import entities.IEntity;
+import entities.*;
 import report.ReportsCreator;
 import utils.TicketOfficeDao;
 
@@ -14,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "MyServlet")
@@ -83,6 +84,41 @@ public class OperationServlet extends HttpServlet {
                 reportsCreator.setRequest(request);
                 System.out.println("Statistics");
                 request.setAttribute("statistics", true);
+                path = "index.jsp";
+                break;
+            case "Search":
+                    String table = request.getParameter("table");
+                System.out.println(table);
+                list = null;
+                switch (table){
+                    case "vehicle":
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("selType"));
+                        break;
+                    case "journary":
+                        String dateTime = request.getParameter("dateAndTimeOfArrival1");
+                        if (!dateTime.equals("")){
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            dateTime = request.getParameter("dateAndTimeOfArrival1").replace('T',' ')+":00.0";
+                        }
+                        System.out.println("dateTime=" + dateTime);
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("departurePoint1"), dateTime);
+                        break;
+                    case "receipt":
+                        System.out.println("request.getParameter(\"passenger\")"+request.getParameter("passenger"));
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("passenger"));
+                        break;
+                    case "ticket":
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("selCategory"));
+                        break;
+                    case "passenger":
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("selCat"));
+                        break;
+                }
+                request.setAttribute("entities", list);
+                request.setAttribute("table", request.getParameter("table"));
+                entity = list.get(0);
+                request.setAttribute(table, true);
+                request.setAttribute("columnsName", entity.recieveColumnsName());
                 path = "index.jsp";
                 break;
         }

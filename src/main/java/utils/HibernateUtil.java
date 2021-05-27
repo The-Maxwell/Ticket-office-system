@@ -21,7 +21,7 @@ public class HibernateUtil {
                         "jdbc:mysql://localhost:3306/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false" )
                 .setProperty( "hibernate.connection.username", "root" )
                 .setProperty( "hibernate.connection.password", "root" )
-                .setProperty( "hibernate.connection.pool_size", "1" )
+                .setProperty( "hibernate.connection.pool_size", "2" )
                 .setProperty( "hibernate.connection.autocommit", "false" )
                 .setProperty( "hibernate.cache.provider_class", "org.hibernate.cache.NoCacheProvider" )
                 .setProperty( "hibernate.cache.use_second_level_cache", "false" )

@@ -130,7 +130,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=datetime-local]:f
   outline-offset: 0;
 }
 
-.submit input[type=button], .submit input[type=submit], .submit input[type=reset], .add-new-item input[type=button], .search input[type=button]{
+.submit input[type=button], .submit input[type=submit], .submit input[type=reset], .add-new-item input[type=button], .search input[type=submit]{
   padding: 0 18px;
   height: 29px;
   font-size: 12px;
@@ -155,13 +155,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=datetime-local]:f
 .submit input[type=reset]{
   margin-left: 3%;
 }
-.submit input[type=button]:active, .submit input[type=reset]:active, .submit input[type=submit]:active, .add-new-item input[type=button]:active, .search input[type=button]:active {
+.submit input[type=button]:active, .submit input[type=reset]:active, .submit input[type=submit]:active, .add-new-item input[type=button]:active, .search input[type=submit]:active {
   background: #cde5ef;
   border-color: #9eb9c2 #b3c0c8 #b4ccce;
   -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
-.submit input[type=button]:hover, .submit input[type=reset]:hover, .submit input[type=submit]:hover, .add-new-item input[type=button]:hover, .search input[type=button]:hover {
+.submit input[type=button]:hover, .submit input[type=reset]:hover, .submit input[type=submit]:hover, .add-new-item input[type=button]:hover, .search input[type=submit]:hover {
   background: #64D9E1;
   color: #ECFCFD;
 }

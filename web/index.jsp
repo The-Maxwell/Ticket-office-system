@@ -43,80 +43,124 @@
 
         <c:if test="${requestScope.columnsName != null}">
 
-            <c:if test="${requestScope.vehicle == true}">
-
             <div class="search">
-                <form action="" method="post">
-                    Пошук транспорту за його типом:
-                    <select name="selType">
-                        <option value="bus" >Автобус</option>
-                        <option value="train">Потяг</option>
-                        <option value="airplane">Літак</option>
-                    </select>
-                    <input type="button" value="Пошук" id="search1">
-                </form>
-                    </div>
-
-                </c:if>
-
+                <form action="/work_with_db" method="post">
+            <c:if test="${requestScope.vehicle == true}">
+                Пошук транспорту за його типом:
+                <select name="selType">
+                    <option value="bus">Автобус</option>
+                    <option value="train">Потяг</option>
+                    <option value="airplane">Літак</option>
+                </select>
+            </c:if>
             <c:if test="${requestScope.journary == true}">
-                <div class="search">
-                    <form action="" method="post">
-                    Пошук рейсу за місцем відправки:
-                    <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">
-                    та датою відправлення:
-                    <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">
-                    <input type="button" value="Пошук" id="search2">
-                    </form>
-                        </div>
+                Пошук рейсу за місцем відправки:
+                <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">
+                та датою відправлення:
+                <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">
             </c:if>
-
             <c:if test="${requestScope.ticket == true}">
-
-                    <div class="search">
-                        <form action="" method="post">
-                            Пошук по категорії квитка:
-                            <select name="selCategory">
-                                <option value="econom">Економ</option>
-                                <option value="medium">Бізнес</option>
-                                <option value="luxe">Люкс</option>
-
-                            </select>
-                            <input type="button" value="Пошук" id="search3">
-                        </form>
-                            </div>
+                Пошук по категорії квитка:
+                <select name="selCategory">
+                    <option value="econom">Економ</option>
+                    <option value="medium">Бізнес</option>
+                    <option value="luxe">Люкс</option>
+                </select>
             </c:if>
-
             <c:if test="${requestScope.receipt == true}">
-                        <div class="search">
-                            <form action="" method="post">
-                            Пошук чеків за пасажиром:
-                            <input type="number" name="pessenger" value="" placeholder="Номер пасажира">
-                            <input type="button" value="Пошук" id="search4">
-                            </form>
-                                </div>
-
+                Пошук чеків за пасажиром:
+                <input type="number" name="passenger" value="" placeholder="Номер пасажира">
             </c:if>
-
             <c:if test="${requestScope.passenger == true}">
-                            <div class="search">
-                                    <form action="" method="post">
-                                        Пошук пасажирів за пільгами:
-                                        <select name="selCat">
-
-                                            <option value="Дитина до 4 років" >Дитина до 4 років</option>
-                                            <option value="Школяр" >Школяр</option>
-                                            <option value="Студент" >Студент</option>
-                                            <option value="Без пільг" >Без пільг</option>
-                                            <option value="Пенсіонер" >Пенсіонер</option>
-                                            <option value="Людина з інвалідністю" >Людина з інвалідністю</option>
-
-                                        </select>
-                                        <input type="button" value="Пошук" id="search5">
-                                    </form>
-                                    </div>
-
+                Пошук пасажирів за пільгами:
+                <select name="selCat">
+                    <option value="Дитина до 4 років" >Дитина до 4 років</option>
+                    <option value="Школяр" >Школяр</option>
+                    <option value="Студент" >Студент</option>
+                    <option value="Без пільг" >Без пільг</option>
+                    <option value="Пенсіонер" >Пенсіонер</option>
+                    <option value="Людина з інвалідністю" >Людина з інвалідністю</option>
+                </select>
             </c:if>
+                    <input type="hidden" name="act" value="Search">
+                    <input type="hidden" name="table" value="<%=request.getParameter("table")%>">
+                    <input type="submit" value="Пошук" id="search1">
+                </form>
+            </div>
+
+<%--            <c:if test="${requestScope.vehicle == true}">--%>
+
+<%--            <div class="search">--%>
+<%--                <form action="" method="post">--%>
+<%--                    Пошук транспорту за його типом:--%>
+<%--                    <select name="selType">--%>
+<%--                        <option value="bus" >Автобус</option>--%>
+<%--                        <option value="train">Потяг</option>--%>
+<%--                        <option value="airplane">Літак</option>--%>
+<%--                    </select>--%>
+<%--                    <input type="button" value="Пошук" id="search1">--%>
+<%--                </form>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+
+<%--            <c:if test="${requestScope.journary == true}">--%>
+<%--                <div class="search">--%>
+<%--                    <form action="" method="post">--%>
+<%--                    Пошук рейсу за місцем відправки:--%>
+<%--                    <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">--%>
+<%--                    та датою відправлення:--%>
+<%--                    <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">--%>
+<%--                    <input type="button" value="Пошук" id="search2">--%>
+<%--                    </form>--%>
+<%--                        </div>--%>
+<%--            </c:if>--%>
+
+<%--            <c:if test="${requestScope.ticket == true}">--%>
+
+<%--                    <div class="search">--%>
+<%--                        <form action="" method="post">--%>
+<%--                            Пошук по категорії квитка:--%>
+<%--                            <select name="selCategory">--%>
+<%--                                <option value="econom">Економ</option>--%>
+<%--                                <option value="medium">Бізнес</option>--%>
+<%--                                <option value="luxe">Люкс</option>--%>
+
+<%--                            </select>--%>
+<%--                            <input type="button" value="Пошук" id="search3">--%>
+<%--                        </form>--%>
+<%--                            </div>--%>
+<%--            </c:if>--%>
+
+<%--            <c:if test="${requestScope.receipt == true}">--%>
+<%--                        <div class="search">--%>
+<%--                            <form action="" method="post">--%>
+<%--                            Пошук чеків за пасажиром:--%>
+<%--                            <input type="number" name="pessenger" value="" placeholder="Номер пасажира">--%>
+<%--                            <input type="button" value="Пошук" id="search4">--%>
+<%--                            </form>--%>
+<%--                                </div>--%>
+
+<%--            </c:if>--%>
+
+<%--            <c:if test="${requestScope.passenger == true}">--%>
+<%--                            <div class="search">--%>
+<%--                                    <form action="" method="post">--%>
+<%--                                        Пошук пасажирів за пільгами:--%>
+<%--                                        <select name="selCat">--%>
+
+<%--                                            <option value="Дитина до 4 років" >Дитина до 4 років</option>--%>
+<%--                                            <option value="Школяр" >Школяр</option>--%>
+<%--                                            <option value="Студент" >Студент</option>--%>
+<%--                                            <option value="Без пільг" >Без пільг</option>--%>
+<%--                                            <option value="Пенсіонер" >Пенсіонер</option>--%>
+<%--                                            <option value="Людина з інвалідністю" >Людина з інвалідністю</option>--%>
+
+<%--                                        </select>--%>
+<%--                                        <input type="button" value="Пошук" id="search5">--%>
+<%--                                    </form>--%>
+<%--                                    </div>--%>
+
+<%--            </c:if>--%>
 
             <div class="add-new-item"><input type="button" value="Додати" id="add"></div>
 
