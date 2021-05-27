@@ -43,6 +43,14 @@ body {
   width: 1080px;
   text-align: center;
 }
+footer{
+  border-top: 1px #361b36 solid;
+  padding: 1% 50% 1% 50%;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bolder;
+  margin-top: 25px;
+}
 
 .nav {
   height: 48px;
@@ -153,12 +161,17 @@ body {
 }
 
 /*mystyles*/
+.table-wrap{
+  width: 1300px;
+  height: 600px;
+  overflow: auto;
+}
 table {
   width: 1000px;
   border: 1px solid green;
   margin: 0 auto;
   border-spacing: 3px;
-  margin-bottom: 100px;
+  margin-bottom: 5px;
   font-size: 16px;
 }
 th, td {
@@ -174,6 +187,8 @@ th, td {
 }
 main {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
  .reports {
@@ -181,7 +196,7 @@ main {
    border:1px #ccc solid;
    flex-wrap: wrap;
    width: 1200px;
-   height: 400px;
+   height: 700px;
    justify-content: center;
    overflow: auto;
  }
@@ -200,4 +215,12 @@ a img {
 }
 .statistics input[type=button]{
   margin-top: 5px;
+}
+.search{
+  padding: 20px 50px 20px 50px;
+  border: 2px #8AD9DF dashed;
+  font-size: 14px;
+}
+.add-new-item{
+  padding: 10px;
 }

@@ -45,22 +45,22 @@
 
             <c:if test="${requestScope.vehicle == true}">
 
-            <div class="search_vehicle">
+            <div class="search">
                 <form action="" method="post">
                     Пошук транспорту за його типом:
-                    <select  name="selType">
+                    <select name="selType">
                         <option value="bus" >Автобус</option>
                         <option value="train">Потяг</option>
                         <option value="airplane">Літак</option>
                     </select>
                     <input type="button" value="Пошук" id="search1">
                 </form>
-                    <%--</div> --%>
+                    </div>
 
                 </c:if>
 
             <c:if test="${requestScope.journary == true}">
-                <div class="search_journary">
+                <div class="search">
                     <form action="" method="post">
                     Пошук рейсу за місцем відправки:
                     <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">
@@ -68,12 +68,12 @@
                     <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">
                     <input type="button" value="Пошук" id="search2">
                     </form>
-                        <%--</div> --%>
+                        </div>
             </c:if>
 
             <c:if test="${requestScope.ticket == true}">
 
-                    <div class="search_ticket">
+                    <div class="search">
                         <form action="" method="post">
                             Пошук по категорії квитка:
                             <select name="selCategory">
@@ -84,22 +84,22 @@
                             </select>
                             <input type="button" value="Пошук" id="search3">
                         </form>
-                            <%--</div> --%>
+                            </div>
             </c:if>
 
             <c:if test="${requestScope.receipt == true}">
-                        <div class="search_receipt">
+                        <div class="search">
                             <form action="" method="post">
                             Пошук чеків за пасажиром:
                             <input type="number" name="pessenger" value="" placeholder="Номер пасажира">
                             <input type="button" value="Пошук" id="search4">
                             </form>
-                                <%--</div> --%>
+                                </div>
 
             </c:if>
 
             <c:if test="${requestScope.passenger == true}">
-                            <div class="search_passenger">
+                            <div class="search">
                                     <form action="" method="post">
                                         Пошук пасажирів за пільгами:
                                         <select name="selCat">
@@ -114,13 +114,11 @@
                                         </select>
                                         <input type="button" value="Пошук" id="search5">
                                     </form>
-
-                                    <%--</div> --%>
+                                    </div>
 
             </c:if>
 
-
-            <input type="button" value="Додати" id="add">
+            <div class="add-new-item"><input type="button" value="Додати" id="add"></div>
 
             <c:set var="t" scope="session" value="${requestScope.table}"/>
             <script>
@@ -138,73 +136,75 @@
                 var buttonAdd = document.getElementById("add");
                 buttonAdd.onclick = onAddButton;
             </script>
-            <table>
-                <thead>
-                <tr>
-                    <c:forEach var="colName" items="${requestScope.columnsName}">
-                        <th>${colName}</th>
-                    </c:forEach>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="entity" items="${requestScope.entities}">
+            <div class="table-wrap">
+                <table>
+                    <thead>
                     <tr>
-                        <c:set var="noEdit" scope="session" value="${true}"/>
-                        <c:forEach var="column" items="${entity.recieveEntityInfo()}">
-                            <c:if test="${noEdit == false}">
-                                <td contenteditable="true">${column}</td>
-                            </c:if>
-                            <c:if test="${noEdit == true}">
-                                <c:set var="noEdit" scope="session" value="${false}"/>
-                                <td>${column}</td>
-                            </c:if>
+                        <c:forEach var="colName" items="${requestScope.columnsName}">
+                            <th>${colName}</th>
                         </c:forEach>
-                        <td><input type="button" class="delete" value="Видалити"/></td>
-                        <td><input type="button" class="edit" value="Редагувати"/></td>
                     </tr>
-                </c:forEach>
-                </tbody>
-                <script>
-                    function onDelete({target: el}) {
-                        var el2 = el.parentNode;
-                        var el3 = el2.parentElement;
-                        let formData = new FormData();
-                        formData.set('entityString', el3.children[0].textContent);
-                        var table = document.getElementsByClassName("active")[0];
-                        formData.append('table', table.getAttribute("title"));
-                        formData.append('act', 'Delete');
-                        var req = new XMLHttpRequest();
-                        req.open("POST", "http://localhost:8082/work_with_db");
-                        req.send(formData);
-                    }
-
-                    function onEdit({target: el}) {
-                        var el2 = el.parentNode;
-                        var el3 = el2.parentElement;
-                        var entityString = "";
-                        for (var i = 0; i < el3.children.length; i++) {
-                            entityString += el3.children[i].textContent;
-                            if (i + 1 != el3.children.length) entityString += ",";
+                    </thead>
+                    <tbody>
+                    <c:forEach var="entity" items="${requestScope.entities}">
+                        <tr>
+                            <c:set var="noEdit" scope="session" value="${true}"/>
+                            <c:forEach var="column" items="${entity.recieveEntityInfo()}">
+                                <c:if test="${noEdit == false}">
+                                    <td contenteditable="true">${column}</td>
+                                </c:if>
+                                <c:if test="${noEdit == true}">
+                                    <c:set var="noEdit" scope="session" value="${false}"/>
+                                    <td>${column}</td>
+                                </c:if>
+                            </c:forEach>
+                            <td><input type="button" class="delete" value="Видалити"/></td>
+                            <td><input type="button" class="edit" value="Редагувати"/></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                    <script>
+                        function onDelete({target: el}) {
+                            var el2 = el.parentNode;
+                            var el3 = el2.parentElement;
+                            let formData = new FormData();
+                            formData.set('entityString', el3.children[0].textContent);
+                            var table = document.getElementsByClassName("active")[0];
+                            formData.append('table', table.getAttribute("title"));
+                            formData.append('act', 'Delete');
+                            var req = new XMLHttpRequest();
+                            req.open("POST", "http://localhost:8082/work_with_db");
+                            req.send(formData);
                         }
-                        console.log(entityString);
-                        let formData = new FormData();
-                        formData.append('entityString', entityString);
-                        var table = document.getElementsByClassName("active")[0];
-                        formData.append('table', table.getAttribute("title"));
-                        formData.append('act', 'Update');
-                        var req = new XMLHttpRequest();
-                        req.open("POST", "http://localhost:8082/work_with_db");
-                        req.send(formData);
-                    }
 
-                    var deleteElems = document.getElementsByClassName("delete");
-                    var editElems = document.getElementsByClassName("edit");
-                    for (var i = 0; i < deleteElems.length; i++) {
-                        deleteElems[i].onclick = onDelete;
-                        editElems[i].onclick = onEdit;
-                    }
-                </script>
-            </table>
+                        function onEdit({target: el}) {
+                            var el2 = el.parentNode;
+                            var el3 = el2.parentElement;
+                            var entityString = "";
+                            for (var i = 0; i < el3.children.length; i++) {
+                                entityString += el3.children[i].textContent;
+                                if (i + 1 != el3.children.length) entityString += ",";
+                            }
+                            console.log(entityString);
+                            let formData = new FormData();
+                            formData.append('entityString', entityString);
+                            var table = document.getElementsByClassName("active")[0];
+                            formData.append('table', table.getAttribute("title"));
+                            formData.append('act', 'Update');
+                            var req = new XMLHttpRequest();
+                            req.open("POST", "http://localhost:8082/work_with_db");
+                            req.send(formData);
+                        }
+
+                        var deleteElems = document.getElementsByClassName("delete");
+                        var editElems = document.getElementsByClassName("edit");
+                        for (var i = 0; i < deleteElems.length; i++) {
+                            deleteElems[i].onclick = onDelete;
+                            editElems[i].onclick = onEdit;
+                        }
+                    </script>
+                </table>
+            </div>
         </c:if>
 
         <c:if test="${requestScope.statistics == true}">
@@ -256,6 +256,9 @@
                 </div>
             </div>
         </c:if>
+        <footer>
+            Copyright © 2021. Pryshchepa/Soloveu</p>
+        </footer>
     </main>
 </div>
 <section class="containerAddVehicle">
@@ -389,8 +392,9 @@
     <div class="add">
         <h1>Відправка звіту на електрону адресу</h1>
         <form method="post" action="/statistics">
-            <p><input type="email" name="email" value="" placeholder="Email"></p>
-            <p><textarea name="message" placeholder="Повідомлення в Email. Не більше 500 символів." maxlength="500"></textarea></p>
+            <p><input type="email" name="email"  placeholder="Email"></p>
+            <p><input type="text" name="header" placeholder="Тема"></p>
+            <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
             <p><input type="hidden" name="act" value="Mail"></p>
             <p><input type="hidden" name="sendReport" id="sendReport"></p>
             <p class="submit"><input type="submit" name="add" value="Відправити">
@@ -422,5 +426,6 @@
         }
     </script>
 </section>
+
 </body>
 </html>

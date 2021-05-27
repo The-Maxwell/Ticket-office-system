@@ -83,8 +83,6 @@ public class OperationServlet extends HttpServlet {
                 reportsCreator.setRequest(request);
                 System.out.println("Statistics");
                 request.setAttribute("statistics", true);
-                //String [] arr = reportsCreator.createReports();
-                //request.setAttribute("reportsName", arr);
                 path = "index.jsp";
                 break;
         }
@@ -94,12 +92,12 @@ public class OperationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = null;
-        String path = null;
-        boolean result = false;
-        String action = req.getParameter("act");
-        resp.setContentType("text/html;charset=UTF-8");
-        System.out.println("Action= " +action);
+//        RequestDispatcher requestDispatcher = null;
+//        String path = null;
+//        boolean result = false;
+//        String action = req.getParameter("act");
+//        resp.setContentType("text/html;charset=UTF-8");
+//        System.out.println("Action= " +action);
         doGet(req, resp);
     }
 }

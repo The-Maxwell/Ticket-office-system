@@ -39,11 +39,16 @@ public class PDFViewerServlet extends HttpServlet {
             case "Mail":
                 String sendReport = request.getParameter("sendReport");
                 String email = request.getParameter("email");
+                String header = request.getParameter("header");
                 String message = request.getParameter("message");
                 String pathToReport = reportsCreator.getLastReportsPath(sendReport);
+                //Додати перевірки + дефолтні значення
+                if(email.trim().equals("")) System.out.println("email=null");
+                if(header.trim().equals("")) System.out.println("header=null");
+                if(message.trim().equals("")) System.out.println("message=null");
                 int index = pathToReport.indexOf(sendReport);
                 String filename = pathToReport.substring(index);
-                boolean result = EmailService.sendReportToEmail(email, message, pathToReport, filename);
+                boolean result = EmailService.sendReportToEmail(email, header, message, pathToReport, filename);
 //                System.out.println("Result="+result);
                 requestDispatcher = request.getRequestDispatcher("/work_with_db?act=Statistics");
                 requestDispatcher.forward(request, response);

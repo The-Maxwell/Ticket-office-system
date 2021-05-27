@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class EmailService {
 
-    public static boolean sendReportToEmail(String to, String textMessage, String pathToReport, String filename) {
+    public static boolean sendReportToEmail(String to, String header, String textMessage, String pathToReport, String filename) {
 
         final String SENDER_EMAIL_ADDRESS = "ticketoffice.reports.sender@gmail.com";
         final String SENDER_EMAIL_PASSWORD = "reP_40ku_Csdr";
@@ -46,7 +46,7 @@ public class EmailService {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("Відправка звіту");
+            message.setSubject(header);
 
             // Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
