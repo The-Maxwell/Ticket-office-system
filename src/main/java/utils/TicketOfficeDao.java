@@ -48,18 +48,17 @@ public class TicketOfficeDao {
         return result;
     }
 
-    public boolean insertEntity(String entityString, String table) {
-        boolean result = false;
+    public String insertEntity(String entityString, String table) {
+        String result = null;
         entityString = entityString.trim();
         if (entityString == null) {
-            final JDialog dialog = new JDialog();
-            return result;
+            return "Error. Empty input!";
         }
         int fieldCount = getEntityFieldCount(table);
         String[] arrEntityString = entityString.split(",");
 
         if (arrEntityString == null || arrEntityString.length != fieldCount) {
-            return result;
+            return "Error. Empty input!";
         }
 
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -67,10 +66,9 @@ public class TicketOfficeDao {
             session.beginTransaction();
             session.save(getNeededEntity(arrEntityString, session, table));
             session.getTransaction().commit();
-            result = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
-            e.printStackTrace();
+            result = e.getMessage();
         } finally {
             session.close();
             return result;
@@ -151,16 +149,16 @@ public class TicketOfficeDao {
                 return new VehicleEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6]);
             case "journary":
                 int idVehicle = Integer.parseInt(arrEntityString[5]);
-                return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], session.load(VehicleEntity.class, idVehicle));
+                return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(VehicleEntity.class, idVehicle));
             case "receipt":
                 int idPassenger = Integer.parseInt(arrEntityString[4]);
-                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(PassengerEntity.class, idPassenger));
+                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], session.load(PassengerEntity.class, idPassenger));
             case "ticket":
                 int idReceipt = Integer.parseInt(arrEntityString[4]);
                 int idJournary = Integer.parseInt(arrEntityString[5]);
-                return new TicketEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(ReceiptEntity.class, idReceipt), session.load(JournaryEntity.class, idJournary));
+                return new TicketEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], session.load(ReceiptEntity.class, idReceipt), session.load(JournaryEntity.class, idJournary));
             case "passenger":
-                return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4]);
+                return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3]);
             default:
                 return null;
         }

@@ -336,6 +336,7 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "/work_with_db", true);
                 xhr.send(form);
+                onReset(event);
             }
 
             function onReset(event) {

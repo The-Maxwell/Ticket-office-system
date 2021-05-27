@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "MyServlet")
@@ -48,9 +47,8 @@ public class OperationServlet extends HttpServlet {
                 path = "index.jsp";
                 break;
             case "Add":
-                FormDataParser.getStringEntity(request.getParameter("vehicleCode"),request.getParameter("vehicleType"),request.getParameter("numberOfSeats"),
-                        request.getParameter("numberOfEconomyClassSeats"),request.getParameter("numberOfMediumClassSeats"),request.getParameter("numberOfLuxuryClassSeats"),
-                        request.getParameter("vechileCompany"));
+                String entityString = FormIEntityDataParser.getStringEntity(request);
+
                 System.out.println("Table= " + request.getParameter("table"));
                 //result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if(!result){

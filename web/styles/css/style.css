@@ -44,12 +44,12 @@ body {
   text-align: center;
 }
 footer{
-  border-top: 1px #361b36 solid;
-  padding: 1% 50% 1% 50%;
+  border: 1px #361b36 solid;
   text-align: center;
   font-size: 12px;
   font-weight: bolder;
   margin-top: 25px;
+  padding: 5px 15px 5px 15px;
 }
 
 .nav {
