@@ -1,6 +1,7 @@
 package entities;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 
 public class FormIEntityDataParser {
     public static String getStringEntity(HttpServletRequest request){
@@ -11,10 +12,10 @@ public class FormIEntityDataParser {
                         request.getParameter("numberOfEconomyClassSeats"),request.getParameter("numberOfMediumClassSeats"),request.getParameter("numberOfLuxuryClassSeats"),
                         request.getParameter("vechileCompany"));
             case "journary":
-                return getStringJoin(request.getParameter("departurePoint"), request.getParameter("destination"), request.getParameter("dateAndTimeOfArrival"),
-                        request.getParameter("dateAndTimeOfDeparture"), request.getParameter("vechileId"));
+                return getStringJoin(request.getParameter("departurePoint"), request.getParameter("destination"), request.getParameter("dateAndTimeOfArrival").replace('T',' ')+":00.0",
+                        request.getParameter("dateAndTimeOfDeparture").replace('T',' ')+":00.0", request.getParameter("vechileId"));
             case "receipt":
-                return getStringJoin(request.getParameter("dataAndTimeOfSale"), request.getParameter("dataAndTimeOfBooking"), request.getParameter("totalPrice"),
+                return getStringJoin(request.getParameter("dataAndTimeOfSale").replace('T',' ')+":00.0", request.getParameter("dataAndTimeOfBooking").replace('T',' ')+":00.0", request.getParameter("totalPrice"),
                         request.getParameter("passengerId"));
             case "ticket":
                 return getStringJoin(request.getParameter("category"), request.getParameter("cost"), request.getParameter("sequenceNumber"),

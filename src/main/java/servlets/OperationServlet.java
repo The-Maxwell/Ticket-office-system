@@ -32,7 +32,7 @@ public class OperationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = null;
         String path = null;
-        boolean result = false;
+        String result = null;
         String action = request.getParameter("act");
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Action= " + action);
@@ -48,21 +48,19 @@ public class OperationServlet extends HttpServlet {
                 break;
             case "Add":
                 String entityString = FormIEntityDataParser.getStringEntity(request);
-
                 System.out.println("Table= " + request.getParameter("table"));
-                //result = ticketOfficeDao.insertEntity(request.getParameter("entityString"), request.getParameter("table"));
-                if(!result){
+                result = ticketOfficeDao.insertEntity(entityString, request.getParameter("table"));
+                if(result != null){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Insert Error</h2>");
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
-                System.out.println(path);
                 break;
             case "Delete":
                 System.out.println(request.getParameter("entityString") + " " + request.getParameter("table"));
-//                result = ticketOfficeDao.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
-                if(!result){
+                result = ticketOfficeDao.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
+                if(result != null){
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Delete Error</h2>");
                     return;
@@ -70,23 +68,32 @@ public class OperationServlet extends HttpServlet {
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Update":
-                //result = ticketOfficeDao.updateEntity(request.getParameter("entityString"), request.getParameter("table"));
-                if(!result){
+                entityString = request.getParameter("entityString");
+                System.out.println("Table= " + request.getParameter("table"));
+                System.out.println("entityString="+entityString);
+                result = ticketOfficeDao.updateEntity(entityString, request.getParameter("table"));
+                if (result != null) {
                     PrintWriter printWriter = response.getWriter();
                     printWriter.println("<h2>Update Error</h2>");
                     return;
                 }
-                path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+                //path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+                list = ticketOfficeDao.selectEntities(request.getParameter("table"));
+                request.setAttribute("entities", list);
+                request.setAttribute("table", request.getParameter("table"));
+                entity = list.get(0);
+                request.setAttribute(request.getParameter("table"), true);
+                request.setAttribute("columnsName", entity.recieveColumnsName());
+                path = "index.jsp";
+                System.out.println(path);
                 break;
             case "Statistics":
                 reportsCreator.setRequest(request);
-                System.out.println("Statistics");
                 request.setAttribute("statistics", true);
                 path = "index.jsp";
                 break;
             case "Search":
-                    String table = request.getParameter("table");
-                System.out.println(table);
+                String table = request.getParameter("table");
                 list = null;
                 switch (table){
                     case "vehicle":
@@ -95,7 +102,6 @@ public class OperationServlet extends HttpServlet {
                     case "journary":
                         String dateTime = request.getParameter("dateAndTimeOfArrival1");
                         if (!dateTime.equals("")){
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             dateTime = request.getParameter("dateAndTimeOfArrival1").replace('T',' ')+":00.0";
                         }
                         System.out.println("dateTime=" + dateTime);

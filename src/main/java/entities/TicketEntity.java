@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ public class TicketEntity implements IEntity {
     private JournaryEntity journaryByJournaryId;
 
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "Ticket_number", nullable = false)
     public int getTicketNumber() {
         return ticketNumber;
@@ -113,6 +117,18 @@ public class TicketEntity implements IEntity {
         return row;
     }
     public TicketEntity(){}
+
+    public TicketEntity(String category, String cost, String sequenceNumber, ReceiptEntity receiptByRecieptId, JournaryEntity journaryByJournaryId) throws Exception {
+        this();
+        if (!category.equals("econom") && !category.equals("medium") && !category.equals("luxe")) throw new Exception("vehicleType can take only following values: econom, medium, luxe");
+        this.category = category;
+        this.cost = BigDecimal.valueOf(Double.parseDouble(cost));;
+        this.sequenceNumber = Integer.parseInt(sequenceNumber);
+        if(receiptByRecieptId==null) throw new Exception("Invalid Reciept_id!");
+        this.receiptByRecieptId = receiptByRecieptId;
+        if(journaryByJournaryId==null) throw new Exception("Invalid Journary_id!");
+        this.journaryByJournaryId = journaryByJournaryId;
+    }
 
     public TicketEntity(String ticketNumber, String category, String cost, String sequenceNumber, ReceiptEntity receiptByRecieptId, JournaryEntity journaryByJournaryId) throws Exception {
         this.ticketNumber = Integer.parseInt(ticketNumber);

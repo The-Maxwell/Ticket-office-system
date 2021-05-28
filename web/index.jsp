@@ -216,9 +216,19 @@
                             var table = document.getElementsByClassName("active")[0];
                             formData.append('table', table.getAttribute("title"));
                             formData.append('act', 'Delete');
-                            var req = new XMLHttpRequest();
-                            req.open("POST", "http://localhost:8082/work_with_db");
-                            req.send(formData);
+                            var request = new XMLHttpRequest();
+                            request.open("POST", "http://localhost:8082/work_with_db");
+                            request.onreadystatechange = function () {
+                                if (request.readyState == 4) {
+                                    var status = request.status;
+                                    if (status == 200){
+                                        location.reload();
+                                    } else {
+                                        //document.write("Ответ сервера " + request.statusText);
+                                    }
+                                }
+                            };
+                            request.send(formData);
                         }
 
                         function onEdit({target: el}) {
@@ -227,19 +237,29 @@
                             var entityString = "";
                             for (var i = 0; i < el3.children.length; i++) {
                                 entityString += el3.children[i].textContent;
-                                if (i + 1 != el3.children.length) entityString += ",";
+                                if (i + 1 !== el3.children.length) entityString += ",";
                             }
+                            entityString = entityString.substr(0,entityString.length-2);
                             console.log(entityString);
                             let formData = new FormData();
                             formData.append('entityString', entityString);
                             var table = document.getElementsByClassName("active")[0];
                             formData.append('table', table.getAttribute("title"));
                             formData.append('act', 'Update');
-                            var req = new XMLHttpRequest();
-                            req.open("POST", "http://localhost:8082/work_with_db");
-                            req.send(formData);
+                            var request = new XMLHttpRequest();
+                            request.open("POST", "http://localhost:8082/work_with_db");
+                            request.onreadystatechange = function () {
+                                if (request.readyState == 4) {
+                                    var status = request.status;
+                                    if (status == 200){
+                                        location.reload();
+                                    } else {
+                                        //document.write("Ответ сервера " + request.statusText);
+                                    }
+                                }
+                            };
+                            request.send(formData);
                         }
-
                         var deleteElems = document.getElementsByClassName("delete");
                         var editElems = document.getElementsByClassName("edit");
                         for (var i = 0; i < deleteElems.length; i++) {
@@ -333,9 +353,19 @@
                 var table = document.getElementsByClassName("active")[0];
                 form.append('table', table.getAttribute("title"));
                 form.append('act', 'Add');
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/work_with_db", true);
-                xhr.send(form);
+                var request = new XMLHttpRequest();
+                request.open("POST", "/work_with_db");
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4) {
+                        var status = request.status;
+                        if (status == 200){
+                            location.reload();
+                        } else {
+                            //document.write("Ответ сервера " + request.statusText);
+                        }
+                    }
+                };
+                request.send(form);
                 onReset(event);
             }
 
@@ -376,7 +406,7 @@
         <form method="post" action="/work_with_db">
             <p><select id="category" name="category">
                 <option disabled selected>Категорія</option>
-                <option value="econom">Економний</option>
+                <option value="econom" selected>Економний</option>
                 <option value="medium">Середній</option>
                 <option value="luxe">Люкс</option>
             </select></p>

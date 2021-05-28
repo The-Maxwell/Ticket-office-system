@@ -165,6 +165,9 @@ footer{
   width: 1300px;
   height: 600px;
   overflow: auto;
+  padding: 15px;
+  border: 2px #8AD9DF dashed;
+
 }
 table {
   width: 1000px;

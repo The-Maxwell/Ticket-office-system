@@ -135,6 +135,17 @@ public class JournaryEntity implements IEntity{
 
     public JournaryEntity(){}
 
+    public JournaryEntity( String departurePoint, String destination, String dateAndTimeOfArrival, String dateAndTimeOfDeparture, VehicleEntity vehicleByVechileId) throws Exception {
+        this();
+        this.departurePoint = departurePoint;
+        this.destination = destination;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+        this.dateAndTimeOfArrival = new Timestamp(dateFormat.parse(dateAndTimeOfArrival).getTime());
+        this.dateAndTimeOfDeparture = new Timestamp(dateFormat.parse(dateAndTimeOfDeparture).getTime());;
+        if(vehicleByVechileId==null) throw new Exception("Invalid Vechile_id!");
+        this.vehicleByVechileId = vehicleByVechileId;
+    }
+
     public JournaryEntity(String journaryNumber, String departurePoint, String destination, String dateAndTimeOfArrival, String dateAndTimeOfDeparture, VehicleEntity vehicleByVechileId) throws Exception {
         this.journaryNumber = Integer.parseInt(journaryNumber);
         this.departurePoint = departurePoint;

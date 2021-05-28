@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +19,8 @@ public class PassengerEntity implements IEntity {
     private Collection<ReceiptEntity> receiptsByPassengerCode;
 
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "Passenger_code", nullable = false)
     public int getPassengerCode() {
         return passengerCode;
@@ -113,6 +117,16 @@ public class PassengerEntity implements IEntity {
         return row;
     }
     public PassengerEntity(){}
+
+    public PassengerEntity(String lastName, String firstName, String surname, String category) throws Exception {
+        this();
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.surname = surname;
+        if (!category.equals("Дитина до 4 років") && !category.equals("Школяр") && !category.equals("Студент")&& !category.equals("Без пільг")
+                && !category.equals("Пенсіонер") && !category.equals("Людина з інвалідністю")) throw new Exception("vehicleType can take only following values: Дитина до 4 років, \nШколяр, Студент, Без пільг, Пенсіонер, Людина з інвалідністю");
+        this.category = category;
+    }
 
     public PassengerEntity(String passengerCode, String lastName, String firstName, String surname, String category) throws Exception {
         this.passengerCode = Integer.parseInt(passengerCode);

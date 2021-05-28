@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -20,6 +22,8 @@ public class ReceiptEntity implements IEntity{
     private Collection<TicketEntity> ticketsByReceiptCode;
 
     @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "Receipt_code", nullable = false)
     public int getReceiptCode() {
         return receiptCode;
@@ -115,6 +119,16 @@ public class ReceiptEntity implements IEntity{
         return row;
     }
     public ReceiptEntity(){}
+
+    public ReceiptEntity( String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId) throws Exception {
+        this();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
+        this.dataAndTimeOfSale = new Timestamp(dateFormat.parse(dataAndTimeOfSale).getTime());
+        this.dataAndTimeOfBooking = new Timestamp(dateFormat.parse(dataAndTimeOfBooking).getTime());
+        this.totalPrice = BigDecimal.valueOf(Double.parseDouble(totalPrice));
+        if(passengerByPassengerId==null) throw new Exception("Invalid Passenger_id!");
+        this.passengerByPassengerId = passengerByPassengerId;
+    }
 
     public ReceiptEntity(String receiptCode, String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId) throws Exception {
         this.receiptCode = Integer.parseInt(receiptCode);
