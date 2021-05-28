@@ -501,6 +501,20 @@
         }
     </script>
 </section>
-
+<section class="result-log">
+    <div class="add">
+        <h1>Повідомлення</h1>
+        <p id="result-text">Все норм!</p>
+        <p class="submit"><input type="button" name="ok" onclick="onOK(event)" value="Ок">
+    </div>
+</section>
+<script>
+    function onOK(event) {
+        var element = document.getElementsByClassName("result-log")[0];
+        element.style.display = "none";
+        var elBlur = document.getElementsByClassName("wrapper")[0];
+        elBlur.style.filter = "blur(0px)";
+    }
+</script>
 </body>
 </html>

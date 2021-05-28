@@ -1,4 +1,4 @@
-.containerAddVehicle, .containerAddJournary, .containerAddTicket, .containerAddReceipt, .containerAddPassenger, .containerSendEmail {
+.containerAddVehicle, .containerAddJournary, .containerAddTicket, .containerAddReceipt, .containerAddPassenger, .containerSendEmail, .result-log{
   display: none;
   margin: 80px auto;
   width: 640px;
@@ -7,7 +7,9 @@
   left: 50%;
   transform: translate(-50%, 50%);
 }
-
+.result-log{
+  top: 10%;
+}
 .add {
   position: relative;
   margin: 0 auto;
