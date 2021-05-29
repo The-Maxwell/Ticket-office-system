@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @NamedQuery(name="SelectAllJournary", query="SELECT j FROM JournaryEntity j")
 @Entity
@@ -19,6 +20,7 @@ public class JournaryEntity implements IEntity{
     private Timestamp dateAndTimeOfArrival;
     private Timestamp dateAndTimeOfDeparture;
     private VehicleEntity vehicleByVechileId;
+    private int income;
     private Collection<TicketEntity> ticketsByJournaryNumber;
 
     @Id
@@ -73,6 +75,76 @@ public class JournaryEntity implements IEntity{
         this.dateAndTimeOfDeparture = dateAndTimeOfDeparture;
     }
 
+    @Basic
+    @Column(name = "Income", nullable = false)
+    public int getIncome() {
+        return income;
+    }
+
+    public void setIncome(int income) {
+        this.income = income;
+    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        JournaryEntity that = (JournaryEntity) o;
+//
+//        if (journaryNumber != that.journaryNumber)
+//            return false;
+//        if (departurePoint != null ? !departurePoint.equals(that.departurePoint) : that.departurePoint != null)
+//            return false;
+//        if (destination != null ? !destination.equals(that.destination) : that.destination != null) return false;
+//        if (dateAndTimeOfArrival != null ? !dateAndTimeOfArrival.equals(that.dateAndTimeOfArrival) : that.dateAndTimeOfArrival != null)
+//            return false;
+//        if (dateAndTimeOfDeparture != null ? !dateAndTimeOfDeparture.equals(that.dateAndTimeOfDeparture) : that.dateAndTimeOfDeparture != null)
+//            return false;
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = journaryNumber;
+//        result = 31 * result + (departurePoint != null ? departurePoint.hashCode() : 0);
+//        result = 31 * result + (destination != null ? destination.hashCode() : 0);
+//        result = 31 * result + (dateAndTimeOfArrival != null ? dateAndTimeOfArrival.hashCode() : 0);
+//        result = 31 * result + (dateAndTimeOfDeparture != null ? dateAndTimeOfDeparture.hashCode() : 0);
+//        return result;
+//    }
+//@Override
+//public boolean equals(Object o) {
+//    if (this == o) return true;
+//    if (o == null || getClass() != o.getClass()) return false;
+//
+//    JournaryEntity that = (JournaryEntity) o;
+//
+//    if (journaryNumber != that.journaryNumber)
+//        return false;
+//    if (departurePoint != null ? !departurePoint.equals(that.departurePoint) : that.departurePoint != null)
+//        return false;
+//    if (destination != null ? !destination.equals(that.destination) : that.destination != null) return false;
+//    if (dateAndTimeOfArrival != null ? !dateAndTimeOfArrival.equals(that.dateAndTimeOfArrival) : that.dateAndTimeOfArrival != null)
+//        return false;
+//    if (dateAndTimeOfDeparture != null ? !dateAndTimeOfDeparture.equals(that.dateAndTimeOfDeparture) : that.dateAndTimeOfDeparture != null)
+//        return false;
+//    if (income != that.income)
+//        return false;
+//    return true;
+//}
+
+//    @Override
+//    public int hashCode() {
+//        int result = journaryNumber;
+//        result = 31 * result + (departurePoint != null ? departurePoint.hashCode() : 0);
+//        result = 31 * result + (destination != null ? destination.hashCode() : 0);
+//        result = 31 * result + (dateAndTimeOfArrival != null ? dateAndTimeOfArrival.hashCode() : 0);
+//        result = 31 * result + (dateAndTimeOfDeparture != null ? dateAndTimeOfDeparture.hashCode() : 0);
+//        return result;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,8 +152,8 @@ public class JournaryEntity implements IEntity{
 
         JournaryEntity that = (JournaryEntity) o;
 
-        if (journaryNumber != that.journaryNumber)
-            return false;
+        if (journaryNumber != that.journaryNumber) return false;
+        if (income != that.income) return false;
         if (departurePoint != null ? !departurePoint.equals(that.departurePoint) : that.departurePoint != null)
             return false;
         if (destination != null ? !destination.equals(that.destination) : that.destination != null) return false;
@@ -89,7 +161,6 @@ public class JournaryEntity implements IEntity{
             return false;
         if (dateAndTimeOfDeparture != null ? !dateAndTimeOfDeparture.equals(that.dateAndTimeOfDeparture) : that.dateAndTimeOfDeparture != null)
             return false;
-
         return true;
     }
 
@@ -100,6 +171,7 @@ public class JournaryEntity implements IEntity{
         result = 31 * result + (destination != null ? destination.hashCode() : 0);
         result = 31 * result + (dateAndTimeOfArrival != null ? dateAndTimeOfArrival.hashCode() : 0);
         result = 31 * result + (dateAndTimeOfDeparture != null ? dateAndTimeOfDeparture.hashCode() : 0);
+        result = 31 * result + income;
         return result;
     }
 
@@ -130,6 +202,7 @@ public class JournaryEntity implements IEntity{
         row.add(String.valueOf(dateAndTimeOfArrival));
         row.add(String.valueOf(dateAndTimeOfDeparture));
         row.add(String.valueOf(vehicleByVechileId.getVehicleCode()));
+        row.add(String.valueOf(income));
         return row;
     }
 
@@ -146,7 +219,7 @@ public class JournaryEntity implements IEntity{
         this.vehicleByVechileId = vehicleByVechileId;
     }
 
-    public JournaryEntity(String journaryNumber, String departurePoint, String destination, String dateAndTimeOfArrival, String dateAndTimeOfDeparture, VehicleEntity vehicleByVechileId) throws Exception {
+    public JournaryEntity(String journaryNumber, String departurePoint, String destination, String dateAndTimeOfArrival, String dateAndTimeOfDeparture, VehicleEntity vehicleByVechileId, String income) throws Exception {
         this.journaryNumber = Integer.parseInt(journaryNumber);
         this.departurePoint = departurePoint;
         this.destination = destination;
@@ -155,15 +228,16 @@ public class JournaryEntity implements IEntity{
         this.dateAndTimeOfDeparture = new Timestamp(dateFormat.parse(dateAndTimeOfDeparture).getTime());;
         if(vehicleByVechileId==null) throw new Exception("Invalid Vechile_id!");
         this.vehicleByVechileId = vehicleByVechileId;
+        this.income = Integer.parseInt(income);
     }
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Номер рейсу","Місце відправки","Місце прибуття","Дата і час відправки","Дата і час прибуття","Номер транспортного засобу"};
+        return new String[]{"Номер рейсу","Місце відправки","Місце прибуття","Дата і час відправки","Дата і час прибуття","Номер транспортного засобу", "Дохід"};
     }
     @Override
     public String recieveStringInfo() {
         return String.valueOf(journaryNumber)+","+departurePoint+","+destination+","+String.valueOf(dateAndTimeOfArrival)+","+String.valueOf(dateAndTimeOfDeparture)
-                +","+String.valueOf(vehicleByVechileId.getVehicleCode());
+                +","+String.valueOf(vehicleByVechileId.getVehicleCode())+ "," +String.valueOf(income);
     }
 }

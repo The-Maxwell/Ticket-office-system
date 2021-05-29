@@ -45,122 +45,123 @@
 
             <div class="search">
                 <form action="/work_with_db" method="post">
-            <c:if test="${requestScope.vehicle == true}">
-                Пошук транспорту за його типом:
-                <select name="selType">
-                    <option value="bus">Автобус</option>
-                    <option value="train">Потяг</option>
-                    <option value="airplane">Літак</option>
-                </select>
-            </c:if>
-            <c:if test="${requestScope.journary == true}">
-                Пошук рейсу за місцем відправки:
-                <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">
-                та датою відправлення:
-                <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">
-            </c:if>
-            <c:if test="${requestScope.ticket == true}">
-                Пошук по категорії квитка:
-                <select name="selCategory">
-                    <option value="econom">Економ</option>
-                    <option value="medium">Бізнес</option>
-                    <option value="luxe">Люкс</option>
-                </select>
-            </c:if>
-            <c:if test="${requestScope.receipt == true}">
-                Пошук чеків за пасажиром:
-                <input type="number" name="passenger" value="" placeholder="Номер пасажира">
-            </c:if>
-            <c:if test="${requestScope.passenger == true}">
-                Пошук пасажирів за пільгами:
-                <select name="selCat">
-                    <option value="Дитина до 4 років" >Дитина до 4 років</option>
-                    <option value="Школяр" >Школяр</option>
-                    <option value="Студент" >Студент</option>
-                    <option value="Без пільг" >Без пільг</option>
-                    <option value="Пенсіонер" >Пенсіонер</option>
-                    <option value="Людина з інвалідністю" >Людина з інвалідністю</option>
-                </select>
-            </c:if>
+                    <c:if test="${requestScope.vehicle == true}">
+                        Пошук транспорту за його типом:
+                        <select name="selType">
+                            <option value="bus">Автобус</option>
+                            <option value="train">Потяг</option>
+                            <option value="airplane">Літак</option>
+                        </select>
+                    </c:if>
+                    <c:if test="${requestScope.journary == true}">
+                        Пошук рейсу за місцем відправки:
+                        <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">
+                        та датою відправлення:
+                        <input type="datetime-local" name="dateAndTimeOfArrival1" value=""
+                               placeholder="Дата і час відправки">
+                    </c:if>
+                    <c:if test="${requestScope.ticket == true}">
+                        Пошук по категорії квитка:
+                        <select name="selCategory">
+                            <option value="econom">Економ</option>
+                            <option value="medium">Бізнес</option>
+                            <option value="luxe">Люкс</option>
+                        </select>
+                    </c:if>
+                    <c:if test="${requestScope.receipt == true}">
+                        Пошук чеків за пасажиром:
+                        <input type="number" name="passenger" value="" placeholder="Номер пасажира">
+                    </c:if>
+                    <c:if test="${requestScope.passenger == true}">
+                        Пошук пасажирів за пільгами:
+                        <select name="selCat">
+                            <option value="Дитина до 4 років">Дитина до 4 років</option>
+                            <option value="Школяр">Школяр</option>
+                            <option value="Студент">Студент</option>
+                            <option value="Без пільг">Без пільг</option>
+                            <option value="Пенсіонер">Пенсіонер</option>
+                            <option value="Людина з інвалідністю">Людина з інвалідністю</option>
+                        </select>
+                    </c:if>
                     <input type="hidden" name="act" value="Search">
                     <input type="hidden" name="table" value="<%=request.getParameter("table")%>">
                     <input type="submit" value="Пошук" id="search1">
                 </form>
             </div>
 
-<%--            <c:if test="${requestScope.vehicle == true}">--%>
+            <%--            <c:if test="${requestScope.vehicle == true}">--%>
 
-<%--            <div class="search">--%>
-<%--                <form action="" method="post">--%>
-<%--                    Пошук транспорту за його типом:--%>
-<%--                    <select name="selType">--%>
-<%--                        <option value="bus" >Автобус</option>--%>
-<%--                        <option value="train">Потяг</option>--%>
-<%--                        <option value="airplane">Літак</option>--%>
-<%--                    </select>--%>
-<%--                    <input type="button" value="Пошук" id="search1">--%>
-<%--                </form>--%>
-<%--                    </div>--%>
-<%--                </c:if>--%>
+            <%--            <div class="search">--%>
+            <%--                <form action="" method="post">--%>
+            <%--                    Пошук транспорту за його типом:--%>
+            <%--                    <select name="selType">--%>
+            <%--                        <option value="bus" >Автобус</option>--%>
+            <%--                        <option value="train">Потяг</option>--%>
+            <%--                        <option value="airplane">Літак</option>--%>
+            <%--                    </select>--%>
+            <%--                    <input type="button" value="Пошук" id="search1">--%>
+            <%--                </form>--%>
+            <%--                    </div>--%>
+            <%--                </c:if>--%>
 
-<%--            <c:if test="${requestScope.journary == true}">--%>
-<%--                <div class="search">--%>
-<%--                    <form action="" method="post">--%>
-<%--                    Пошук рейсу за місцем відправки:--%>
-<%--                    <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">--%>
-<%--                    та датою відправлення:--%>
-<%--                    <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">--%>
-<%--                    <input type="button" value="Пошук" id="search2">--%>
-<%--                    </form>--%>
-<%--                        </div>--%>
-<%--            </c:if>--%>
+            <%--            <c:if test="${requestScope.journary == true}">--%>
+            <%--                <div class="search">--%>
+            <%--                    <form action="" method="post">--%>
+            <%--                    Пошук рейсу за місцем відправки:--%>
+            <%--                    <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">--%>
+            <%--                    та датою відправлення:--%>
+            <%--                    <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">--%>
+            <%--                    <input type="button" value="Пошук" id="search2">--%>
+            <%--                    </form>--%>
+            <%--                        </div>--%>
+            <%--            </c:if>--%>
 
-<%--            <c:if test="${requestScope.ticket == true}">--%>
+            <%--            <c:if test="${requestScope.ticket == true}">--%>
 
-<%--                    <div class="search">--%>
-<%--                        <form action="" method="post">--%>
-<%--                            Пошук по категорії квитка:--%>
-<%--                            <select name="selCategory">--%>
-<%--                                <option value="econom">Економ</option>--%>
-<%--                                <option value="medium">Бізнес</option>--%>
-<%--                                <option value="luxe">Люкс</option>--%>
+            <%--                    <div class="search">--%>
+            <%--                        <form action="" method="post">--%>
+            <%--                            Пошук по категорії квитка:--%>
+            <%--                            <select name="selCategory">--%>
+            <%--                                <option value="econom">Економ</option>--%>
+            <%--                                <option value="medium">Бізнес</option>--%>
+            <%--                                <option value="luxe">Люкс</option>--%>
 
-<%--                            </select>--%>
-<%--                            <input type="button" value="Пошук" id="search3">--%>
-<%--                        </form>--%>
-<%--                            </div>--%>
-<%--            </c:if>--%>
+            <%--                            </select>--%>
+            <%--                            <input type="button" value="Пошук" id="search3">--%>
+            <%--                        </form>--%>
+            <%--                            </div>--%>
+            <%--            </c:if>--%>
 
-<%--            <c:if test="${requestScope.receipt == true}">--%>
-<%--                        <div class="search">--%>
-<%--                            <form action="" method="post">--%>
-<%--                            Пошук чеків за пасажиром:--%>
-<%--                            <input type="number" name="pessenger" value="" placeholder="Номер пасажира">--%>
-<%--                            <input type="button" value="Пошук" id="search4">--%>
-<%--                            </form>--%>
-<%--                                </div>--%>
+            <%--            <c:if test="${requestScope.receipt == true}">--%>
+            <%--                        <div class="search">--%>
+            <%--                            <form action="" method="post">--%>
+            <%--                            Пошук чеків за пасажиром:--%>
+            <%--                            <input type="number" name="pessenger" value="" placeholder="Номер пасажира">--%>
+            <%--                            <input type="button" value="Пошук" id="search4">--%>
+            <%--                            </form>--%>
+            <%--                                </div>--%>
 
-<%--            </c:if>--%>
+            <%--            </c:if>--%>
 
-<%--            <c:if test="${requestScope.passenger == true}">--%>
-<%--                            <div class="search">--%>
-<%--                                    <form action="" method="post">--%>
-<%--                                        Пошук пасажирів за пільгами:--%>
-<%--                                        <select name="selCat">--%>
+            <%--            <c:if test="${requestScope.passenger == true}">--%>
+            <%--                            <div class="search">--%>
+            <%--                                    <form action="" method="post">--%>
+            <%--                                        Пошук пасажирів за пільгами:--%>
+            <%--                                        <select name="selCat">--%>
 
-<%--                                            <option value="Дитина до 4 років" >Дитина до 4 років</option>--%>
-<%--                                            <option value="Школяр" >Школяр</option>--%>
-<%--                                            <option value="Студент" >Студент</option>--%>
-<%--                                            <option value="Без пільг" >Без пільг</option>--%>
-<%--                                            <option value="Пенсіонер" >Пенсіонер</option>--%>
-<%--                                            <option value="Людина з інвалідністю" >Людина з інвалідністю</option>--%>
+            <%--                                            <option value="Дитина до 4 років" >Дитина до 4 років</option>--%>
+            <%--                                            <option value="Школяр" >Школяр</option>--%>
+            <%--                                            <option value="Студент" >Студент</option>--%>
+            <%--                                            <option value="Без пільг" >Без пільг</option>--%>
+            <%--                                            <option value="Пенсіонер" >Пенсіонер</option>--%>
+            <%--                                            <option value="Людина з інвалідністю" >Людина з інвалідністю</option>--%>
 
-<%--                                        </select>--%>
-<%--                                        <input type="button" value="Пошук" id="search5">--%>
-<%--                                    </form>--%>
-<%--                                    </div>--%>
+            <%--                                        </select>--%>
+            <%--                                        <input type="button" value="Пошук" id="search5">--%>
+            <%--                                    </form>--%>
+            <%--                                    </div>--%>
 
-<%--            </c:if>--%>
+            <%--            </c:if>--%>
 
             <div class="add-new-item"><input type="button" value="Додати" id="add"></div>
 
@@ -183,6 +184,7 @@
             <div class="table-wrap">
                 <table>
                     <thead>
+                    <c:set var="countCol" scope="session" value="${requestScope.columnsCount}"/>
                     <tr>
                         <c:forEach var="colName" items="${requestScope.columnsName}">
                             <th>${colName}</th>
@@ -192,13 +194,16 @@
                     <tbody>
                     <c:forEach var="entity" items="${requestScope.entities}">
                         <tr>
-                            <c:set var="noEdit" scope="session" value="${true}"/>
-                            <c:forEach var="column" items="${entity.recieveEntityInfo()}">
-                                <c:if test="${noEdit == false}">
-                                    <td contenteditable="true">${column}</td>
+                            <c:forEach var="column" items="${entity.recieveEntityInfo()}" varStatus="i">
+                                <c:if test="${!i.first}">
+                                    <c:if test="${i.last && requestScope.journary == true}">
+                                        <td>${column}</td>
+                                    </c:if>
+                                    <c:if test="${i.last && requestScope.journary != true || !i.last}">
+                                        <td contenteditable="true">${column}</td>
+                                    </c:if>
                                 </c:if>
-                                <c:if test="${noEdit == true}">
-                                    <c:set var="noEdit" scope="session" value="${false}"/>
+                                <c:if test="${i.first}">
                                     <td>${column}</td>
                                 </c:if>
                             </c:forEach>
@@ -221,7 +226,7 @@
                             request.onreadystatechange = function () {
                                 if (request.readyState == 4) {
                                     var status = request.status;
-                                    if (status == 200){
+                                    if (status == 200) {
                                         location.reload();
                                     } else {
                                         //document.write("Ответ сервера " + request.statusText);
@@ -239,7 +244,7 @@
                                 entityString += el3.children[i].textContent;
                                 if (i + 1 !== el3.children.length) entityString += ",";
                             }
-                            entityString = entityString.substr(0,entityString.length-2);
+                            entityString = entityString.substr(0, entityString.length - 2);
                             console.log(entityString);
                             let formData = new FormData();
                             formData.append('entityString', entityString);
@@ -251,7 +256,7 @@
                             request.onreadystatechange = function () {
                                 if (request.readyState == 4) {
                                     var status = request.status;
-                                    if (status == 200){
+                                    if (status == 200) {
                                         location.reload();
                                     } else {
                                         //document.write("Ответ сервера " + request.statusText);
@@ -260,6 +265,7 @@
                             };
                             request.send(formData);
                         }
+
                         var deleteElems = document.getElementsByClassName("delete");
                         var editElems = document.getElementsByClassName("edit");
                         for (var i = 0; i < deleteElems.length; i++) {
@@ -275,9 +281,13 @@
             <div class="reports">
                 <div class="flex-item">
                     <form>
-                        <a href="/statistics?report=VehicheReport" target="_blank" title="Натисніть, щоб переглянути звіт по транспортним засобам"><img src="styles/img/train.svg" alt="Vehicle Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="VehicheReport" onclick="onOpenSendForm(event)"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateVehicleReport"></p>
+                        <a href="/statistics?report=VehicheReport" target="_blank"
+                           title="Натисніть, щоб переглянути звіт по транспортним засобам"><img
+                                src="styles/img/train.svg" alt="Vehicle Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"
+                                                            id="VehicheReport" onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"
+                                                            onclick="onGenerate(event)" id="generateVehicleReport"></p>
                     </form>
                     <script>
                         function onGenerate(event) {
@@ -292,6 +302,7 @@
                             xhr.open("POST", "/statistics", true);
                             xhr.send(form);
                         }
+
                         function onOpenSendForm(event) {
                             var element = document.getElementsByClassName("containerSendEmail")[0];
                             element.style.display = "block";
@@ -306,16 +317,26 @@
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank" title="Натисніть, щоб переглянути звіт по трансп. засобам, рейсам та квиткам"><img src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="VehicheJournaryTicketReport" onclick="onOpenSendForm(event)"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateVehicheJournaryTicketReport"></p>
+                        <a href="/statistics?report=VehicheJournaryTicketReport" target="_blank"
+                           title="Натисніть, щоб переглянути звіт по трансп. засобам, рейсам та квиткам"><img
+                                src="styles/img/tickets.svg" alt="VehicleJournaryTicket Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"
+                                                            id="VehicheJournaryTicketReport"
+                                                            onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"
+                                                            onclick="onGenerate(event)"
+                                                            id="generateVehicheJournaryTicketReport"></p>
                     </form>
                 </div>
                 <div class="flex-item">
                     <form action="post">
-                        <a href="/statistics?report=CategoryReport" target="_blank" title="Натисніть, щоб переглянути звіт по категоріям пасажирів"><img src="styles/img/diagram.svg" alt="Category Report"></a>
-                        <p class="submit statistics"><input type="button" value="Відправити через Email" id="CategoryReport" onclick="onOpenSendForm(event)"></p>
-                        <p class="submit statistics"><input type="button" value="Згенерувати" onclick="onGenerate(event)" id="generateCategoryReport"></p>
+                        <a href="/statistics?report=CategoryReport" target="_blank"
+                           title="Натисніть, щоб переглянути звіт по категоріям пасажирів"><img
+                                src="styles/img/diagram.svg" alt="Category Report"></a>
+                        <p class="submit statistics"><input type="button" value="Відправити через Email"
+                                                            id="CategoryReport" onclick="onOpenSendForm(event)"></p>
+                        <p class="submit statistics"><input type="button" value="Згенерувати"
+                                                            onclick="onGenerate(event)" id="generateCategoryReport"></p>
                     </form>
                 </div>
             </div>
@@ -358,7 +379,7 @@
                 request.onreadystatechange = function () {
                     if (request.readyState == 4) {
                         var status = request.status;
-                        if (status == 200){
+                        if (status == 200) {
                             location.reload();
                         } else {
                             //document.write("Ответ сервера " + request.statusText);
@@ -467,16 +488,16 @@
     <div class="add">
         <h1>Відправка звіту на електрону адресу</h1>
         <form method="post" action="/statistics">
-            <p><input type="email" name="email"  placeholder="Email"></p>
+            <p><input type="email" name="email" placeholder="Email"></p>
             <p><input type="text" name="header" placeholder="Тема"></p>
             <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
             <p><input type="hidden" name="act" value="Mail"></p>
             <p><input type="hidden" name="sendReport" id="sendReport"></p>
             <p class="submit"><input type="submit" name="add" value="Відправити">
                 <input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onResetSendEmail(event)"
-                                                                                                           value="Відмінити">
+                       name="reset"
+                       onclick="onResetSendEmail(event)"
+                       value="Відмінити">
             </p>
         </form>
     </div>

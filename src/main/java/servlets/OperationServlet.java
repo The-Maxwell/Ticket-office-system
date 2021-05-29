@@ -44,6 +44,7 @@ public class OperationServlet extends HttpServlet {
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
+                request.setAttribute("columnsCount", entity.recieveColumnsName().length);
                 path = "index.jsp";
                 break;
             case "Add":
@@ -77,15 +78,15 @@ public class OperationServlet extends HttpServlet {
                     printWriter.println("<h2>Update Error</h2>");
                     return;
                 }
-                //path = "/work_with_db?act=Show&table=" + request.getParameter("table");
-                list = ticketOfficeDao.selectEntities(request.getParameter("table"));
-                request.setAttribute("entities", list);
-                request.setAttribute("table", request.getParameter("table"));
-                entity = list.get(0);
-                request.setAttribute(request.getParameter("table"), true);
-                request.setAttribute("columnsName", entity.recieveColumnsName());
-                path = "index.jsp";
-                System.out.println(path);
+                path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+//                list = ticketOfficeDao.selectEntities(request.getParameter("table"));
+//                request.setAttribute("entities", list);
+//                request.setAttribute("table", request.getParameter("table"));
+//                entity = list.get(0);
+//                request.setAttribute(request.getParameter("table"), true);
+//                request.setAttribute("columnsName", entity.recieveColumnsName());
+//                path = "index.jsp";
+//                System.out.println(path);
                 break;
             case "Statistics":
                 reportsCreator.setRequest(request);

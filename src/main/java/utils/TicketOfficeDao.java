@@ -83,6 +83,7 @@ public class TicketOfficeDao {
         }
         int fieldCount = getEntityFieldCount(table);
         if(!table.equals("vehicle")) fieldCount++;
+        if(table.equals("journary")) fieldCount++;
         String[] arrEntityString = entityString.split(",");
         if (arrEntityString == null || arrEntityString.length != fieldCount) {
             return "Error. Empty input!";
@@ -169,7 +170,7 @@ public class TicketOfficeDao {
                 return new VehicleEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6]);
             case "journary":
                 int idVehicle = Integer.parseInt(arrEntityString[5]);
-                return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], session.load(VehicleEntity.class, idVehicle));
+                return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], session.load(VehicleEntity.class, idVehicle), arrEntityString[6]);
             case "receipt":
                 int idPassenger = Integer.parseInt(arrEntityString[4]);
                 return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(PassengerEntity.class, idPassenger));
