@@ -37,6 +37,10 @@ public class OperationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Action= " + action);
         switch (action){
+//            case "Home":
+//                request.setAttribute("home", true);
+//                path = "index.jsp";
+//                break;
             case "Show":
                 List<IEntity> list = ticketOfficeDao.selectEntities(request.getParameter("table"));
                 request.setAttribute("entities", list);
@@ -78,14 +82,6 @@ public class OperationServlet extends HttpServlet {
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
-//                list = ticketOfficeDao.selectEntities(request.getParameter("table"));
-//                request.setAttribute("entities", list);
-//                request.setAttribute("table", request.getParameter("table"));
-//                entity = list.get(0);
-//                request.setAttribute(request.getParameter("table"), true);
-//                request.setAttribute("columnsName", entity.recieveColumnsName());
-//                path = "index.jsp";
-//                System.out.println(path);
                 break;
             case "Statistics":
                 reportsCreator.setRequest(request);
@@ -116,6 +112,10 @@ public class OperationServlet extends HttpServlet {
                         break;
                     case "passenger":
                         list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("selCat"));
+                        break;
+                    case "user":
+                        list = ticketOfficeDao.searchBySpecificParams(table, request.getParameter("lastName"), request.getParameter("firstName")
+                                , request.getParameter("selRole"));
                         break;
                 }
                 request.setAttribute("entities", list);

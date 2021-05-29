@@ -140,4 +140,24 @@ public class UserEntity implements IEntity{
     public String recieveStringInfo() {
         return String.valueOf(id)+","+lastName+","+firstName+","+surname+","+email+","+age+","+role;
     }
+    public UserEntity(){
+
+    }
+    public UserEntity(String lastName, String firstName, String surname, String email, String age, String role) throws Exception {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.email = email;
+        this.age = Integer.parseInt(age);;
+        this.role = role;
+    }
+    public UserEntity(String id, String lastName, String firstName, String surname, String email, String age, String role) throws Exception {
+        this.id = Integer.parseInt(id);
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.email = email;
+        this.age = Integer.parseInt(age);;
+        this.role = role;
+    }
 }

@@ -6,10 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -86,8 +82,8 @@ public class TicketOfficeDao {
             return "Error. Empty input!";
         }
         int fieldCount = getEntityFieldCount(table);
-        if(!table.equals("vehicle")) fieldCount++;
-        if(table.equals("journary")) fieldCount++;
+        if (!table.equals("vehicle")) fieldCount++;
+        if (table.equals("journary")) fieldCount++;
         String[] arrEntityString = entityString.split(",");
         if (arrEntityString == null || arrEntityString.length != fieldCount) {
             return "Error. Empty input!";
@@ -143,6 +139,8 @@ public class TicketOfficeDao {
                 return TicketEntity.class;
             case "passenger":
                 return PassengerEntity.class;
+            case "user":
+                return UserEntity.class;
             default:
                 return null;
         }
@@ -164,10 +162,13 @@ public class TicketOfficeDao {
                 return new TicketEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], session.load(ReceiptEntity.class, idReceipt), session.load(JournaryEntity.class, idJournary));
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3]);
+            case "user":
+                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5]);
             default:
                 return null;
         }
     }
+
     public Object getNeededEntityForUpdate(String[] arrEntityString, Session session, String table) throws Exception {
         switch (table) {
             case "vehicle":
@@ -184,6 +185,8 @@ public class TicketOfficeDao {
                 return new TicketEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(ReceiptEntity.class, idReceipt), session.load(JournaryEntity.class, idJournary));
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4]);
+            case "user":
+                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6]);
             default:
                 return null;
         }
@@ -199,12 +202,14 @@ public class TicketOfficeDao {
             case "receipt":
             case "passenger":
                 return 4;
+            case "user":
+                return 6;
             default:
                 return 0;
         }
     }
 
-    public List<IEntity> searchBySpecificParams(String table, String ...param) {
+    public List<IEntity> searchBySpecificParams(String table, String... param) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List result = null;
         try {
@@ -215,6 +220,7 @@ public class TicketOfficeDao {
 
             session.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -222,24 +228,31 @@ public class TicketOfficeDao {
         return result;
     }
 
-    private Criteria getNeededCriteriaForSearch(Session session, String table, String ...param){
+    private Criteria getNeededCriteriaForSearch(Session session, String table, String... param) {
         switch (table) {
             case "vehicle":
                 return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("vehicleType", param[0]));
             case "journary":
                 try {
-                    Criteria criteria = session.createCriteria(getEntityClass(table)).add(Restrictions.like("departurePoint", "%"+param[0]+"%"));
-                    if(!param[1].equals(""))
+                    Criteria criteria = session.createCriteria(getEntityClass(table)).add(Restrictions.like("departurePoint", "%" + param[0] + "%"));
+                    if (!param[1].equals(""))
                         criteria.add(Restrictions.eq("dateAndTimeOfArrival", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(param[1])));
                     return criteria;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             case "receipt":
-                return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("passengerByPassengerId", searchEntity(param[0],table)));
+                return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("passengerByPassengerId", searchEntity(param[0], table)));
             case "ticket":
             case "passenger":
                 return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("category", param[0]));
+            case "user":
+                Criteria criteria = session.createCriteria(getEntityClass(table)).add(Restrictions.like("lastName", "%" + param[0] + "%"));
+                if (!param[1].trim().equals(""))
+                    criteria.add(Restrictions.eq("firstName", "%" + param[1] + "%"));
+                if (param[2] != null)
+                    criteria.add(Restrictions.eq("role", param[2]));
+                return criteria;
         }
         return null;
     }
@@ -249,8 +262,7 @@ public class TicketOfficeDao {
         int id;
         try {
             id = Integer.parseInt(ID);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return entity;
         }
@@ -259,11 +271,9 @@ public class TicketOfficeDao {
             session.beginTransaction();
             entity = (IEntity) session.load(getEntityClass(table), id);
             session.getTransaction().commit();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             session.getTransaction().rollback();
-        }
-        finally {
+        } finally {
             session.close();
         }
         return entity;

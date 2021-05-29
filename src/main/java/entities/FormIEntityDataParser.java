@@ -23,6 +23,9 @@ public class FormIEntityDataParser {
             case "passenger":
                 return getStringJoin(request.getParameter("lastName"), request.getParameter("firstName"), request.getParameter("surname"),
                         request.getParameter("category"));
+            case "user":
+                return getStringJoin(request.getParameter("lastName"), request.getParameter("firstName"), request.getParameter("surname"),
+                        request.getParameter("email"), request.getParameter("age"), request.getParameter("role"));
             default:
                 return null;
         }

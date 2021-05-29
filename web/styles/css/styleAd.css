@@ -1,4 +1,4 @@
-.containerAddVehicle, .containerAddJournary, .containerAddTicket, .containerAddReceipt, .containerAddPassenger, .containerSendEmail, .result-log{
+.containerAddVehicle, .containerAddJournary, .containerAddTicket, .containerAddReceipt, .containerAddPassenger, .containerAddUser, .containerSendEmail, .result-log{
   display: none;
   margin: 80px auto;
   width: 640px;

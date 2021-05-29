@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="views/stylesIndex.css"/>
     <link rel="stylesheet" href="styles/css/style.css">
     <link rel="stylesheet" href="styles/css/styleAd.css">
+    <link rel="icon" type="image/x-icon" href="styles/img/favicon.ico" />
 </head>
 <body>
 <div class="wrapper">
@@ -84,9 +85,14 @@
                             <option value="Людина з інвалідністю">Людина з інвалідністю</option>
                         </select>
                     </c:if>
-                    <c:if test="${requestScope.passenger == true}">
-                        Пошук пасажирів за пільгами:
-                        <select name="selCat">
+                    <c:if test="${requestScope.user == true}">
+                        Пошук користувачів за прізвищем:
+                        <input type="text" name="lastName" value="" placeholder="Прізвищем">
+                        , іменем:
+                        <input type="text" name="firstName" value="" placeholder="Ім'я">
+                        , ролю:
+                        <select name="selRole">
+                            <option value="" disabled selected>Роль</option>
                             <option value="Director">Директор</option>
                             <option value="Admin">Адміністратор</option>
                             <option value="Seller">Продавець</option>
@@ -479,12 +485,41 @@
             <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
             <p><select id="categoryPassenger" name="category">
                 <option disabled selected>Категорія</option>
-                <option value="Дитина до 4 років">Дитина до 4 років</option>
+                <option value="Дитина до 4 років" selected>Дитина до 4 років</option>
                 <option value="Школяр">Школяр</option>
                 <option value="Студент">Студент</option>
                 <option value="Без пільг">Без пільг</option>
                 <option value="Пенсіонер">Пенсіонер</option>
                 <option value="Людина з інвалідністю">Людина з інвалідністю</option>
+            </select></p>
+            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+                                                                                                           name="reset"
+                                                                                                           onclick="onReset(event)"
+                                                                                                           value="Відмінити">
+            </p>
+        </form>
+    </div>
+</section>
+private String lastName;
+private String firstName;
+private String surname;
+private String email;
+private int age;
+private String role;
+<section class="containerAddUser">
+    <div class="add">
+        <h1>Додавання нового користувача</h1>
+        <form method="post" action="/work_with_db">
+            <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
+            <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
+            <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
+            <p><input type="email" name="email" value="" placeholder="Email"></p>
+            <p><input type="number" name="age" value="" placeholder="Вік"></p>
+            <p><select id="role" name="role">
+                <option disabled selected>Роль</option>
+                <option value="Director" selected>Директор</option>
+                <option value="Admin">Адміністратор</option>
+                <option value="Seller">Продавець</option>
             </select></p>
             <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
