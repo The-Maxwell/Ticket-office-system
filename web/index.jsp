@@ -20,7 +20,7 @@
     <section class="container">
         <nav>
             <ul class="nav">
-                <li title="home" <c:if test="${requestScope.home == true}">class="active"</c:if>><a href="index.jsp"
+                <li title="home" <c:if test="${requestScope.home == true}">class="active"</c:if>><a href="/work_with_db?act=Home"
                                                                                                     class="nav-icon"
                                                                                                     title="home"><span
                         class="icon-home">Home</span></a></li>
@@ -197,7 +197,7 @@
                 buttonAdd.onclick = onAddButton;
             </script>
             <div class="table-wrap">
-                <table>
+                <table class="result-table">
                     <thead>
                     <tr>
                         <c:forEach var="colName" items="${requestScope.columnsName}">
@@ -290,9 +290,55 @@
                 </table>
             </div>
         </c:if>
-        <c:if test="${requestScope.user == true}">
+        <c:if test="${requestScope.home == true}">
 
+            <div class="titl">
+                <h1>Загальна інформація</h1>
+            </div>
+
+            <div class = "tabl1">
+                <table class="user-info-table">
+                    <tbody class="t">
+                    <tr class="l_n">
+                        <td>Посада:</td><td>Адміністратор</td>
+                    </tr>
+                    <tr class="l_n">
+                        <td>Прізвище:</td><td>Прізвище</td>
+                    </tr>
+                    <tr class="l_n">
+                        <td>Ім`я:</td><td>Ім`я</td>
+                    </tr>
+                    <tr class="l_n">
+                        <td>По батькові:</td><td>По батькові</td>
+                    </tr>
+
+                    <tr class="l_n"><td>Вік:</td><td>Вік</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="titl">
+                <h1>Контактні дані</h1>
+            </div>
+            <div class = "tabl1">
+                <table class="user-info-table">
+                    <tbody class="t">
+                    <tr class="l_n">
+                        <td>Email:</td><td>Email</td>
+                    </tr>
+                    <tr class="l_n">
+                        <td>Телефон:</td><td>Телефон</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="search">
+                <form>
+                    <input type="submit" value="Вихід" id="exit">
+                </form>
+            </div>
         </c:if>
+
         <c:if test="${requestScope.statistics == true}">
             <div class="reports">
                 <div class="flex-item">
@@ -500,12 +546,6 @@
         </form>
     </div>
 </section>
-private String lastName;
-private String firstName;
-private String surname;
-private String email;
-private int age;
-private String role;
 <section class="containerAddUser">
     <div class="add">
         <h1>Додавання нового користувача</h1>

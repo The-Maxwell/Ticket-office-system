@@ -37,10 +37,10 @@ public class OperationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Action= " + action);
         switch (action){
-//            case "Home":
-//                request.setAttribute("home", true);
-//                path = "index.jsp";
-//                break;
+            case "Home":
+                request.setAttribute("home", true);
+                path = "index.jsp";
+                break;
             case "Show":
                 List<IEntity> list = ticketOfficeDao.selectEntities(request.getParameter("table"));
                 request.setAttribute("entities", list);
