@@ -37,10 +37,14 @@ public class TicketOfficeDao {
                 case "ticket":
                     query = session.createNamedQuery("SelectAllTicket");
                     break;
+                case "user":
+                    query = session.createNamedQuery("SelectAllUser");
+                    break;
             }
             result = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
+            e.printStackTrace();
             session.getTransaction().rollback();
         } finally {
             session.close();

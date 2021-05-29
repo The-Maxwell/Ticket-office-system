@@ -44,7 +44,6 @@ public class OperationServlet extends HttpServlet {
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
-                request.setAttribute("columnsCount", entity.recieveColumnsName().length);
                 path = "index.jsp";
                 break;
             case "Add":

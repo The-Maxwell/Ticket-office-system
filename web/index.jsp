@@ -33,7 +33,8 @@
                         href="/work_with_db?act=Show&table=receipt" title="receipt">Чеки</a></li>
                 <li title="passenger" <c:if test="${requestScope.passenger == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Show&table=passenger" title="passenger">Пасажири</a></li>
-                <li><a href="index.jsp" title="Contact">Працівники</a></li>
+                <li title="user" <c:if test="${requestScope.user == true}">class="active"</c:if>><a
+                        href="/work_with_db?act=Show&table=user" title="user">Користувачі</a></li>
                 <li title="statistics" <c:if test="${requestScope.statistics == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Statistics" title="statistics">Статистика</a></li>
             </ul>
@@ -81,6 +82,14 @@
                             <option value="Без пільг">Без пільг</option>
                             <option value="Пенсіонер">Пенсіонер</option>
                             <option value="Людина з інвалідністю">Людина з інвалідністю</option>
+                        </select>
+                    </c:if>
+                    <c:if test="${requestScope.passenger == true}">
+                        Пошук пасажирів за пільгами:
+                        <select name="selCat">
+                            <option value="Director">Директор</option>
+                            <option value="Admin">Адміністратор</option>
+                            <option value="Seller">Продавець</option>
                         </select>
                     </c:if>
                     <input type="hidden" name="act" value="Search">
@@ -184,7 +193,6 @@
             <div class="table-wrap">
                 <table>
                     <thead>
-                    <c:set var="countCol" scope="session" value="${requestScope.columnsCount}"/>
                     <tr>
                         <c:forEach var="colName" items="${requestScope.columnsName}">
                             <th>${colName}</th>
@@ -276,7 +284,9 @@
                 </table>
             </div>
         </c:if>
+        <c:if test="${requestScope.user == true}">
 
+        </c:if>
         <c:if test="${requestScope.statistics == true}">
             <div class="reports">
                 <div class="flex-item">
