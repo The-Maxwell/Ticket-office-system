@@ -39,7 +39,7 @@ public class OperationServlet extends HttpServlet {
         switch (action){
             case "Home":
                 request.setAttribute("home", true);
-                path = "index.jsp";
+                path = "views/main.jsp";
                 break;
             case "Show":
                 List<IEntity> list = ticketOfficeDao.selectEntities(request.getParameter("table"));
@@ -48,10 +48,11 @@ public class OperationServlet extends HttpServlet {
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
-                path = "index.jsp";
+                path = "views/main.jsp";
                 break;
             case "Add":
                 String entityString = FormIEntityDataParser.getStringEntity(request);
+                System.out.println(entityString);
                 System.out.println("Table= " + request.getParameter("table"));
                 result = ticketOfficeDao.insertEntity(entityString, request.getParameter("table"));
                 if(result != null){
@@ -81,12 +82,13 @@ public class OperationServlet extends HttpServlet {
                     printWriter.println("<h2>Update Error</h2>");
                     return;
                 }
+                System.out.println(result);
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Statistics":
                 reportsCreator.setRequest(request);
                 request.setAttribute("statistics", true);
-                path = "index.jsp";
+                path = "views/main.jsp";
                 break;
             case "Search":
                 String table = request.getParameter("table");
@@ -123,7 +125,7 @@ public class OperationServlet extends HttpServlet {
                 entity = list.get(0);
                 request.setAttribute(table, true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
-                path = "index.jsp";
+                path = "views/main.jsp";
                 break;
         }
         requestDispatcher = request.getRequestDispatcher(path);

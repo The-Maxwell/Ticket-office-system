@@ -17,6 +17,8 @@ public class UserEntity implements IEntity{
     private String email;
     private int age;
     private String role;
+    private String phoneNumber;
+    private String password;
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -90,6 +92,26 @@ public class UserEntity implements IEntity{
         this.role = role;
     }
 
+    @Basic
+    @Column(name = "Phone_number", nullable = false)
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Basic
+    @Column(name = "Password", nullable = false)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,6 +125,8 @@ public class UserEntity implements IEntity{
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
+        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         return role != null ? role.equals(that.role) : that.role == null;
     }
 
@@ -115,6 +139,8 @@ public class UserEntity implements IEntity{
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
 
@@ -128,36 +154,41 @@ public class UserEntity implements IEntity{
         row.add(email);
         row.add(String.valueOf(age));
         row.add(role);
+        row.add(phoneNumber);
         return row;
     }
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"ID користувача","Прізвище","Ім'я","По батькові","Email","Вік","Роль"};
+        return new String[]{"ID користувача","Прізвище","Ім'я","По батькові","Email","Вік","Роль","Телефонний номер"};
     }
 
     @Override
     public String recieveStringInfo() {
-        return String.valueOf(id)+","+lastName+","+firstName+","+surname+","+email+","+age+","+role;
+        return String.valueOf(id)+","+lastName+","+firstName+","+surname+","+email+","+age+","+role + "," + phoneNumber;
     }
     public UserEntity(){
 
     }
-    public UserEntity(String lastName, String firstName, String surname, String email, String age, String role) throws Exception {
+    public UserEntity(String lastName, String firstName, String surname, String email, String age, String role, String phoneNumber, String password) throws Exception {
         this.lastName = lastName;
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
         this.age = Integer.parseInt(age);;
         this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
     }
-    public UserEntity(String id, String lastName, String firstName, String surname, String email, String age, String role) throws Exception {
+    public UserEntity(String id, String lastName, String firstName, String surname, String email, String age, String role, String phoneNumber, String password) throws Exception {
         this.id = Integer.parseInt(id);
         this.lastName = lastName;
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
-        this.age = Integer.parseInt(age);;
+        this.age = Integer.parseInt(age);
         this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 }

@@ -252,7 +252,7 @@ a img {
 }
 .user-info-table td {
   border-top: 10px solid #8abddf;
-  padding: 10px 50px 10px 50px;
+  padding: 20px 100px 20px 100px;
   background: white;
 }
 .user-info-table td:first-child {
@@ -261,4 +261,16 @@ a img {
 }
 .user-info-table td:last-child {
   border-bottom-right-radius: 20px;
+}
+.exit-div{
+  border: none;
+}
+#exit{
+  padding: 5px 20px 5px 20px;
+  font-size: 14px;
+}
+.user-info-header-one, .user-info-header-two{
+  margin: 20px;
+  font-size: 18px;
+  font-weight: bold;
 }

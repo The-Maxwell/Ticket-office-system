@@ -1190,99 +1190,111 @@ SELECT|sys.sys_config:null
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;Seller&apos;</DefaultExpression>
     </column>
-    <key id="346" parent="297" name="PRIMARY">
+    <column id="346" parent="297" name="Phone_number">
+      <Position>8</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <column id="347" parent="297" name="Password">
+      <Position>9</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+    </column>
+    <key id="348" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="347" parent="298" name="Vehicle_code">
+    <column id="349" parent="298" name="Vehicle_code">
       <Position>1</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="348" parent="298" name="Vehicle_type">
+    <column id="350" parent="298" name="Vehicle_type">
       <Position>2</Position>
       <DataType>enum(&apos;train&apos;, &apos;bus&apos;, &apos;airplane&apos;)|0e</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="349" parent="298" name="Number_of_seats">
+    <column id="351" parent="298" name="Number_of_seats">
       <Position>3</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="350" parent="298" name="Number_of_economy_class_seats">
+    <column id="352" parent="298" name="Number_of_economy_class_seats">
       <Position>4</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="351" parent="298" name="Number_of_medium_class_seats">
+    <column id="353" parent="298" name="Number_of_medium_class_seats">
       <Position>5</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="352" parent="298" name="Number_of_luxury_class_seats">
+    <column id="354" parent="298" name="Number_of_luxury_class_seats">
       <Position>6</Position>
       <DataType>int unsigned|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="353" parent="298" name="Vechile_company">
+    <column id="355" parent="298" name="Vechile_company">
       <Position>7</Position>
       <DataType>varchar(80)|0s</DataType>
     </column>
-    <key id="354" parent="298" name="PRIMARY">
+    <key id="356" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Vehicle_code</ColNames>
       <Primary>1</Primary>
     </key>
-    <argument id="355" parent="299" name="last_name">
+    <argument id="357" parent="299" name="last_name">
       <Position>1</Position>
       <DataType>varchar(40)|0s</DataType>
     </argument>
-    <argument id="356" parent="299" name="first_name">
+    <argument id="358" parent="299" name="first_name">
       <Position>2</Position>
       <DataType>varchar(40)|0s</DataType>
     </argument>
-    <argument id="357" parent="299" name="surname">
+    <argument id="359" parent="299" name="surname">
       <Position>3</Position>
       <DataType>varchar(40)|0s</DataType>
     </argument>
-    <argument id="358" parent="299" name="category">
+    <argument id="360" parent="299" name="category">
       <Position>4</Position>
       <DataType>varchar(40)|0s</DataType>
     </argument>
-    <argument id="359" parent="299" name="strResult">
+    <argument id="361" parent="299" name="strResult">
       <Position>5</Position>
       <ArgumentDirection>O</ArgumentDirection>
       <DataType>varchar(80)|0s</DataType>
     </argument>
-    <argument id="360" parent="300" name="dateStart">
+    <argument id="362" parent="300" name="dateStart">
       <Position>1</Position>
       <DataType>date|0s</DataType>
     </argument>
-    <argument id="361" parent="300" name="dateEnd">
+    <argument id="363" parent="300" name="dateEnd">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </argument>
-    <argument id="362" parent="300" name="countTickets">
+    <argument id="364" parent="300" name="countTickets">
       <Position>3</Position>
       <ArgumentDirection>O</ArgumentDirection>
       <DataType>bigint|0s</DataType>
     </argument>
-    <argument id="363" parent="300" name="money">
+    <argument id="365" parent="300" name="money">
       <Position>4</Position>
       <ArgumentDirection>O</ArgumentDirection>
       <DataType>decimal(10,2 digit)|0s</DataType>
     </argument>
-    <argument id="364" parent="300" name="strResult">
+    <argument id="366" parent="300" name="strResult">
       <Position>5</Position>
       <ArgumentDirection>O</ArgumentDirection>
       <DataType>varchar(80)|0s</DataType>
     </argument>
-    <argument id="365" parent="301" name="dateStart">
+    <argument id="367" parent="301" name="dateStart">
       <Position>1</Position>
       <DataType>date|0s</DataType>
     </argument>
-    <argument id="366" parent="301" name="dateEnd">
+    <argument id="368" parent="301" name="dateEnd">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </argument>

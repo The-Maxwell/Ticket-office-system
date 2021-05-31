@@ -84,8 +84,10 @@ public class TicketOfficeDao {
         int fieldCount = getEntityFieldCount(table);
         if (!table.equals("vehicle")) fieldCount++;
         if (table.equals("journary")) fieldCount++;
+        if (table.equals("user")) fieldCount--;
         String[] arrEntityString = entityString.split(",");
         if (arrEntityString == null || arrEntityString.length != fieldCount) {
+            System.out.println(arrEntityString.length +" "+ fieldCount);
             return "Error. Empty input!";
         }
 
@@ -163,7 +165,7 @@ public class TicketOfficeDao {
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3]);
             case "user":
-                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5]);
+                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6], arrEntityString[7]);
             default:
                 return null;
         }
@@ -186,7 +188,11 @@ public class TicketOfficeDao {
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4]);
             case "user":
-                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6]);
+                int idUser = Integer.parseInt(arrEntityString[0]);
+                UserEntity userEntity = ((UserEntity) session.load(UserEntity.class, idUser));
+                String pwd = userEntity.getPassword();
+                session.evict(userEntity);
+                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6], arrEntityString[7], pwd);
             default:
                 return null;
         }
@@ -203,7 +209,7 @@ public class TicketOfficeDao {
             case "passenger":
                 return 4;
             case "user":
-                return 6;
+                return 8;
             default:
                 return 0;
         }

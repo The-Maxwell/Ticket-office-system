@@ -16,8 +16,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>RedirectServlet</servlet-name>
-        <servlet-class>servlets.RedirectServlet</servlet-class>
+        <servlet-name>AuthorizationServlet</servlet-name>
+        <servlet-class>servlets.AuthorizationServlet</servlet-class>
     </servlet>
 
     <servlet>
@@ -31,8 +31,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>RedirectServlet</servlet-name>
-        <url-pattern>/redirect</url-pattern>
+        <servlet-name>AuthorizationServlet</servlet-name>
+        <url-pattern>/authorization</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

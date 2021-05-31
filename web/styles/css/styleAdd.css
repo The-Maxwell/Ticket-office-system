@@ -55,7 +55,7 @@
 .add p:first-child {
   margin-top: 0;
 }
-.add input[type=text], .add input[type=password], .add input[type=number], .add select, .add input[type=email], .add textarea {
+.add input[type=text], .add input[type=password], .add input[type=number], .add select, .add input[type=email], .add textarea, .add input[type=tel] {
   width: 298px;
 }
 .add p.remember_me {
@@ -107,7 +107,7 @@ input, select {
   font-size: 14px;
 }
 
-input[type=text], input[type=password], input[type=datetime-local], input[type=number], select, input[type=email], textarea {
+input[type=text], input[type=password], input[type=datetime-local], input[type=number], select, input[type=email], textarea, input[type=tel] {
   margin: 5px;
   padding: 0 10px;
   width: 200px;
@@ -126,7 +126,7 @@ textarea{
   height: 100px;
   resize: none;
 }
-input[type=text]:focus, input[type=password]:focus, input[type=datetime-local]:focus, input[type=number]:focus, select:focus, input[type=email]:focus, textarea:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=datetime-local]:focus, input[type=number]:focus, select:focus, input[type=email]:focus, textarea:focus, input[type=tel]:focus {
   border-color: #7dc9e2;
   outline-color: #dceefc;
   outline-offset: 0;
@@ -168,6 +168,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=datetime-local]:f
   color: #ECFCFD;
 }
 .lt-ie9 input[type=text], .lt-ie9 input[type=password], .lt-ie9 input[type=datetime-local], .lt-ie9 input[type=number], .lt-ie9 select,
-.lt-ie9 input[type=email], .lt-ie9 textarea{
+.lt-ie9 input[type=email], .lt-ie9 textarea, .lt-ie9 input[type=tel]{
   line-height: 34px;
 }
