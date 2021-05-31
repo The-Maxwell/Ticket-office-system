@@ -10,12 +10,12 @@
 <html>
 <head>
     <title>Ticketoffice</title>
-    <link rel="stylesheet" href="styles/css/styleAuthorization.css.css">
+    <link rel="stylesheet" href="styles/css/styleAuthorization.css">
     <link rel="icon" type="image/x-icon" href="styles/img/favicon.ico" />
 </head>
 <body>
-<section class="containerSignIN">
-    <div class="add">
+<section class="container">
+    <div class="login">
         <h1>Вхід в систему</h1>
         <form method="post" action="/work_with_db?act=Home">
             <p><input type="text" name="login" value="" placeholder="Username or Email"></p>
