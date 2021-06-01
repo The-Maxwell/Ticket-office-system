@@ -21,7 +21,7 @@ public class HibernateUtil {
                         "jdbc:mysql://localhost:3306/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false" )
                 .setProperty( "hibernate.connection.username", "root" )
                 .setProperty( "hibernate.connection.password", "root" )
-                .setProperty( "hibernate.connection.pool_size", "3" )
+                .setProperty( "hibernate.connection.pool_size", "2" )
                 .setProperty( "hibernate.connection.autocommit", "false" )
                 .setProperty( "hibernate.cache.provider_class", "org.hibernate.cache.NoCacheProvider" )
                 .setProperty( "hibernate.cache.use_second_level_cache", "false" )
@@ -29,7 +29,8 @@ public class HibernateUtil {
                 .setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" )
                 .setProperty( "hibernate.show_sql","true" )
                 .setProperty( "hibernate.current_session_context_class", "thread" )
-//                .setProperty("hibernate.enable_lazy_load_no_trans", "true")
+                //It may cause some errors
+                .setProperty( "hibernate.enable_lazy_load_no_trans", "true" )
                 .addPackage( "entities" )
                 .addAnnotatedClass(JournaryEntity.class)
                 .addAnnotatedClass(VehicleEntity.class)

@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,18 @@ public class OperationServlet extends HttpServlet {
         switch (action){
             case "Home":
                 request.setAttribute("home", true);
+                HttpSession session = request.getSession();
+                int userId = (int) session.getAttribute("userId");
+                UserEntity userEntity = (UserEntity)ticketOfficeDao.searchEntity(String.valueOf(userId), "user");
+//                this.lastName = lastName;
+//                this.firstName = firstName;
+//                this.surname = surname;
+//                this.email = email;
+//                this.age = Integer.parseInt(age);;
+//                this.role = role;
+//                this.phoneNumber = phoneNumber;
+                request.setAttribute("userInfo", userEntity.recieveEntityInfo());
+                System.out.println("userId=" + userId);
                 path = "views/main.jsp";
                 break;
             case "Show":
@@ -127,6 +140,11 @@ public class OperationServlet extends HttpServlet {
                 request.setAttribute("columnsName", entity.recieveColumnsName());
                 path = "views/main.jsp";
                 break;
+            case "SignOut":
+                session = request.getSession();
+                session.invalidate();
+                response.sendRedirect("index.jsp");
+                return;
         }
         requestDispatcher = request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);

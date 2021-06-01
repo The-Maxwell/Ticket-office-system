@@ -95,6 +95,10 @@ body {
     float: left;
     line-height: 31px;
 }
+p#error-text{
+    font-size: 14px;
+    text-align: center;
+}
 .login p.remember_me label {
     font-size: 12px;
     color: #777;
@@ -146,7 +150,7 @@ input[type=text]:focus, input[type=password]:focus {
     outline-offset: 0;
 }
 
-input[type=submit] {
+input[type=submit], input[type=button] {
     padding: 0 18px;
     height: 29px;
     font-size: 14px;
@@ -168,13 +172,13 @@ input[type=submit] {
     -webkit-box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
 }
-input[type=submit]:active {
+input[type=submit]:active, input[type=button]:active {
     background: #cde5ef;
     border-color: #9eb9c2 #b3c0c8 #b4ccce;
     -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.2);
 }
-.submit input[type=submit]:hover{
+.submit input[type=submit]:hover, .submit input[type=button]:hover{
     background: #64D9E1;
     color: #ECFCFD;
 }
@@ -182,3 +186,5 @@ input[type=submit]:active {
 .lt-ie9 input[type=text], .lt-ie9 input[type=password] {
     line-height: 34px;
 }
+
+

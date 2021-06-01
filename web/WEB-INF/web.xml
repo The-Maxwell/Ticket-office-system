@@ -50,10 +50,21 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
+    <filter>
+        <filter-name>AutorizationFilter</filter-name>
+        <filter-class>
+            servlets.AutorizationFilter
+        </filter-class>
+    </filter>
 
     <filter-mapping>
         <filter-name>Set Character Encoding</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AutorizationFilter</filter-name>
+        <url-pattern>/work_with_db</url-pattern>
     </filter-mapping>
 
 </web-app>

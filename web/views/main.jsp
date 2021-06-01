@@ -13,16 +13,17 @@
     <link rel="stylesheet" href="views/stylesIndex.css"/>
     <link rel="stylesheet" href="styles/css/style.css">
     <link rel="stylesheet" href="styles/css/styleAdd.css">
-    <link rel="icon" type="image/x-icon" href="styles/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="styles/img/favicon.ico"/>
 </head>
 <body>
 <div class="wrapper">
     <section class="container">
         <nav>
             <ul class="nav">
-                <li title="home" <c:if test="${requestScope.home == true}">class="active"</c:if>><a href="/work_with_db?act=Home"
-                                                                                                    class="nav-icon"
-                                                                                                    title="home"><span
+                <li title="home" <c:if test="${requestScope.home == true}">class="active"</c:if>><a
+                        href="/work_with_db?act=Home"
+                        class="nav-icon"
+                        title="home"><span
                         class="icon-home">Home</span></a></li>
                 <li title="vehicle" <c:if test="${requestScope.vehicle == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Show&table=vehicle" title="vehicle">Транспортні засоби</a></li>
@@ -34,10 +35,12 @@
                         href="/work_with_db?act=Show&table=receipt" title="receipt">Чеки</a></li>
                 <li title="passenger" <c:if test="${requestScope.passenger == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Show&table=passenger" title="passenger">Пасажири</a></li>
-                <li title="user" <c:if test="${requestScope.user == true}">class="active"</c:if>><a
-                        href="/work_with_db?act=Show&table=user" title="user">Користувачі</a></li>
-                <li title="statistics" <c:if test="${requestScope.statistics == true}">class="active"</c:if>><a
-                        href="/work_with_db?act=Statistics" title="statistics">Статистика</a></li>
+                <c:if test="${sessionScope.userRole == 'Admin'}">
+                    <li title="user" <c:if test="${requestScope.user == true}">class="active"</c:if>><a
+                            href="/work_with_db?act=Show&table=user" title="user">Користувачі</a></li>
+                    <li title="statistics" <c:if test="${requestScope.statistics == true}">class="active"</c:if>><a
+                            href="/work_with_db?act=Statistics" title="statistics">Статистика</a></li>
+                </c:if>
             </ul>
         </nav>
     </section>
@@ -300,19 +303,25 @@
                 <table class="user-info-table">
                     <tbody>
                     <tr>
-                        <td>Посада:</td><td>Адміністратор</td>
+                        <td>Посада:</td>
+                        <td>${userInfo.get(6)}</td>
                     </tr>
                     <tr>
-                        <td>Прізвище:</td><td>Прізвище</td>
+                        <td>Прізвище:</td>
+                        <td>${userInfo.get(1)}</td>
                     </tr>
                     <tr>
-                        <td>Ім`я:</td><td>Ім`я</td>
+                        <td>Ім`я:</td>
+                        <td>${userInfo.get(2)}</td>
                     </tr>
                     <tr>
-                        <td>По батькові:</td><td>По батькові</td>
+                        <td>По батькові:</td>
+                        <td>${userInfo.get(3)}</td>
                     </tr>
 
-                    <tr><td>Вік:</td><td>Вік</td>
+                    <tr>
+                        <td>Вік:</td>
+                        <td>${userInfo.get(5)}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -324,19 +333,25 @@
                 <table class="user-info-table">
                     <tbody>
                     <tr>
-                        <td>Email:</td><td>Email</td>
+                        <td>Email:</td>
+                        <td>${userInfo.get(4)}</td>
                     </tr>
                     <tr>
-                        <td>Телефон:</td><td>Телефон</td>
+                        <td>Телефон:</td>
+                        <td>${userInfo.get(7)}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <div class="search exit-div">
-                <form class="exit-form">
+                <form class="exit-form" action="/work_with_db" method="post">
+                    <input type="hidden" name="act" value="SignOut">
                     <input type="submit" value="Вийти з облікового запису" id="exit">
                 </form>
             </div>
+        </c:if>
+        <c:if test="${sessionScope.userRole == 'Admin'}">
+
         </c:if>
 
         <c:if test="${requestScope.statistics == true}">
@@ -546,69 +561,73 @@
         </form>
     </div>
 </section>
-<section class="containerAddUser">
-    <div class="add">
-        <h1>Додавання нового користувача</h1>
-        <form method="post" action="/work_with_db">
-            <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
-            <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
-            <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
-            <p><input type="email" name="email" value="" placeholder="Email"></p>
-            <p><input type="number" name="age" value="" placeholder="Вік"></p>
-            <p><select id="role" name="role">
-                <option disabled selected>Роль</option>
-                <option value="Director" selected>Директор</option>
-                <option value="Admin">Адміністратор</option>
-                <option value="Seller">Продавець</option>
-            </select></p>
-            <p><input type="tel" pattern="+[0-9]{12}" name="phoneNumber" value="" placeholder="Телефонний номер"></p>
-            <p><input type="text" name="password" value="" placeholder="Пароль"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
-            </p>
-        </form>
-    </div>
-</section>
-<section class="containerSendEmail">
-    <div class="add">
-        <h1>Відправка звіту на електрону адресу</h1>
-        <form method="post" action="/statistics">
-            <p><input type="email" name="email" placeholder="Email"></p>
-            <p><input type="text" name="header" placeholder="Тема"></p>
-            <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
-            <p><input type="hidden" name="act" value="Mail"></p>
-            <p><input type="hidden" name="sendReport" id="sendReport"></p>
-            <p class="submit"><input type="submit" name="add" value="Відправити">
-                <input type="reset"
-                       name="reset"
-                       onclick="onResetSendEmail(event)"
-                       value="Відмінити">
-            </p>
-        </form>
-    </div>
-    <script>
-        // function onSendEmail(event){
-        //     event.preventDefault();
-        //     let currentForm = event.target.parentNode.parentNode;
-        //     console.log(currentForm.getAttribute("id"));
-        //     let form = new FormData(event.target.parentNode.parentNode);
-        //     var table = document.getElementsByClassName("active")[0];
-        //     form.append('table', table.getAttribute("title"));
-        //     form.append('act', 'Add');
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.open("POST", "/work_with_db", true);
-        //     xhr.send(form);
-        // }
-        function onResetSendEmail(event) {
-            var element = document.getElementsByClassName("containerSendEmail")[0];
-            element.style.display = "none";
-            var elBlur = document.getElementsByClassName("wrapper")[0];
-            elBlur.style.filter = "blur(0px)";
-        }
-    </script>
-</section>
+<c:if test="${sessionScope.userRole == 'Admin'}">
+    <section class="containerAddUser">
+        <div class="add">
+            <h1>Додавання нового користувача</h1>
+            <form method="post" action="/work_with_db">
+                <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
+                <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
+                <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
+                <p><input type="email" name="email" value="" placeholder="Email"></p>
+                <p><input type="number" name="age" value="" placeholder="Вік"></p>
+                <p><select id="role" name="role">
+                    <option disabled selected>Роль</option>
+                    <option value="Director" selected>Директор</option>
+                    <option value="Admin">Адміністратор</option>
+                    <option value="Seller">Продавець</option>
+                </select></p>
+                <p><input type="tel" pattern="+[0-9]{12}" name="phoneNumber" value="" placeholder="Телефонний номер">
+                </p>
+                <p><input type="text" name="password" value="" placeholder="Пароль"></p>
+                <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input
+                        type="reset"
+                        name="reset"
+                        onclick="onReset(event)"
+                        value="Відмінити">
+                </p>
+            </form>
+        </div>
+    </section>
+    <section class="containerSendEmail">
+        <div class="add">
+            <h1>Відправка звіту на електрону адресу</h1>
+            <form method="post" action="/statistics">
+                <p><input type="email" name="email" placeholder="Email"></p>
+                <p><input type="text" name="header" placeholder="Тема"></p>
+                <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
+                <p><input type="hidden" name="act" value="Mail"></p>
+                <p><input type="hidden" name="sendReport" id="sendReport"></p>
+                <p class="submit"><input type="submit" name="add" value="Відправити">
+                    <input type="reset"
+                           name="reset"
+                           onclick="onResetSendEmail(event)"
+                           value="Відмінити">
+                </p>
+            </form>
+        </div>
+        <script>
+            // function onSendEmail(event){
+            //     event.preventDefault();
+            //     let currentForm = event.target.parentNode.parentNode;
+            //     console.log(currentForm.getAttribute("id"));
+            //     let form = new FormData(event.target.parentNode.parentNode);
+            //     var table = document.getElementsByClassName("active")[0];
+            //     form.append('table', table.getAttribute("title"));
+            //     form.append('act', 'Add');
+            //     var xhr = new XMLHttpRequest();
+            //     xhr.open("POST", "/work_with_db", true);
+            //     xhr.send(form);
+            // }
+            function onResetSendEmail(event) {
+                var element = document.getElementsByClassName("containerSendEmail")[0];
+                element.style.display = "none";
+                var elBlur = document.getElementsByClassName("wrapper")[0];
+                elBlur.style.filter = "blur(0px)";
+            }
+        </script>
+    </section>
+</c:if>
 <section class="result-log">
     <div class="add">
         <h1>Повідомлення</h1>

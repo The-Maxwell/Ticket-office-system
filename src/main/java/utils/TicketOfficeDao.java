@@ -142,6 +142,7 @@ public class TicketOfficeDao {
             case "passenger":
                 return PassengerEntity.class;
             case "user":
+            case "authorization":
                 return UserEntity.class;
             default:
                 return null;
@@ -259,6 +260,9 @@ public class TicketOfficeDao {
                 if (param[2] != null)
                     criteria.add(Restrictions.eq("role", param[2]));
                 return criteria;
+            case "authorization":
+                return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("email", param[0]))
+                        .add(Restrictions.eq("password", param[1]));
         }
         return null;
     }
