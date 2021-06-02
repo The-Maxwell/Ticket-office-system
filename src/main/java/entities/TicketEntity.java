@@ -86,7 +86,7 @@ public class TicketEntity implements IEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "Reciept_id", referencedColumnName = "Receipt_code")
+    @JoinColumn(name = "Reciept_id", referencedColumnName = "Receipt_code", nullable = false)
     public ReceiptEntity getReceiptByRecieptId() {
         return receiptByRecieptId;
     }

@@ -1,4 +1,4 @@
-package report;
+package services.reports;
 
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
@@ -22,7 +22,7 @@ import java.util.Date;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
-public class ReportsCreator{
+public class ReportsServiceImpl implements IReportsService {
 
     private String url = "jdbc:mysql://localhost/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false";
     private String username = "root";

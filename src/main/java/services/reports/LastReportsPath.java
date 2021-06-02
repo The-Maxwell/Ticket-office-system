@@ -1,4 +1,4 @@
-package report;
+package services.reports;
 
 import java.io.Serializable;
 

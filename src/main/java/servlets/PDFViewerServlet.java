@@ -1,8 +1,9 @@
 package servlets;
 
-import report.ReportsCreator;
-import services.EmailService;
-import utils.TicketOfficeDao;
+import services.reports.IReportsService;
+import services.reports.ReportsServiceImpl;
+import services.email.EmailServiceImpl;
+import services.email.IEmailService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,18 +20,20 @@ import java.io.IOException;
 @MultipartConfig
 public class PDFViewerServlet extends HttpServlet {
 
-    private ReportsCreator reportsCreator;
+    private IReportsService reportsService;
+    private IEmailService emailService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        reportsCreator = new ReportsCreator();
+        reportsService = new ReportsServiceImpl();
+        emailService = new EmailServiceImpl();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = null;
         String action = request.getParameter("act");
-        reportsCreator.setRequest(request);
+        reportsService.setRequest(request);
         switch (action){
             case "Generate":
                 String generateReport = request.getParameter("generateReport");
@@ -41,14 +44,14 @@ public class PDFViewerServlet extends HttpServlet {
                 String email = request.getParameter("email");
                 String header = request.getParameter("header");
                 String message = request.getParameter("message");
-                String pathToReport = reportsCreator.getLastReportsPath(sendReport);
+                String pathToReport = reportsService.getLastReportsPath(sendReport);
                 //Додати перевірки + дефолтні значення
                 if(email.trim().equals("")) System.out.println("email=null");
                 if(header.trim().equals("")) System.out.println("header=null");
                 if(message.trim().equals("")) System.out.println("message=null");
                 int index = pathToReport.indexOf(sendReport);
                 String filename = pathToReport.substring(index);
-                boolean result = EmailService.sendReportToEmail(email, header, message, pathToReport, filename);
+                boolean result = emailService.sendReportToEmail(email, header, message, pathToReport, filename);
 //                System.out.println("Result="+result);
                 requestDispatcher = request.getRequestDispatcher("/work_with_db?act=Statistics");
                 requestDispatcher.forward(request, response);
@@ -58,22 +61,22 @@ public class PDFViewerServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String report = request.getParameter("report");
-        reportsCreator.setRequest(request);
+        reportsService.setRequest(request);
         //reportsCreator.createReports();
         String path = null;
         switch (report){
             case "VehicheReport":
-                path = ReportsCreator.lastVehicheReportPath;
+                path = ReportsServiceImpl.lastVehicheReportPath;
                 break;
             case "VehicheJournaryTicketReport":
-                path = ReportsCreator.lastVehicheJournaryTicketReportPath;
+                path = ReportsServiceImpl.lastVehicheJournaryTicketReportPath;
                 break;
             case "CategoryReport":
-                path = ReportsCreator.lastCategoryReportPath;
+                path = ReportsServiceImpl.lastCategoryReportPath;
                 break;
         }
         if(path == null)
-            path = reportsCreator.getLastReportsPath(report);
+            path = reportsService.getLastReportsPath(report);
 
         FileInputStream fis = new FileInputStream(new File(path));
         org.apache.commons.io.IOUtils.copy(fis, response.getOutputStream());
@@ -85,13 +88,13 @@ public class PDFViewerServlet extends HttpServlet {
     protected void generateReport(String generateReport){
         switch (generateReport){
             case "generateVehicleReport":
-                reportsCreator.createVehicleReport();
+                reportsService.createVehicleReport();
                 break;
             case "generateVehicheJournaryTicketReport":
-                reportsCreator.createVehicheJournaryTicketReport();
+                reportsService.createVehicheJournaryTicketReport();
                 break;
             case "generateCategoryReport":
-                reportsCreator.createCategoryReport();
+                reportsService.createCategoryReport();
                 break;
         }
     }

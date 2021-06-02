@@ -1,4 +1,6 @@
-package services;
+package services.email;
+
+import services.email.IEmailService;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -10,9 +12,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
-public class EmailService {
+public class EmailServiceImpl implements IEmailService {
 
-    public static boolean sendReportToEmail(String to, String header, String textMessage, String pathToReport, String filename) {
+    public boolean sendReportToEmail(String to, String header, String textMessage, String pathToReport, String filename) {
 
         final String SENDER_EMAIL_ADDRESS = "ticketoffice.reports.sender@gmail.com";
         final String SENDER_EMAIL_PASSWORD = "reP_40ku_Csdr";

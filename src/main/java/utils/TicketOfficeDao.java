@@ -68,6 +68,7 @@ public class TicketOfficeDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
+            result = e.getMessage();
             session.getTransaction().rollback();
         } finally {
             session.close();
@@ -98,8 +99,8 @@ public class TicketOfficeDao {
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
-            session.getTransaction().rollback();
             result = e.getMessage();
+            session.getTransaction().rollback();
         } finally {
             session.close();
             return result;
@@ -121,8 +122,8 @@ public class TicketOfficeDao {
             session.remove(entity);
             session.getTransaction().commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
             result = e.getMessage();
+            session.getTransaction().rollback();
         } finally {
             session.close();
             return result;

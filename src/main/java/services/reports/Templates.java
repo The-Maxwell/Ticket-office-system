@@ -1,4 +1,4 @@
-package report;
+package services.reports;
 
 import net.sf.dynamicreports.report.base.expression.AbstractValueFormatter;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;

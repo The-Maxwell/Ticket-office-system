@@ -25,7 +25,7 @@
     </div>
 </section>
 <c:if test="${requestScope.errorMessage != null}">
-    <section id="error-log">
+    <section class="result-log">
         <div class="login">
             <h1>Повідомлення</h1>
             <p id="error-text">${requestScope.errorMessage}</p>
@@ -34,7 +34,7 @@
     </section>
     <script>
         function onOK(event) {
-            var element = document.getElementById("error-log");
+            var element = document.getElementById("result-log");
             element.style.display = "none";
         }
     </script>

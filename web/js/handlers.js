@@ -95,6 +95,7 @@ function onOpenSendForm(event) {
 }
 
 function onAdd(event) {
+
     let form = new FormData(event.target.parentNode.parentNode);
     var table = document.getElementsByClassName("active")[0];
     form.append('table', table.getAttribute("title"));
@@ -106,12 +107,20 @@ function onAdd(event) {
             var status = request.status;
             if (status == 200) {
                 location.reload();
-            } else {
-                //document.write("Ответ сервера " + request.statusText);
+            }
+            else if(status == 500){
+                console.error("Error");
+                var element1 = document.getElementsByClassName("result-log")[0];
+                element1.style.display = "block";
+                var element2 = document.getElementById("result-text");
+                element2.textContent = "Error adding!";
+                var elBlur = document.getElementsByClassName("wrapper")[0];
+                elBlur.style.filter = "blur(2px)";
             }
         }
     };
     request.send(form);
+    event.preventDefault();
     onReset(event);
 }
 

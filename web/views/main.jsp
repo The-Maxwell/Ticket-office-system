@@ -10,7 +10,6 @@
 <html>
 <head>
     <title>Ticketoffice</title>
-    <link rel="stylesheet" href="views/stylesIndex.css"/>
     <link rel="stylesheet" href="styles/css/style.css">
     <link rel="stylesheet" href="styles/css/styleAdd.css">
     <link rel="icon" type="image/x-icon" href="styles/img/favicon.ico"/>
@@ -145,11 +144,9 @@
             </div>
         </c:if>
         <c:if test="${requestScope.home == true}">
-
             <div class="user-info-header-one">
                 <h1>Загальна інформація</h1>
             </div>
-
             <div>
                 <table class="user-info-table">
                     <tbody>
@@ -253,19 +250,22 @@
     <div class="add">
         <h1>Додавання нового транспортного засобу</h1>
         <form>
-            <p><input type="number" name="vehicleCode" value="" placeholder="Код транспортного засобу"></p>
-            <p><select id="vehicleType" name="vehicleType">
+            <p><input type="number" name="vehicleCode" value="" required placeholder="Код транспортного засобу"></p>
+            <p><select id="vehicleType" name="vehicleType" required>
                 <option disabled selected>Тип</option>
                 <option value="bus" selected>Автобус</option>
                 <option value="train">Потяг</option>
                 <option value="airplane">Літак</option>
             </select></p>
-            <p><input type="number" name="numberOfSeats" value="" placeholder="К-сть місць"></p>
-            <p><input type="number" name="numberOfEconomyClassSeats" value="" placeholder="К-сть економ. місць"></p>
-            <p><input type="number" name="numberOfMediumClassSeats" value="" placeholder="К-сть серед. місць"></p>
-            <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць"></p>
+            <p><input type="number" name="numberOfSeats" value="" placeholder="К-сть місць" required></p>
+            <p><input type="number" name="numberOfEconomyClassSeats" value="" placeholder="К-сть економ. місць"
+                      required></p>
+            <p><input type="number" name="numberOfMediumClassSeats" value="" placeholder="К-сть серед. місць" required>
+            </p>
+            <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць" required>
+            </p>
             <p><input type="text" name="vechileCompany" value="" placeholder="Транспортна компанія"></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
+            <p class="submit"><input type="submit" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
                                                                                                            onclick="onReset(event)"
                                                                                                            value="Відмінити">
@@ -277,12 +277,13 @@
     <div class="add">
         <h1>Додавання нового рейсу</h1>
         <form method="post" action="/work_with_db">
-            <p><input type="text" name="departurePoint" value="" placeholder="Місце відправки"></p>
-            <p><input type="text" name="destination" value="" placeholder="Місце прибуття"></p>
-            <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"></p>
-            <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття">
-            </p>
-            <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу"></p>
+            <p><input type="text" name="departurePoint" value="" placeholder="Місце відправки" required></p>
+            <p><input type="text" name="destination" value="" placeholder="Місце прибуття" required></p>
+            <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"
+                      required></p>
+            <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття"
+                      required></p>
+            <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу" required></p>
             <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
                                                                                                            onclick="onReset(event)"
@@ -295,16 +296,16 @@
     <div class="add">
         <h1>Додавання нового квитка</h1>
         <form method="post" action="/work_with_db">
-            <p><select id="category" name="category">
+            <p><select id="category" name="category" required>
                 <option disabled selected>Категорія</option>
                 <option value="econom" selected>Економний</option>
                 <option value="medium">Середній</option>
                 <option value="luxe">Люкс</option>
             </select></p>
-            <p><input type="number" name="cost" value="" placeholder="Вартість"></p>
-            <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер"></p>
-            <p><input type="number" name="receiptId" value="" placeholder="Код чека"></p>
-            <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу"></p>
+            <p><input type="number" name="cost" value="" placeholder="Вартість" required></p>
+            <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер" required></p>
+            <p><input type="number" name="receiptId" value="" placeholder="Код чека" required></p>
+            <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу" required></p>
             <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
                                                                                                            onclick="onReset(event)"
@@ -317,11 +318,12 @@
     <div class="add">
         <h1>Додавання нового чека</h1>
         <form method="post" action="/work_with_db">
-            <p><input type="datetime-local" name="dataAndTimeOfSale" value="" placeholder="Дата і час продажі"></p>
+            <p><input type="datetime-local" name="dataAndTimeOfSale" value="" placeholder="Дата і час продажі" required>
+            </p>
             <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання">
             </p>
-            <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна"></p>
-            <p><input type="number" name="passengerId" value="" placeholder="Код пасажира"></p>
+            <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна" required></p>
+            <p><input type="number" name="passengerId" value="" placeholder="Код пасажира" required></p>
             <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
                                                                                                            name="reset"
                                                                                                            onclick="onReset(event)"
@@ -334,10 +336,10 @@
     <div class="add">
         <h1>Додавання нового пасажира</h1>
         <form method="post" action="/work_with_db">
-            <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
-            <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
-            <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
-            <p><select id="categoryPassenger" name="category">
+            <p><input type="text" name="lastName" value="" placeholder="Прізвище" required></p>
+            <p><input type="text" name="firstName" value="" placeholder="Ім'я" required></p>
+            <p><input type="text" name="surname" value="" placeholder="По батькові" required></p>
+            <p><select id="categoryPassenger" name="category" required>
                 <option disabled selected>Категорія</option>
                 <option value="Дитина до 4 років" selected>Дитина до 4 років</option>
                 <option value="Школяр">Школяр</option>
@@ -359,21 +361,22 @@
         <div class="add">
             <h1>Додавання нового користувача</h1>
             <form method="post" action="/work_with_db">
-                <p><input type="text" name="lastName" value="" placeholder="Прізвище"></p>
-                <p><input type="text" name="firstName" value="" placeholder="Ім'я"></p>
-                <p><input type="text" name="surname" value="" placeholder="По батькові"></p>
-                <p><input type="email" name="email" value="" placeholder="Email"></p>
-                <p><input type="number" name="age" value="" placeholder="Вік"></p>
-                <p><select id="role" name="role">
+                <p><input type="text" name="lastName" value="" placeholder="Прізвище" required></p>
+                <p><input type="text" name="firstName" value="" placeholder="Ім'я" required></p>
+                <p><input type="text" name="surname" value="" placeholder="По батькові" required></p>
+                <p><input type="email" name="email" value="" placeholder="Email" required></p>
+                <p><input type="number" name="age" value="" placeholder="Вік" required></p>
+                <p><select id="role" name="role" required>
                     <option disabled selected>Роль</option>
                     <option value="Director" selected>Директор</option>
                     <option value="Admin">Адміністратор</option>
                     <option value="Seller">Продавець</option>
                 </select></p>
-                <p><input type="tel" pattern="+[0-9]{12}" name="phoneNumber" value="" placeholder="Телефонний номер">
+                <p><input type="tel" pattern="+[0-9]{12}" name="phoneNumber" value="" placeholder="Телефонний номер"
+                          required>
                 </p>
-                <p><input type="text" name="password" value="" placeholder="Пароль"></p>
-                <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input
+                <p><input type="text" name="password" value="" placeholder="Пароль" required></p>
+                <p class="submit"><input type="submit" name="add" onclick="onAdd(event)" value="Додати"><input
                         type="reset"
                         name="reset"
                         onclick="onReset(event)"
@@ -391,7 +394,7 @@
                 <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
                 <p><input type="hidden" name="act" value="Mail"></p>
                 <p><input type="hidden" name="sendReport" id="sendReport"></p>
-                <p class="submit"><input type="submit" name="add" value="Відправити">
+                <p class="submit"><input type="button" name="add" value="Відправити">
                     <input type="reset"
                            name="reset"
                            onclick="onResetSendEmail(event)"
@@ -404,7 +407,7 @@
 <section class="result-log">
     <div class="add">
         <h1>Повідомлення</h1>
-        <p id="result-text">Все норм!</p>
+        <p id="result-text"></p>
         <p class="submit"><input type="button" name="ok" onclick="onOK(event)" value="Ок">
     </div>
 </section>

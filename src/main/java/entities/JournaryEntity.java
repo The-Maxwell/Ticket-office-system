@@ -176,7 +176,7 @@ public class JournaryEntity implements IEntity{
     }
 
     @ManyToOne
-    @JoinColumn(name = "Vechile_id", referencedColumnName = "Vehicle_code")
+    @JoinColumn(name = "Vechile_id", referencedColumnName = "Vehicle_code", nullable = false)
     public VehicleEntity getVehicleByVechileId() {
         return vehicleByVechileId;
     }
