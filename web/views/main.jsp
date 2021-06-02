@@ -107,98 +107,10 @@
                 </form>
             </div>
 
-            <%--            <c:if test="${requestScope.vehicle == true}">--%>
-
-            <%--            <div class="search">--%>
-            <%--                <form action="" method="post">--%>
-            <%--                    Пошук транспорту за його типом:--%>
-            <%--                    <select name="selType">--%>
-            <%--                        <option value="bus" >Автобус</option>--%>
-            <%--                        <option value="train">Потяг</option>--%>
-            <%--                        <option value="airplane">Літак</option>--%>
-            <%--                    </select>--%>
-            <%--                    <input type="button" value="Пошук" id="search1">--%>
-            <%--                </form>--%>
-            <%--                    </div>--%>
-            <%--                </c:if>--%>
-
-            <%--            <c:if test="${requestScope.journary == true}">--%>
-            <%--                <div class="search">--%>
-            <%--                    <form action="" method="post">--%>
-            <%--                    Пошук рейсу за місцем відправки:--%>
-            <%--                    <input type="text" name="departurePoint1" value="" placeholder="Місце відправки">--%>
-            <%--                    та датою відправлення:--%>
-            <%--                    <input type="datetime-local" name="dateAndTimeOfArrival1" value="" placeholder="Дата і час відправки">--%>
-            <%--                    <input type="button" value="Пошук" id="search2">--%>
-            <%--                    </form>--%>
-            <%--                        </div>--%>
-            <%--            </c:if>--%>
-
-            <%--            <c:if test="${requestScope.ticket == true}">--%>
-
-            <%--                    <div class="search">--%>
-            <%--                        <form action="" method="post">--%>
-            <%--                            Пошук по категорії квитка:--%>
-            <%--                            <select name="selCategory">--%>
-            <%--                                <option value="econom">Економ</option>--%>
-            <%--                                <option value="medium">Бізнес</option>--%>
-            <%--                                <option value="luxe">Люкс</option>--%>
-
-            <%--                            </select>--%>
-            <%--                            <input type="button" value="Пошук" id="search3">--%>
-            <%--                        </form>--%>
-            <%--                            </div>--%>
-            <%--            </c:if>--%>
-
-            <%--            <c:if test="${requestScope.receipt == true}">--%>
-            <%--                        <div class="search">--%>
-            <%--                            <form action="" method="post">--%>
-            <%--                            Пошук чеків за пасажиром:--%>
-            <%--                            <input type="number" name="pessenger" value="" placeholder="Номер пасажира">--%>
-            <%--                            <input type="button" value="Пошук" id="search4">--%>
-            <%--                            </form>--%>
-            <%--                                </div>--%>
-
-            <%--            </c:if>--%>
-
-            <%--            <c:if test="${requestScope.passenger == true}">--%>
-            <%--                            <div class="search">--%>
-            <%--                                    <form action="" method="post">--%>
-            <%--                                        Пошук пасажирів за пільгами:--%>
-            <%--                                        <select name="selCat">--%>
-
-            <%--                                            <option value="Дитина до 4 років" >Дитина до 4 років</option>--%>
-            <%--                                            <option value="Школяр" >Школяр</option>--%>
-            <%--                                            <option value="Студент" >Студент</option>--%>
-            <%--                                            <option value="Без пільг" >Без пільг</option>--%>
-            <%--                                            <option value="Пенсіонер" >Пенсіонер</option>--%>
-            <%--                                            <option value="Людина з інвалідністю" >Людина з інвалідністю</option>--%>
-
-            <%--                                        </select>--%>
-            <%--                                        <input type="button" value="Пошук" id="search5">--%>
-            <%--                                    </form>--%>
-            <%--                                    </div>--%>
-
-            <%--            </c:if>--%>
-
             <div class="add-new-item"><input type="button" value="Додати" id="add"></div>
 
             <c:set var="t" scope="session" value="${requestScope.table}"/>
-            <script>
-                function onAddButton(event) {
-                    <%
-                    out.println("var table = '" + request.getParameter("table") + "';");
-                    %>
-                    var element = document.getElementsByClassName("containerAdd" + table.substr(0, 1) + table.substr(1, table.length - 1))[0];
-                    console.log(table.substr(0, 1) + table.substr(1, table.length - 1));
-                    element.style.display = "block";
-                    var elBlur = document.getElementsByClassName("wrapper")[0];
-                    elBlur.style.filter = "blur(2px)";
-                }
 
-                var buttonAdd = document.getElementById("add");
-                buttonAdd.onclick = onAddButton;
-            </script>
             <div class="table-wrap">
                 <table class="result-table">
                     <thead>
@@ -213,10 +125,10 @@
                         <tr>
                             <c:forEach var="column" items="${entity.recieveEntityInfo()}" varStatus="i">
                                 <c:if test="${!i.first}">
-                                    <c:if test="${i.last && requestScope.journary == true}">
+                                    <c:if test="${i.last && (requestScope.journary == true || requestScope.receipt == true)}">
                                         <td>${column}</td>
                                     </c:if>
-                                    <c:if test="${i.last && requestScope.journary != true || !i.last}">
+                                    <c:if test="${i.last && (requestScope.journary != true && requestScope.receipt != true) || !i.last}">
                                         <td contenteditable="true">${column}</td>
                                     </c:if>
                                 </c:if>
@@ -229,67 +141,6 @@
                         </tr>
                     </c:forEach>
                     </tbody>
-                    <script>
-                        function onDelete({target: el}) {
-                            var el2 = el.parentNode;
-                            var el3 = el2.parentElement;
-                            let formData = new FormData();
-                            formData.set('entityString', el3.children[0].textContent);
-                            var table = document.getElementsByClassName("active")[0];
-                            formData.append('table', table.getAttribute("title"));
-                            formData.append('act', 'Delete');
-                            var request = new XMLHttpRequest();
-                            request.open("POST", "http://localhost:8082/work_with_db");
-                            request.onreadystatechange = function () {
-                                if (request.readyState == 4) {
-                                    var status = request.status;
-                                    if (status == 200) {
-                                        location.reload();
-                                    } else {
-                                        //document.write("Ответ сервера " + request.statusText);
-                                    }
-                                }
-                            };
-                            request.send(formData);
-                        }
-
-                        function onEdit({target: el}) {
-                            var el2 = el.parentNode;
-                            var el3 = el2.parentElement;
-                            var entityString = "";
-                            for (var i = 0; i < el3.children.length; i++) {
-                                entityString += el3.children[i].textContent;
-                                if (i + 1 !== el3.children.length) entityString += ",";
-                            }
-                            entityString = entityString.substr(0, entityString.length - 2);
-                            console.log(entityString);
-                            let formData = new FormData();
-                            formData.append('entityString', entityString);
-                            var table = document.getElementsByClassName("active")[0];
-                            formData.append('table', table.getAttribute("title"));
-                            formData.append('act', 'Update');
-                            var request = new XMLHttpRequest();
-                            request.open("POST", "http://localhost:8082/work_with_db");
-                            request.onreadystatechange = function () {
-                                if (request.readyState == 4) {
-                                    var status = request.status;
-                                    if (status == 200) {
-                                        location.reload();
-                                    } else {
-                                        //document.write("Ответ сервера " + request.statusText);
-                                    }
-                                }
-                            };
-                            request.send(formData);
-                        }
-
-                        var deleteElems = document.getElementsByClassName("delete");
-                        var editElems = document.getElementsByClassName("edit");
-                        for (var i = 0; i < deleteElems.length; i++) {
-                            deleteElems[i].onclick = onDelete;
-                            editElems[i].onclick = onEdit;
-                        }
-                    </script>
                 </table>
             </div>
         </c:if>
@@ -366,31 +217,6 @@
                         <p class="submit statistics"><input type="button" value="Згенерувати"
                                                             onclick="onGenerate(event)" id="generateVehicleReport"></p>
                     </form>
-                    <script>
-                        function onGenerate(event) {
-                            event.preventDefault();
-                            console.log("onGenerate");
-                            var el = event.target;
-                            console.log(el.getAttribute("id"));
-                            let form = new FormData();
-                            form.append('act', 'Generate');
-                            form.append('generateReport', el.getAttribute("id"));
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "/statistics", true);
-                            xhr.send(form);
-                        }
-
-                        function onOpenSendForm(event) {
-                            var element = document.getElementsByClassName("containerSendEmail")[0];
-                            element.style.display = "block";
-                            var target = event.target;
-                            var el = document.getElementById("sendReport");
-                            el.value = target.id;
-                            console.log(el.value);
-                            var elBlur = document.getElementsByClassName("wrapper")[0];
-                            elBlur.style.filter = "blur(2px)";
-                        }
-                    </script>
                 </div>
                 <div class="flex-item">
                     <form action="post">
@@ -445,39 +271,6 @@
                                                                                                            value="Відмінити">
             </p>
         </form>
-        <script>
-            function onAdd(event) {
-                let form = new FormData(event.target.parentNode.parentNode);
-                var table = document.getElementsByClassName("active")[0];
-                form.append('table', table.getAttribute("title"));
-                form.append('act', 'Add');
-                var request = new XMLHttpRequest();
-                request.open("POST", "/work_with_db");
-                request.onreadystatechange = function () {
-                    if (request.readyState == 4) {
-                        var status = request.status;
-                        if (status == 200) {
-                            location.reload();
-                        } else {
-                            //document.write("Ответ сервера " + request.statusText);
-                        }
-                    }
-                };
-                request.send(form);
-                onReset(event);
-            }
-
-            function onReset(event) {
-                <%
-                    out.println("var table = '" + request.getParameter("table") + "';");
-                %>
-                var element = document.getElementsByClassName("containerAdd" + table.substr(0, 1) + table.substr(1, table.length - 1))[0];
-                console.log(table.substr(0, 1) + table.substr(1, table.length - 1));
-                element.style.display = "none";
-                var elBlur = document.getElementsByClassName("wrapper")[0];
-                elBlur.style.filter = "blur(0px)";
-            }
-        </script>
     </div>
 </section>
 <section class="containerAddJournary">
@@ -606,26 +399,6 @@
                 </p>
             </form>
         </div>
-        <script>
-            // function onSendEmail(event){
-            //     event.preventDefault();
-            //     let currentForm = event.target.parentNode.parentNode;
-            //     console.log(currentForm.getAttribute("id"));
-            //     let form = new FormData(event.target.parentNode.parentNode);
-            //     var table = document.getElementsByClassName("active")[0];
-            //     form.append('table', table.getAttribute("title"));
-            //     form.append('act', 'Add');
-            //     var xhr = new XMLHttpRequest();
-            //     xhr.open("POST", "/work_with_db", true);
-            //     xhr.send(form);
-            // }
-            function onResetSendEmail(event) {
-                var element = document.getElementsByClassName("containerSendEmail")[0];
-                element.style.display = "none";
-                var elBlur = document.getElementsByClassName("wrapper")[0];
-                elBlur.style.filter = "blur(0px)";
-            }
-        </script>
     </section>
 </c:if>
 <section class="result-log">
@@ -643,5 +416,6 @@
         elBlur.style.filter = "blur(0px)";
     }
 </script>
+<script src="js/handlers.js"></script>
 </body>
 </html>

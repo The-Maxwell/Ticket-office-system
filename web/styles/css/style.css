@@ -136,8 +136,7 @@ footer{
   text-shadow: none;
 }
 .nav .nav-icon {
-  padding: 0 15px;
-  top : 15;
+  padding: 15px 15px 15px 15px;
 }
 .nav .nav-icon:before {
   display: none;
@@ -171,7 +170,7 @@ footer{
 }
 .result-table {
   width: 1000px;
-  border: 1px solid green;
+  border: 2px solid #8abddf;
   margin: 0 auto;
   border-spacing: 3px;
   margin-bottom: 5px;
@@ -179,9 +178,10 @@ footer{
 }
 .result-table th, .result-table td {
   text-align: center;
-  border: 1px solid green;
+  border: 2px solid #8abddf;
   border-collapse: separate;
-  padding: 1px;
+  padding: 2px;
+  vertical-align: middle;
 }
 
 .wrapper{

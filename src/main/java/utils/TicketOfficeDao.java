@@ -158,7 +158,8 @@ public class TicketOfficeDao {
                 return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(VehicleEntity.class, idVehicle));
             case "receipt":
                 int idPassenger = Integer.parseInt(arrEntityString[3]);
-                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], session.load(PassengerEntity.class, idPassenger));
+                int idUser = Integer.parseInt(arrEntityString[4]);
+                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], session.load(PassengerEntity.class, idPassenger), session.load(UserEntity.class, idUser));
             case "ticket":
                 int idReceipt = Integer.parseInt(arrEntityString[3]);
                 int idJournary = Integer.parseInt(arrEntityString[4]);
@@ -181,7 +182,8 @@ public class TicketOfficeDao {
                 return new JournaryEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], session.load(VehicleEntity.class, idVehicle), arrEntityString[6]);
             case "receipt":
                 int idPassenger = Integer.parseInt(arrEntityString[4]);
-                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(PassengerEntity.class, idPassenger));
+                int idUser = Integer.parseInt(arrEntityString[5]);
+                return new ReceiptEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], session.load(PassengerEntity.class, idPassenger), session.load(UserEntity.class, idUser));
             case "ticket":
                 int idReceipt = Integer.parseInt(arrEntityString[4]);
                 int idJournary = Integer.parseInt(arrEntityString[5]);
@@ -189,7 +191,7 @@ public class TicketOfficeDao {
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4]);
             case "user":
-                int idUser = Integer.parseInt(arrEntityString[0]);
+                idUser = Integer.parseInt(arrEntityString[0]);
                 UserEntity userEntity = ((UserEntity) session.load(UserEntity.class, idUser));
                 String pwd = userEntity.getPassword();
                 session.evict(userEntity);
@@ -205,8 +207,8 @@ public class TicketOfficeDao {
                 return 7;
             case "ticket":
             case "journary":
-                return 5;
             case "receipt":
+                return 5;
             case "passenger":
                 return 4;
             case "user":

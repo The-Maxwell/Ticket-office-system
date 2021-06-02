@@ -1,0 +1,133 @@
+function onAddButton(event) {
+    var tableActive = document.getElementsByClassName("active")[0];
+    var table = tableActive.getAttribute("title");
+    var element = document.getElementsByClassName("containerAdd" + table)[0];
+    element.style.display = "block";
+    var elBlur = document.getElementsByClassName("wrapper")[0];
+    elBlur.style.filter = "blur(2px)";
+}
+
+var buttonAdd = document.getElementById("add");
+buttonAdd.onclick = onAddButton;
+
+function onDelete({target: el}) {
+    var el2 = el.parentNode;
+    var el3 = el2.parentElement;
+    let formData = new FormData();
+    formData.set('entityString', el3.children[0].textContent);
+    var table = document.getElementsByClassName("active")[0];
+    formData.append('table', table.getAttribute("title"));
+    formData.append('act', 'Delete');
+    var request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:8082/work_with_db");
+    request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+            var status = request.status;
+            if (status == 200) {
+                location.reload();
+            } else {
+                // document.write("Ответ сервера " + request.statusText);
+            }
+        }
+    };
+    request.send(formData);
+}
+
+function onEdit({target: el}) {
+    var el2 = el.parentNode;
+    var el3 = el2.parentElement;
+    var entityString = "";
+    for (var i = 0; i < el3.children.length; i++) {
+        entityString += el3.children[i].textContent;
+        if (i + 1 !== el3.children.length) entityString += ",";
+    }
+    entityString = entityString.substr(0, entityString.length - 2);
+    console.log(entityString);
+    let formData = new FormData();
+    formData.append('entityString', entityString);
+    var table = document.getElementsByClassName("active")[0];
+    formData.append('table', table.getAttribute("title"));
+    formData.append('act', 'Update');
+    var request = new XMLHttpRequest();
+    request.open("POST", "http://localhost:8082/work_with_db");
+    request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+            var status = request.status;
+            if (status == 200) {
+                location.reload();
+            } else {
+                //document.write("Ответ сервера " + request.statusText);
+            }
+        }
+    };
+    request.send(formData);
+}
+
+var deleteElems = document.getElementsByClassName("delete");
+var editElems = document.getElementsByClassName("edit");
+for (var i = 0; i < deleteElems.length; i++) {
+    deleteElems[i].onclick = onDelete;
+    editElems[i].onclick = onEdit;
+}
+
+function onGenerate(event) {
+    event.preventDefault();
+    console.log("onGenerate");
+    var el = event.target;
+    console.log(el.getAttribute("id"));
+    let form = new FormData();
+    form.append('act', 'Generate');
+    form.append('generateReport', el.getAttribute("id"));
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/statistics", true);
+    xhr.send(form);
+}
+
+function onOpenSendForm(event) {
+    var element = document.getElementsByClassName("containerSendEmail")[0];
+    element.style.display = "block";
+    var target = event.target;
+    var el = document.getElementById("sendReport");
+    el.value = target.id;
+    console.log(el.value);
+    var elBlur = document.getElementsByClassName("wrapper")[0];
+    elBlur.style.filter = "blur(2px)";
+}
+
+function onAdd(event) {
+    let form = new FormData(event.target.parentNode.parentNode);
+    var table = document.getElementsByClassName("active")[0];
+    form.append('table', table.getAttribute("title"));
+    form.append('act', 'Add');
+    var request = new XMLHttpRequest();
+    request.open("POST", "/work_with_db");
+    request.onreadystatechange = function () {
+        if (request.readyState == 4) {
+            var status = request.status;
+            if (status == 200) {
+                location.reload();
+            } else {
+                //document.write("Ответ сервера " + request.statusText);
+            }
+        }
+    };
+    request.send(form);
+    onReset(event);
+}
+
+function onReset(event) {
+    var tableActive = document.getElementsByClassName("active")[0];
+    var table = tableActive.getAttribute("title");
+    var element = document.getElementsByClassName("containerAdd" + table)[0];
+    element.style.display = "none";
+    var elBlur = document.getElementsByClassName("wrapper")[0];
+    elBlur.style.filter = "blur(0px)";
+}
+
+function onResetSendEmail(event) {
+    var element = document.getElementsByClassName("containerSendEmail")[0];
+    element.style.display = "none";
+    var elBlur = document.getElementsByClassName("wrapper")[0];
+    elBlur.style.filter = "blur(0px)";
+}
+

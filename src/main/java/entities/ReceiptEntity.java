@@ -19,6 +19,7 @@ public class ReceiptEntity implements IEntity{
     private Timestamp dataAndTimeOfBooking;
     private BigDecimal totalPrice;
     private PassengerEntity passengerByPassengerId;
+    private UserEntity userByUserId;
     private Collection<TicketEntity> ticketsByReceiptCode;
 
     @Id
@@ -99,6 +100,16 @@ public class ReceiptEntity implements IEntity{
         this.passengerByPassengerId = passengerByPassengerId;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "User_id", referencedColumnName = "ID", nullable = false)
+    public UserEntity getUserByUserId() {
+        return userByUserId;
+    }
+
+    public void setUserByUserId(UserEntity userByUserId) {
+        this.userByUserId = userByUserId;
+    }
+
     @OneToMany(mappedBy = "receiptByRecieptId")
     public Collection<TicketEntity> getTicketsByReceiptCode() {
         return ticketsByReceiptCode;
@@ -116,11 +127,12 @@ public class ReceiptEntity implements IEntity{
         row.add(String.valueOf(dataAndTimeOfBooking));
         row.add(String.valueOf(totalPrice));
         row.add(String.valueOf(passengerByPassengerId.getPassengerCode()));
+        row.add(String.valueOf(userByUserId.getId()));
         return row;
     }
     public ReceiptEntity(){}
 
-    public ReceiptEntity( String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId) throws Exception {
+    public ReceiptEntity( String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId, UserEntity userByUserId) throws Exception {
         this();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
         this.dataAndTimeOfSale = new Timestamp(dateFormat.parse(dataAndTimeOfSale).getTime());
@@ -128,9 +140,10 @@ public class ReceiptEntity implements IEntity{
         this.totalPrice = BigDecimal.valueOf(Double.parseDouble(totalPrice));
         if(passengerByPassengerId==null) throw new Exception("Invalid Passenger_id!");
         this.passengerByPassengerId = passengerByPassengerId;
+        this.userByUserId = userByUserId;
     }
 
-    public ReceiptEntity(String receiptCode, String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId) throws Exception {
+    public ReceiptEntity(String receiptCode, String dataAndTimeOfSale, String dataAndTimeOfBooking, String totalPrice, PassengerEntity passengerByPassengerId, UserEntity userByUserId) throws Exception {
         this.receiptCode = Integer.parseInt(receiptCode);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
         this.dataAndTimeOfSale = new Timestamp(dateFormat.parse(dataAndTimeOfSale).getTime());
@@ -138,16 +151,17 @@ public class ReceiptEntity implements IEntity{
         this.totalPrice = BigDecimal.valueOf(Double.parseDouble(totalPrice));
         if(passengerByPassengerId==null) throw new Exception("Invalid Passenger_id!");
         this.passengerByPassengerId = passengerByPassengerId;
+        this.userByUserId = userByUserId;
     }
 
     @Override
     public String[] recieveColumnsName() {
-        return new String[]{"Код чека","Дата і час продажі","Дата і час бронювання","Загальна ціна","Код пасажира"};
+        return new String[]{"Код чека","Дата і час продажі","Дата і час бронювання","Загальна ціна","Код пасажира", "Код працівника"};
     }
 
     @Override
     public String recieveStringInfo() {
         return String.valueOf(receiptCode)+","+String.valueOf(dataAndTimeOfSale)+","+String.valueOf(dataAndTimeOfBooking)+","
-                +String.valueOf(totalPrice)+","+String.valueOf(passengerByPassengerId.getPassengerCode());
+                +String.valueOf(totalPrice)+","+String.valueOf(passengerByPassengerId.getPassengerCode())+","+String.valueOf(userByUserId.getId());
     }
 }

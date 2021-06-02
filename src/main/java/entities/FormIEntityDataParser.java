@@ -1,6 +1,7 @@
 package entities;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 
 public class FormIEntityDataParser {
@@ -15,8 +16,9 @@ public class FormIEntityDataParser {
                 return getStringJoin(request.getParameter("departurePoint"), request.getParameter("destination"), request.getParameter("dateAndTimeOfArrival").replace('T',' ')+":00.0",
                         request.getParameter("dateAndTimeOfDeparture").replace('T',' ')+":00.0", request.getParameter("vechileId"));
             case "receipt":
+                HttpSession session = request.getSession();
                 return getStringJoin(request.getParameter("dataAndTimeOfSale").replace('T',' ')+":00.0", request.getParameter("dataAndTimeOfBooking").replace('T',' ')+":00.0", request.getParameter("totalPrice"),
-                        request.getParameter("passengerId"));
+                        request.getParameter("passengerId"), String.valueOf(session.getAttribute("userId")));
             case "ticket":
                 return getStringJoin(request.getParameter("category"), request.getParameter("cost"), request.getParameter("sequenceNumber"),
                         request.getParameter("receiptId"), request.getParameter("journaryId"));
