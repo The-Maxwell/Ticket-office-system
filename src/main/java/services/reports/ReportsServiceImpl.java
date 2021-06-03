@@ -233,10 +233,10 @@ public class ReportsServiceImpl implements IReportsService {
     }
 
     public void saveLastReportsPath(String reportName){
-        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
+        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports/reports_path.obj");
         LastReportsPath p;
-        if(new File(relativePath + "/reports_path.obj").exists()) {
-            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
+        if(new File(relativePath).exists()) {
+            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath)))
             {
                 p=(LastReportsPath)ois.readObject();
             }
@@ -246,7 +246,7 @@ public class ReportsServiceImpl implements IReportsService {
             }
         }
         else p = new LastReportsPath();
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(relativePath + "/reports_path.obj")))
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(relativePath)))
         {
             switch (reportName){
                 case "VehicheReport":
@@ -267,7 +267,6 @@ public class ReportsServiceImpl implements IReportsService {
     }
     public String getLastReportsPath(String reportName){
         String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports/reports_path.obj");
-        System.out.println(relativePath);
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath)))
         {
             LastReportsPath p = (LastReportsPath)ois.readObject();

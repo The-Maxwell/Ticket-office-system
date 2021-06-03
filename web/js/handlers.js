@@ -57,7 +57,6 @@ for (var i = 0; i < deleteElems.length; i++) {
 }
 function onSubmitReport(event) {
     event.preventDefault();
-    console.log("Submit report")
     let form = new FormData(event.target);
     var request = new XMLHttpRequest();
     request.open("POST", "/statistics");
@@ -65,11 +64,12 @@ function onSubmitReport(event) {
         onReadyStateChangeReports(request);
     };
     request.send(form);
+    var loading = document.getElementById("loading");
+    loading.style.display = "block";
     onResetSendEmail(event);
 }
 function onGenerate(event) {
     event.preventDefault();
-    console.log("onGenerate");
     var el = event.target;
     console.log(el.getAttribute("id"));
     let form = new FormData();
@@ -81,6 +81,8 @@ function onGenerate(event) {
         onReadyStateChangeReports(request);
     };
     request.send(form);
+    var loading = document.getElementById("loading");
+    loading.style.display = "block";
 }
 
 function onOpenSendForm(event) {
@@ -89,7 +91,6 @@ function onOpenSendForm(event) {
     var target = event.target;
     var el = document.getElementById("sendReport");
     el.value = target.id;
-    console.log(el.value);
     var elBlur = document.getElementsByClassName("wrapper")[0];
     elBlur.style.filter = "blur(2px)";
 }
@@ -126,10 +127,13 @@ function onReadyStateChangeCRUD(request) {
         }
     }
 }
+
 function onReadyStateChangeReports(request) {
     if (request.readyState == 4) {
         var status = request.status;
         if (status == 200 || status == 500){
+            var loading = document.getElementById("loading");
+            loading.style.display = "none";
             var element1 = document.getElementsByClassName("result-log")[0];
             element1.style.display = "block";
             var element2 = document.getElementById("result-text");

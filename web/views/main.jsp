@@ -375,7 +375,7 @@
     <section class="containerSendEmail">
         <div class="add">
             <h1>Відправка звіту на електрону адресу</h1>
-            <form onsubmit="onSubmitReport(event)">
+            <form onsubmit="onSubmitReport(event)" id="formSendEmail">
                 <p><input type="email" name="email" placeholder="Email" required></p>
                 <p><input type="text" name="header" placeholder="Тема"></p>
                 <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
@@ -395,6 +395,7 @@
         <p class="submit"><input type="button" name="ok" onclick="onOK(event)" value="Ок">
     </div>
 </section>
+<div id="loading"></div>
 <script src="js/handlers.js"></script>
 </body>
 </html>

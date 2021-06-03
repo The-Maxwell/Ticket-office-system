@@ -53,7 +53,6 @@ public class PDFViewerServlet extends HttpServlet {
                 String message = request.getParameter("message");
                 String pathToReport = reportsService.getLastReportsPath(sendReport);
                 //Додати перевірки + дефолтні значення
-                if(email.trim().equals("")) System.out.println("email=null");
                 if(header.trim().equals("")) header = sendReport;
                 if(message.trim().equals("")) message = "Вам відправлений звіт - " + sendReport;
                 if(pathToReport == null){
