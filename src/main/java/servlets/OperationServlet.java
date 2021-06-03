@@ -51,6 +51,7 @@ public class OperationServlet extends HttpServlet {
                 List<IEntity> list = ticketOfficeService.selectEntities(request.getParameter("table"));
                 request.setAttribute("entities", list);
                 request.setAttribute("table", request.getParameter("table"));
+                //Додати null перевірку та перевірку на перегляд таблиці користувачів
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
@@ -83,6 +84,7 @@ public class OperationServlet extends HttpServlet {
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Statistics":
+                //Додати перевірку на перегляд таблиці користувачів
                 request.setAttribute("statistics", true);
                 path = "views/main.jsp";
                 break;

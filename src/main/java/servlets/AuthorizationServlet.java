@@ -36,7 +36,6 @@ public class AuthorizationServlet extends HttpServlet {
         UserEntity userEntity = null;
         try {
             userEntity = (UserEntity) ticketOfficeDao.searchBySpecificParams("authorization", login, password).get(0);
-            System.out.println(userEntity.recieveStringInfo());
         } catch (Exception e) {
             e.printStackTrace();
         }
