@@ -14,7 +14,8 @@ import java.util.Properties;
 
 public class EmailServiceImpl implements IEmailService {
 
-    public boolean sendReportToEmail(String to, String header, String textMessage, String pathToReport, String filename) {
+    public String sendReportToEmail(String to, String header, String textMessage, String pathToReport, String filename) {
+        String result = null;
 
         final String SENDER_EMAIL_ADDRESS = "ticketoffice.reports.sender@gmail.com";
         final String SENDER_EMAIL_PASSWORD = "reP_40ku_Csdr";
@@ -75,10 +76,10 @@ public class EmailServiceImpl implements IEmailService {
 
             // Send message
             Transport.send(message);
-            return true;
         } catch (MessagingException mex) {
             mex.printStackTrace();
-            return false;
+            result = mex.getMessage();
         }
+        return result;
     }
 }

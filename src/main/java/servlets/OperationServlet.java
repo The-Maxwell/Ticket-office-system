@@ -37,7 +37,7 @@ public class OperationServlet extends HttpServlet {
         String path = null;
         String result = null;
         String action = request.getParameter("act");
-        response.setContentType("text/html;charset=UTF-8");
+        //response.setContentType("text/html;charset=UTF-8");
         switch (action) {
             case "Home":
                 request.setAttribute("home", true);
@@ -59,18 +59,16 @@ public class OperationServlet extends HttpServlet {
             case "Add":
                 String entityString = FormIEntityDataParser.getStringEntity(request);
                 result = ticketOfficeService.insertEntity(entityString, request.getParameter("table"));
-                System.out.println("result=" + result);
-                System.out.println("table=" + request.getParameter("table"));
                 if (result != null) {
-                    response.setStatus(500);
+                    setResponseText(response, result);
+                    return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Delete":
                 result = ticketOfficeService.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if (result != null) {
-                    PrintWriter printWriter = response.getWriter();
-                    printWriter.println("<h2>Delete Error</h2>");
+                    setResponseText(response, result);
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
@@ -79,14 +77,12 @@ public class OperationServlet extends HttpServlet {
                 entityString = request.getParameter("entityString");
                 result = ticketOfficeService.updateEntity(entityString, request.getParameter("table"));
                 if (result != null) {
-                    PrintWriter printWriter = response.getWriter();
-                    printWriter.println("<h2>Update Error</h2>");
+                    setResponseText(response, result);
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Statistics":
-                //reportsCreator.setRequest(request);
                 request.setAttribute("statistics", true);
                 path = "views/main.jsp";
                 break;
@@ -138,5 +134,10 @@ public class OperationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+    private void setResponseText(HttpServletResponse response, String result) throws IOException {
+        response.setContentType("text/plain");
+        response.setStatus(500);
+        response.getWriter().write(result);
     }
 }

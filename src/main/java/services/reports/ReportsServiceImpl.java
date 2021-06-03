@@ -48,7 +48,8 @@ public class ReportsServiceImpl implements IReportsService {
 
     }
 
-    public void createVehicleReport() {
+    public String createVehicleReport() {
+        String result = null;
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> vehicleCodeColumn = col.column("Vehicle code", "Vehicle_code", DataTypes.stringType());
@@ -89,12 +90,16 @@ public class ReportsServiceImpl implements IReportsService {
                 saveLastReportsPath("VehicheReport");
             } catch (Exception e) {
                 e.printStackTrace();
+                result = e.getMessage();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            result = throwables.getMessage();
         }
+        return result;
     }
-    public void createVehicheJournaryTicketReport() {
+    public String createVehicheJournaryTicketReport() {
+        String result = null;
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             StyleBuilder groupStyle = stl.style().bold().setFontName("DejaVu Serif");;
             CustomGroupBuilder vehicleGroup = grp.group("Vehicle_code", String.class)
@@ -164,13 +169,17 @@ public class ReportsServiceImpl implements IReportsService {
                 saveLastReportsPath("VehicheJournaryTicketReport");
             } catch (Exception e) {
                 e.printStackTrace();
+                result = e.getMessage();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            result = throwables.getMessage();
         }
+        return result;
     }
 
-    public void createCategoryReport(){
+    public String createCategoryReport(){
+        String result = null;
         try(Connection connection = DriverManager.getConnection(url, username, password)) {
             JasperReportBuilder report = DynamicReports.report();
             TextColumnBuilder<String> categoryColumn = DynamicReports.col.column("Category", "Category", DataTypes.stringType());
@@ -214,10 +223,13 @@ public class ReportsServiceImpl implements IReportsService {
                 saveLastReportsPath("CategoryReport");
             } catch (Exception e) {
                 e.printStackTrace();
+                result = e.getMessage();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            result = throwables.getMessage();
         }
+        return result;
     }
 
     public void saveLastReportsPath(String reportName){
@@ -250,12 +262,13 @@ public class ReportsServiceImpl implements IReportsService {
             oos.writeObject(p);
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
     public String getLastReportsPath(String reportName){
-        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath + "/reports_path.obj")))
+        String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports/reports_path.obj");
+        System.out.println(relativePath);
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(relativePath)))
         {
             LastReportsPath p = (LastReportsPath)ois.readObject();
             switch (reportName){

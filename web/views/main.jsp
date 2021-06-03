@@ -249,9 +249,9 @@
 <section class="containerAddVehicle">
     <div class="add">
         <h1>Додавання нового транспортного засобу</h1>
-        <form>
+        <form onsubmit="onAdd(event)">
             <p><input type="number" name="vehicleCode" value="" required placeholder="Код транспортного засобу"></p>
-            <p><select id="vehicleType" name="vehicleType" required>
+            <p><select id="vehicleType" name="vehicleType">
                 <option disabled selected>Тип</option>
                 <option value="bus" selected>Автобус</option>
                 <option value="train">Потяг</option>
@@ -265,10 +265,8 @@
             <p><input type="number" name="numberOfLuxuryClassSeats" value="" placeholder="К-сть люкс. місць" required>
             </p>
             <p><input type="text" name="vechileCompany" value="" placeholder="Транспортна компанія"></p>
-            <p class="submit"><input type="submit" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
+            <p class="submit"><input type="submit" name="add" value="Додати">
+                <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
             </p>
         </form>
     </div>
@@ -276,7 +274,7 @@
 <section class="containerAddJournary">
     <div class="add">
         <h1>Додавання нового рейсу</h1>
-        <form method="post" action="/work_with_db">
+        <form onsubmit="onAdd(event)">
             <p><input type="text" name="departurePoint" value="" placeholder="Місце відправки" required></p>
             <p><input type="text" name="destination" value="" placeholder="Місце прибуття" required></p>
             <p><input type="datetime-local" name="dateAndTimeOfArrival" value="" placeholder="Дата і час відправки"
@@ -284,10 +282,8 @@
             <p><input type="datetime-local" name="dateAndTimeOfDeparture" value="" placeholder="Дата і час прибуття"
                       required></p>
             <p><input type="number" name="vechileId" value="" placeholder="Номер транспортного засобу" required></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
+            <p class="submit"><input type="submit" name="add" value="Додати">
+                <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
             </p>
         </form>
     </div>
@@ -295,8 +291,8 @@
 <section class="containerAddTicket">
     <div class="add">
         <h1>Додавання нового квитка</h1>
-        <form method="post" action="/work_with_db">
-            <p><select id="category" name="category" required>
+        <form onsubmit="onAdd(event)">
+            <p><select id="category" name="category">
                 <option disabled selected>Категорія</option>
                 <option value="econom" selected>Економний</option>
                 <option value="medium">Середній</option>
@@ -306,10 +302,8 @@
             <p><input type="number" name="sequenceNumber" value="" placeholder="Порядковий номер" required></p>
             <p><input type="number" name="receiptId" value="" placeholder="Код чека" required></p>
             <p><input type="number" name="journaryId" value="" placeholder="Номер рейсу" required></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
+            <p class="submit"><input type="submit" name="add" value="Додати">
+                <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
             </p>
         </form>
     </div>
@@ -317,17 +311,15 @@
 <section class="containerAddReceipt">
     <div class="add">
         <h1>Додавання нового чека</h1>
-        <form method="post" action="/work_with_db">
+        <form onsubmit="onAdd(event)">
             <p><input type="datetime-local" name="dataAndTimeOfSale" value="" placeholder="Дата і час продажі" required>
             </p>
             <p><input type="datetime-local" name="dataAndTimeOfBooking" value="" placeholder="Дата і час бронювання">
             </p>
             <p><input type="number" name="totalPrice" value="" placeholder="Загальна ціна" required></p>
             <p><input type="number" name="passengerId" value="" placeholder="Код пасажира" required></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
+            <p class="submit"><input type="submit" name="add" value="Додати">
+                <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
             </p>
         </form>
     </div>
@@ -335,11 +327,11 @@
 <section class="containerAddPassenger">
     <div class="add">
         <h1>Додавання нового пасажира</h1>
-        <form method="post" action="/work_with_db">
+        <form onsubmit="onAdd(event)">
             <p><input type="text" name="lastName" value="" placeholder="Прізвище" required></p>
             <p><input type="text" name="firstName" value="" placeholder="Ім'я" required></p>
             <p><input type="text" name="surname" value="" placeholder="По батькові" required></p>
-            <p><select id="categoryPassenger" name="category" required>
+            <p><select id="categoryPassenger" name="category">
                 <option disabled selected>Категорія</option>
                 <option value="Дитина до 4 років" selected>Дитина до 4 років</option>
                 <option value="Школяр">Школяр</option>
@@ -348,10 +340,8 @@
                 <option value="Пенсіонер">Пенсіонер</option>
                 <option value="Людина з інвалідністю">Людина з інвалідністю</option>
             </select></p>
-            <p class="submit"><input type="button" name="add" onclick="onAdd(event)" value="Додати"><input type="reset"
-                                                                                                           name="reset"
-                                                                                                           onclick="onReset(event)"
-                                                                                                           value="Відмінити">
+            <p class="submit"><input type="submit" name="add" value="Додати">
+                <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
             </p>
         </form>
     </div>
@@ -360,13 +350,13 @@
     <section class="containerAddUser">
         <div class="add">
             <h1>Додавання нового користувача</h1>
-            <form method="post" action="/work_with_db">
+            <form onsubmit="onAdd(event)">
                 <p><input type="text" name="lastName" value="" placeholder="Прізвище" required></p>
                 <p><input type="text" name="firstName" value="" placeholder="Ім'я" required></p>
                 <p><input type="text" name="surname" value="" placeholder="По батькові" required></p>
                 <p><input type="email" name="email" value="" placeholder="Email" required></p>
                 <p><input type="number" name="age" value="" placeholder="Вік" required></p>
-                <p><select id="role" name="role" required>
+                <p><select id="role" name="role">
                     <option disabled selected>Роль</option>
                     <option value="Director" selected>Директор</option>
                     <option value="Admin">Адміністратор</option>
@@ -376,11 +366,8 @@
                           required>
                 </p>
                 <p><input type="text" name="password" value="" placeholder="Пароль" required></p>
-                <p class="submit"><input type="submit" name="add" onclick="onAdd(event)" value="Додати"><input
-                        type="reset"
-                        name="reset"
-                        onclick="onReset(event)"
-                        value="Відмінити">
+                <p class="submit"><input type="submit" name="add" value="Додати">
+                    <input type="reset" name="reset" onclick="onReset(event)" value="Відмінити">
                 </p>
             </form>
         </div>
@@ -388,17 +375,14 @@
     <section class="containerSendEmail">
         <div class="add">
             <h1>Відправка звіту на електрону адресу</h1>
-            <form method="post" action="/statistics">
-                <p><input type="email" name="email" placeholder="Email"></p>
+            <form onsubmit="onSubmitReport(event)">
+                <p><input type="email" name="email" placeholder="Email" required></p>
                 <p><input type="text" name="header" placeholder="Тема"></p>
                 <p><textarea name="message" placeholder="Повідомлення в Email."></textarea></p>
                 <p><input type="hidden" name="act" value="Mail"></p>
                 <p><input type="hidden" name="sendReport" id="sendReport"></p>
-                <p class="submit"><input type="button" name="add" value="Відправити">
-                    <input type="reset"
-                           name="reset"
-                           onclick="onResetSendEmail(event)"
-                           value="Відмінити">
+                <p class="submit"><input type="submit" name="add" value="Відправити">
+                    <input type="reset" name="reset" onclick="onResetSendEmail(event)" value="Відмінити">
                 </p>
             </form>
         </div>
@@ -411,14 +395,6 @@
         <p class="submit"><input type="button" name="ok" onclick="onOK(event)" value="Ок">
     </div>
 </section>
-<script>
-    function onOK(event) {
-        var element = document.getElementsByClassName("result-log")[0];
-        element.style.display = "none";
-        var elBlur = document.getElementsByClassName("wrapper")[0];
-        elBlur.style.filter = "blur(0px)";
-    }
-</script>
 <script src="js/handlers.js"></script>
 </body>
 </html>

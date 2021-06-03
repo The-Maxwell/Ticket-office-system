@@ -98,7 +98,6 @@ public class TicketOfficeDao {
             session.update(getNeededEntityForUpdate(arrEntityString, session, table));
             session.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
             result = e.getMessage();
             session.getTransaction().rollback();
         } finally {

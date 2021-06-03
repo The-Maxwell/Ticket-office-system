@@ -37,8 +37,15 @@ public class PDFViewerServlet extends HttpServlet {
         switch (action){
             case "Generate":
                 String generateReport = request.getParameter("generateReport");
-                generateReport(generateReport);
-                break;
+                String result = generateReport(generateReport);
+                if (result != null) {
+                    setResponseText(response, 500, result);
+                    return;
+                }
+                else {
+                    setResponseText(response, 200, generateReport +" successfully generated!");
+                    return;
+                }
             case "Mail":
                 String sendReport = request.getParameter("sendReport");
                 String email = request.getParameter("email");
@@ -47,15 +54,26 @@ public class PDFViewerServlet extends HttpServlet {
                 String pathToReport = reportsService.getLastReportsPath(sendReport);
                 //Додати перевірки + дефолтні значення
                 if(email.trim().equals("")) System.out.println("email=null");
-                if(header.trim().equals("")) System.out.println("header=null");
-                if(message.trim().equals("")) System.out.println("message=null");
+                if(header.trim().equals("")) header = sendReport;
+                if(message.trim().equals("")) message = "Вам відправлений звіт - " + sendReport;
+                if(pathToReport == null){
+                    setResponseText(response,500, "Error sending report!");
+                    return;
+                }
                 int index = pathToReport.indexOf(sendReport);
                 String filename = pathToReport.substring(index);
-                boolean result = emailService.sendReportToEmail(email, header, message, pathToReport, filename);
-//                System.out.println("Result="+result);
-                requestDispatcher = request.getRequestDispatcher("/work_with_db?act=Statistics");
-                requestDispatcher.forward(request, response);
-                break;
+                result = emailService.sendReportToEmail(email, header, message, pathToReport, filename);
+                if(result != null){
+                    setResponseText(response,500, result);
+                    return;
+                }
+                else {
+                    setResponseText(response, 200, "Email successfully sent!");
+                    return;
+                }
+//                requestDispatcher = request.getRequestDispatcher("/work_with_db?act=Statistics");
+//                requestDispatcher.forward(request, response);
+//                break;
         }
     }
 
@@ -77,7 +95,11 @@ public class PDFViewerServlet extends HttpServlet {
         }
         if(path == null)
             path = reportsService.getLastReportsPath(report);
-
+        if(path == null){
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().write("<h3>Report not found! Please generate a report!</h3>");
+            return;
+        }
         FileInputStream fis = new FileInputStream(new File(path));
         org.apache.commons.io.IOUtils.copy(fis, response.getOutputStream());
         response.setContentType("application/pdf");
@@ -85,17 +107,25 @@ public class PDFViewerServlet extends HttpServlet {
         response.flushBuffer();
     }
 
-    protected void generateReport(String generateReport){
+    protected String generateReport(String generateReport){
+        String result = null;
         switch (generateReport){
             case "generateVehicleReport":
-                reportsService.createVehicleReport();
+                result = reportsService.createVehicleReport();
                 break;
             case "generateVehicheJournaryTicketReport":
-                reportsService.createVehicheJournaryTicketReport();
+                result = reportsService.createVehicheJournaryTicketReport();
                 break;
             case "generateCategoryReport":
-                reportsService.createCategoryReport();
+                result = reportsService.createCategoryReport();
                 break;
         }
+        return result;
+    }
+
+    private void setResponseText(HttpServletResponse response, int status, String result) throws IOException {
+        response.setContentType("text/plain");
+        response.setStatus(status);
+        response.getWriter().write(result);
     }
 }

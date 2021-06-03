@@ -21,14 +21,7 @@ function onDelete({target: el}) {
     var request = new XMLHttpRequest();
     request.open("POST", "http://localhost:8082/work_with_db");
     request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            var status = request.status;
-            if (status == 200) {
-                location.reload();
-            } else {
-                // document.write("Ответ сервера " + request.statusText);
-            }
-        }
+        onReadyStateChangeCRUD(request);
     };
     request.send(formData);
 }
@@ -51,14 +44,7 @@ function onEdit({target: el}) {
     var request = new XMLHttpRequest();
     request.open("POST", "http://localhost:8082/work_with_db");
     request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            var status = request.status;
-            if (status == 200) {
-                location.reload();
-            } else {
-                //document.write("Ответ сервера " + request.statusText);
-            }
-        }
+        onReadyStateChangeCRUD(request);
     };
     request.send(formData);
 }
@@ -69,7 +55,18 @@ for (var i = 0; i < deleteElems.length; i++) {
     deleteElems[i].onclick = onDelete;
     editElems[i].onclick = onEdit;
 }
-
+function onSubmitReport(event) {
+    event.preventDefault();
+    console.log("Submit report")
+    let form = new FormData(event.target);
+    var request = new XMLHttpRequest();
+    request.open("POST", "/statistics");
+    request.onreadystatechange = function () {
+        onReadyStateChangeReports(request);
+    };
+    request.send(form);
+    onResetSendEmail(event);
+}
 function onGenerate(event) {
     event.preventDefault();
     console.log("onGenerate");
@@ -78,9 +75,12 @@ function onGenerate(event) {
     let form = new FormData();
     form.append('act', 'Generate');
     form.append('generateReport', el.getAttribute("id"));
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/statistics", true);
-    xhr.send(form);
+    var request = new XMLHttpRequest();
+    request.open("POST", "/statistics", true);
+    request.onreadystatechange = function () {
+        onReadyStateChangeReports(request);
+    };
+    request.send(form);
 }
 
 function onOpenSendForm(event) {
@@ -95,35 +95,50 @@ function onOpenSendForm(event) {
 }
 
 function onAdd(event) {
-
-    let form = new FormData(event.target.parentNode.parentNode);
+    event.preventDefault();
+    console.log("Submit")
+    let form = new FormData(event.target);
     var table = document.getElementsByClassName("active")[0];
     form.append('table', table.getAttribute("title"));
     form.append('act', 'Add');
     var request = new XMLHttpRequest();
     request.open("POST", "/work_with_db");
     request.onreadystatechange = function () {
-        if (request.readyState == 4) {
-            var status = request.status;
-            if (status == 200) {
-                location.reload();
-            }
-            else if(status == 500){
-                console.error("Error");
-                var element1 = document.getElementsByClassName("result-log")[0];
-                element1.style.display = "block";
-                var element2 = document.getElementById("result-text");
-                element2.textContent = "Error adding!";
-                var elBlur = document.getElementsByClassName("wrapper")[0];
-                elBlur.style.filter = "blur(2px)";
-            }
-        }
+        onReadyStateChangeCRUD(request);
     };
     request.send(form);
-    event.preventDefault();
     onReset(event);
 }
 
+function onReadyStateChangeCRUD(request) {
+    if (request.readyState == 4) {
+        var status = request.status;
+        if (status == 200) {
+            location.reload();
+        }
+        else if(status == 500){
+            var element1 = document.getElementsByClassName("result-log")[0];
+            element1.style.display = "block";
+            var element2 = document.getElementById("result-text");
+            element2.textContent = request.responseText;
+            var elBlur = document.getElementsByClassName("wrapper")[0];
+            elBlur.style.filter = "blur(2px)";
+        }
+    }
+}
+function onReadyStateChangeReports(request) {
+    if (request.readyState == 4) {
+        var status = request.status;
+        if (status == 200 || status == 500){
+            var element1 = document.getElementsByClassName("result-log")[0];
+            element1.style.display = "block";
+            var element2 = document.getElementById("result-text");
+            element2.textContent = request.responseText;
+            var elBlur = document.getElementsByClassName("wrapper")[0];
+            elBlur.style.filter = "blur(2px)";
+        }
+    }
+}
 function onReset(event) {
     var tableActive = document.getElementsByClassName("active")[0];
     var table = tableActive.getAttribute("title");
@@ -140,3 +155,21 @@ function onResetSendEmail(event) {
     elBlur.style.filter = "blur(0px)";
 }
 
+function onOK(event) {
+    var element = document.getElementsByClassName("result-log")[0];
+    element.style.display = "none";
+    var elBlur = document.getElementsByClassName("wrapper")[0];
+    elBlur.style.filter = "blur(0px)";
+}
+// function onShowReport(event, report){
+//     event.preventDefault();
+//     console.log("Show rep="+report);
+//     let form = new FormData();
+//     form.append('report', report);
+//     var request = new XMLHttpRequest();
+//     request.open("GET", "/statistics");
+//     request.onreadystatechange = function () {
+//         //onReadyStateChange(request);
+//     };
+//     request.send(form);
+// }
