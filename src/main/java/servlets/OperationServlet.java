@@ -23,12 +23,13 @@ import java.util.List;
 public class OperationServlet extends HttpServlet {
 
     private ITicketOfficeService ticketOfficeService;
-
+    private ServletHelper servletHelper;
     //private ReportsCreator reportsCreator;
     @Override
     public void init() throws ServletException {
         super.init();
         ticketOfficeService = new TicketOfficeServiceImpl();
+        servletHelper = new ServletHelper();
         //reportsCreator = new ReportsCreator();
     }
 
@@ -48,10 +49,10 @@ public class OperationServlet extends HttpServlet {
                 path = "views/main.jsp";
                 break;
             case "Show":
+                if (!servletHelper.checkOnAccess(request, response) && request.getParameter("table").equals("user")) return;
                 List<IEntity> list = ticketOfficeService.selectEntities(request.getParameter("table"));
                 request.setAttribute("entities", list);
                 request.setAttribute("table", request.getParameter("table"));
-                //Додати null перевірку та перевірку на перегляд таблиці користувачів
                 IEntity entity = list.get(0);
                 request.setAttribute(request.getParameter("table"), true);
                 request.setAttribute("columnsName", entity.recieveColumnsName());
@@ -61,7 +62,7 @@ public class OperationServlet extends HttpServlet {
                 String entityString = FormIEntityDataParser.getStringEntity(request);
                 result = ticketOfficeService.insertEntity(entityString, request.getParameter("table"));
                 if (result != null) {
-                    setResponseText(response, result);
+                    servletHelper.setResponseText(response, 500, result);
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
@@ -69,7 +70,7 @@ public class OperationServlet extends HttpServlet {
             case "Delete":
                 result = ticketOfficeService.deleteEntity(request.getParameter("entityString"), request.getParameter("table"));
                 if (result != null) {
-                    setResponseText(response, result);
+                    servletHelper.setResponseText(response,500, result);
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
@@ -78,13 +79,13 @@ public class OperationServlet extends HttpServlet {
                 entityString = request.getParameter("entityString");
                 result = ticketOfficeService.updateEntity(entityString, request.getParameter("table"));
                 if (result != null) {
-                    setResponseText(response, result);
+                    servletHelper.setResponseText(response,500, result);
                     return;
                 }
                 path = "/work_with_db?act=Show&table=" + request.getParameter("table");
                 break;
             case "Statistics":
-                //Додати перевірку на перегляд таблиці користувачів
+                if (!servletHelper.checkOnAccess(request, response)) return;
                 request.setAttribute("statistics", true);
                 path = "views/main.jsp";
                 break;
@@ -136,10 +137,5 @@ public class OperationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
-    }
-    private void setResponseText(HttpServletResponse response, String result) throws IOException {
-        response.setContentType("text/plain");
-        response.setStatus(500);
-        response.getWriter().write(result);
     }
 }

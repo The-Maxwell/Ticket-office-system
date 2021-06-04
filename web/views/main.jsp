@@ -34,7 +34,7 @@
                         href="/work_with_db?act=Show&table=receipt" title="receipt">Чеки</a></li>
                 <li title="passenger" <c:if test="${requestScope.passenger == true}">class="active"</c:if>><a
                         href="/work_with_db?act=Show&table=passenger" title="passenger">Пасажири</a></li>
-                <c:if test="${sessionScope.userRole == 'Admin'}">
+                <c:if test="${sessionScope.userRole == 'Admin' || sessionScope.userRole == 'Director'}">
                     <li title="user" <c:if test="${requestScope.user == true}">class="active"</c:if>><a
                             href="/work_with_db?act=Show&table=user" title="user">Користувачі</a></li>
                     <li title="statistics" <c:if test="${requestScope.statistics == true}">class="active"</c:if>><a
@@ -198,10 +198,6 @@
                 </form>
             </div>
         </c:if>
-        <c:if test="${sessionScope.userRole == 'Admin'}">
-
-        </c:if>
-
         <c:if test="${requestScope.statistics == true}">
             <div class="reports">
                 <div class="flex-item">

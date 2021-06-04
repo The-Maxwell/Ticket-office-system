@@ -1,9 +1,9 @@
 package servlets;
 
-import services.reports.IReportsService;
-import services.reports.ReportsServiceImpl;
 import services.email.EmailServiceImpl;
 import services.email.IEmailService;
+import services.reports.IReportsService;
+import services.reports.ReportsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,29 +23,30 @@ public class PDFViewerServlet extends HttpServlet {
 
     private IReportsService reportsService;
     private IEmailService emailService;
+    private ServletHelper servletHelper;
 
     @Override
     public void init() throws ServletException {
         super.init();
         reportsService = new ReportsServiceImpl();
         emailService = new EmailServiceImpl();
+        servletHelper = new ServletHelper();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!checkOnAccess(request, response)) return;
+        if (!servletHelper.checkOnAccess(request, response)) return;
         RequestDispatcher requestDispatcher = null;
         String action = request.getParameter("act");
         reportsService.setRequest(request);
-        switch (action){
+        switch (action) {
             case "Generate":
                 String generateReport = request.getParameter("generateReport");
                 String result = generateReport(generateReport);
                 if (result != null) {
-                    setResponseText(response, 500, result);
+                    servletHelper.setResponseText(response, 500, result);
                     return;
-                }
-                else {
-                    setResponseText(response, 200, generateReport +" successfully generated!");
+                } else {
+                    servletHelper.setResponseText(response, 200, generateReport + " successfully generated!");
                     return;
                 }
             case "Mail":
@@ -54,37 +55,30 @@ public class PDFViewerServlet extends HttpServlet {
                 String header = request.getParameter("header");
                 String message = request.getParameter("message");
                 String pathToReport = reportsService.getLastReportsPath(sendReport);
-                //Додати перевірки + дефолтні значення
-                if(header.trim().equals("")) header = sendReport;
-                if(message.trim().equals("")) message = "Вам відправлений звіт - " + sendReport;
-                if(pathToReport == null){
-                    setResponseText(response,500, "Error sending report!");
+                if (header.trim().equals("")) header = sendReport;
+                if (message.trim().equals("")) message = "Вам відправлений звіт - " + sendReport;
+                if (pathToReport == null) {
+                    servletHelper.setResponseText(response, 500, "Error sending report!");
                     return;
                 }
                 int index = pathToReport.indexOf(sendReport);
                 String filename = pathToReport.substring(index);
                 result = emailService.sendReportToEmail(email, header, message, pathToReport, filename);
-                if(result != null){
-                    setResponseText(response,500, result);
-                    return;
+                if (result != null) {
+                    servletHelper.setResponseText(response, 500, result);
+                } else {
+                    servletHelper.setResponseText(response, 200, "Email successfully sent!");
                 }
-                else {
-                    setResponseText(response, 200, "Email successfully sent!");
-                    return;
-                }
-//                requestDispatcher = request.getRequestDispatcher("/work_with_db?act=Statistics");
-//                requestDispatcher.forward(request, response);
-//                break;
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!checkOnAccess(request, response)) return;
+        if (!servletHelper.checkOnAccess(request, response)) return;
         String report = request.getParameter("report");
         reportsService.setRequest(request);
         //reportsCreator.createReports();
         String path = null;
-        switch (report){
+        switch (report) {
             case "VehicheReport":
                 path = ReportsServiceImpl.lastVehicheReportPath;
                 break;
@@ -95,9 +89,9 @@ public class PDFViewerServlet extends HttpServlet {
                 path = ReportsServiceImpl.lastCategoryReportPath;
                 break;
         }
-        if(path == null)
+        if (path == null)
             path = reportsService.getLastReportsPath(report);
-        if(path == null){
+        if (path == null) {
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().write("<h3>Report not found! Please generate a report!</h3>");
             return;
@@ -109,9 +103,9 @@ public class PDFViewerServlet extends HttpServlet {
         response.flushBuffer();
     }
 
-    protected String generateReport(String generateReport){
+    protected String generateReport(String generateReport) {
         String result = null;
-        switch (generateReport){
+        switch (generateReport) {
             case "generateVehicleReport":
                 result = reportsService.createVehicleReport();
                 break;
@@ -123,20 +117,5 @@ public class PDFViewerServlet extends HttpServlet {
                 break;
         }
         return result;
-    }
-
-    private void setResponseText(HttpServletResponse response, int status, String result) throws IOException {
-        response.setContentType("text/plain");
-        response.setStatus(status);
-        response.getWriter().write(result);
-    }
-    private boolean checkOnAccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("userRole").toString().equals("Seller")) {
-            response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("Access denied!");
-            return false;
-        }
-        return true;
     }
 }

@@ -7,8 +7,12 @@ function onAddButton(event) {
     elBlur.style.filter = "blur(2px)";
 }
 
-var buttonAdd = document.getElementById("add");
-buttonAdd.onclick = onAddButton;
+try{
+    var buttonAdd = document.getElementById("add");
+    buttonAdd.onclick = onAddButton;
+}catch (e) {
+    console.log(e);
+}
 
 function onDelete({target: el}) {
     var el2 = el.parentNode;
