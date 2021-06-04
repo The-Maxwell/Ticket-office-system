@@ -1,6 +1,7 @@
 package utils;
 
 import entities.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -167,7 +168,7 @@ public class TicketOfficeDao {
             case "passenger":
                 return new PassengerEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3]);
             case "user":
-                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6], arrEntityString[7]);
+                return new UserEntity(arrEntityString[0], arrEntityString[1], arrEntityString[2], arrEntityString[3], arrEntityString[4], arrEntityString[5], arrEntityString[6], DigestUtils.sha256Hex(arrEntityString[7] + IEntity.SAULT));
             default:
                 return null;
         }
