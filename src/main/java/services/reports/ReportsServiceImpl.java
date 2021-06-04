@@ -241,7 +241,6 @@ public class ReportsServiceImpl implements IReportsService {
                 p=(LastReportsPath)ois.readObject();
             }
             catch(Exception ex){
-                System.out.println(ex.getMessage());
                 p = new LastReportsPath();
             }
         }
@@ -280,7 +279,6 @@ public class ReportsServiceImpl implements IReportsService {
             }
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
         return null;

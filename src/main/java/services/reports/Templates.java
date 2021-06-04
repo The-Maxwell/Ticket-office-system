@@ -92,8 +92,8 @@ public class Templates {
                 cmp.horizontalList(
                         cmp.image(Templates.class.getResource("images/dynamicreports.png")).setFixedDimension(60, 60),
                         cmp.verticalList(
-                                cmp.text("Ticket office reports").setStyle(bold22CenteredStyle).setHorizontalAlignment(HorizontalAlignment.LEFT)
-                                /*cmp.text("http://www.dynamicreports.org").setStyle(italicStyle).setHyperLink(link))*/).setFixedWidth(300));
+                                cmp.text("Ticket office reports").setStyle(bold22CenteredStyle).setHorizontalAlignment(HorizontalAlignment.LEFT))
+                                .setFixedWidth(300));
 
         footerComponent = cmp.pageXofY()
                 .setStyle(
@@ -101,9 +101,6 @@ public class Templates {
                                 .setTopBorder(stl.pen1Point()));
     }
 
-    /**
-     * Creates custom component which is possible to add to any report band component
-     */
     public static ComponentBuilder<?, ?> createTitleComponent(String label) {
         return cmp.horizontalList()
                 .add(
@@ -130,9 +127,7 @@ public class Templates {
 
     private static class CurrencyValueFormatter extends AbstractValueFormatter<String, Number> {
         private static final long serialVersionUID = 1L;
-
         private String label;
-
         public CurrencyValueFormatter(String label) {
             this.label = label;
         }

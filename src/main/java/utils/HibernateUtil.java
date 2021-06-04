@@ -13,7 +13,7 @@ public class HibernateUtil {
 
     private static SessionFactory configureSessionFactory()
             throws HibernateException {
-        // Настройки hibernate
+        // Налаштування hibernate
         Configuration configuration = new Configuration()
                 .setProperty( "hibernate.connection.driver_class",
                         "com.mysql.cj.jdbc.Driver" )

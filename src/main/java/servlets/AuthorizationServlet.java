@@ -3,7 +3,6 @@ package servlets;
 import entities.IEntity;
 import entities.UserEntity;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.bouncycastle.crypto.Digest;
 import utils.TicketOfficeDao;
 
 import javax.servlet.ServletException;
@@ -30,13 +29,9 @@ public class AuthorizationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        System.out.println(login + " " + password + " " + DigestUtils.sha256Hex(password + IEntity.SAULT));
-        //TODO Объект генерирующий хеш пароля
-        //Encryption encryption = new Encryption();
         String pwdDigest = DigestUtils.sha256Hex(password + IEntity.SAULT);
         HttpSession session = request.getSession();
 
-        //UsersService usersService = new UsersService();
         UserEntity userEntity = null;
         try {
             userEntity = (UserEntity) ticketOfficeDao.searchBySpecificParams("authorization", login, pwdDigest).get(0);

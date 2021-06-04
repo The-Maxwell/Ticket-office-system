@@ -2,7 +2,6 @@ package entities;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 
 public class FormIEntityDataParser {
     public static String getStringEntity(HttpServletRequest request){

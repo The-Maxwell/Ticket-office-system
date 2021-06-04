@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "MyServlet")
@@ -24,13 +23,12 @@ public class OperationServlet extends HttpServlet {
 
     private ITicketOfficeService ticketOfficeService;
     private ServletHelper servletHelper;
-    //private ReportsCreator reportsCreator;
+
     @Override
     public void init() throws ServletException {
         super.init();
         ticketOfficeService = new TicketOfficeServiceImpl();
         servletHelper = new ServletHelper();
-        //reportsCreator = new ReportsCreator();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,7 +36,6 @@ public class OperationServlet extends HttpServlet {
         String path = null;
         String result = null;
         String action = request.getParameter("act");
-        //response.setContentType("text/html;charset=UTF-8");
         switch (action) {
             case "Home":
                 request.setAttribute("home", true);

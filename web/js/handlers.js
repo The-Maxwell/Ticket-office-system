@@ -169,15 +169,3 @@ function onOK(event) {
     var elBlur = document.getElementsByClassName("wrapper")[0];
     elBlur.style.filter = "blur(0px)";
 }
-// function onShowReport(event, report){
-//     event.preventDefault();
-//     console.log("Show rep="+report);
-//     let form = new FormData();
-//     form.append('report', report);
-//     var request = new XMLHttpRequest();
-//     request.open("GET", "/statistics");
-//     request.onreadystatechange = function () {
-//         //onReadyStateChange(request);
-//     };
-//     request.send(form);
-// }

@@ -19,7 +19,6 @@ public class TicketOfficeServiceImpl implements ITicketOfficeService{
 
     @Override
     public String insertEntity(String entityString, String table) {
-        System.out.println("Insert");
         return ticketOfficeDao.insertEntity(entityString, table);
     }
 

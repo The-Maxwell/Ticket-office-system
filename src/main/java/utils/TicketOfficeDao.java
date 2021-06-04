@@ -89,7 +89,6 @@ public class TicketOfficeDao {
         if (table.equals("user")) fieldCount--;
         String[] arrEntityString = entityString.split(",");
         if (arrEntityString == null || arrEntityString.length != fieldCount) {
-            System.out.println(arrEntityString.length +" "+ fieldCount);
             return "Error. Empty input!";
         }
 
