@@ -24,11 +24,10 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 public class ReportsServiceImpl implements IReportsService {
 
-    private String url = "jdbc:mysql://localhost/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false";
-    private String username = "root";
-    private String password = "root";
-    private String scriptSelectTemplate = "SELECT * FROM ";
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+    private final String url = "jdbc:mysql://localhost/ticketoffice_c?serverTimezone=Europe/Moscow&allowPublicKeyRetrieval=true&useSSL=false";
+    private final String username = "root";
+    private final String password = "root";
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
     private HttpServletRequest request;
 
     public static String lastVehicheReportPath = null;
@@ -45,7 +44,6 @@ public class ReportsServiceImpl implements IReportsService {
         createVehicleReport();
         createVehicheJournaryTicketReport();
         createCategoryReport();
-
     }
 
     public String createVehicleReport() {
@@ -157,10 +155,7 @@ public class ReportsServiceImpl implements IReportsService {
                     )
                     .title(Templates.createTitleComponent("Vehicles, journaries, tickets Report"))
                     .pageFooter(Templates.footerComponent)
-                    .setDataSource("SELECT v.*, j.*, t.* \n" +
-                            "FROM vehicle v, journary j, ticket t\n" +
-                            "WHERE v.Vehicle_code=j.Vechile_id AND j.Journary_number=t.Journary_id\n" +
-                            "ORDER BY v.Vehicle_code, j.Journary_number\n", connection);
+                    .setDataSource("SELECT * FROM report2", connection);
             try {
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");
@@ -212,9 +207,7 @@ public class ReportsServiceImpl implements IReportsService {
                     .highlightDetailEvenRows()
                     .title(Templates.createTitleComponent("Category Report"))
                     .pageFooter(Templates.footerComponent)
-                    .setDataSource("SELECT Category, COUNT(*) AS 'categoryCount'\n" +
-                            "FROM passenger\n" +
-                            "GROUP BY Category", connection);
+                    .setDataSource("SELECT * FROM report3", connection);
             try {
                 String dateTime = simpleDateFormat.format(new Date(System.currentTimeMillis()));
                 String relativePath = request.getServletContext().getRealPath("/WEB-INF/classes/reports");

@@ -1,6 +1,5 @@
 package services.reports;
 
-import net.sf.dynamicreports.report.base.expression.AbstractValueFormatter;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
@@ -9,7 +8,6 @@ import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.builder.tableofcontents.TableOfContentsCustomizerBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.VerticalAlignment;
-import net.sf.dynamicreports.report.definition.ReportParameters;
 
 import java.awt.*;
 import java.util.Locale;
@@ -112,29 +110,12 @@ public class Templates {
                 .add(cmp.verticalGap(10));
     }
 
-    public static CurrencyValueFormatter createCurrencyValueFormatter(String label) {
-        return new CurrencyValueFormatter(label);
-    }
-
     public static class CurrencyType extends BigDecimalType {
         private static final long serialVersionUID = 1L;
 
         @Override
         public String getPattern() {
             return "$ #,###.00";
-        }
-    }
-
-    private static class CurrencyValueFormatter extends AbstractValueFormatter<String, Number> {
-        private static final long serialVersionUID = 1L;
-        private String label;
-        public CurrencyValueFormatter(String label) {
-            this.label = label;
-        }
-
-        @Override
-        public String format(Number value, ReportParameters reportParameters) {
-            return label + currencyType.valueToString(value, reportParameters.getLocale());
         }
     }
 }

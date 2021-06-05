@@ -34,7 +34,6 @@ public class PDFViewerServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!servletHelper.checkOnAccess(request, response)) return;
-        RequestDispatcher requestDispatcher = null;
         String action = request.getParameter("act");
         reportsService.setRequest(request);
         switch (action) {
@@ -92,7 +91,7 @@ public class PDFViewerServlet extends HttpServlet {
             path = reportsService.getLastReportsPath(report);
         if (path == null) {
             response.setContentType("text/html;charset=UTF-8");
-            response.getWriter().write("<h3>Report not found! Please generate a report!</h3>");
+            response.getWriter().write("Report not found! Please generate a report!");
             return;
         }
         FileInputStream fis = new FileInputStream(new File(path));

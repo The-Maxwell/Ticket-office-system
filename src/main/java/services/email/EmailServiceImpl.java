@@ -31,7 +31,7 @@ public class EmailServiceImpl implements IEmailService {
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
 
-        // Get the default Session object.
+        //Get the default Session object.
         Session session = Session.getInstance(properties,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -39,42 +39,33 @@ public class EmailServiceImpl implements IEmailService {
                     }
                 });
         try {
-            // Create a default MimeMessage object.
+            //Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
+            //Set From: header field of the header.
             message.setFrom(new InternetAddress(SENDER_EMAIL_ADDRESS));
-
-            // Set To: header field of the header.
+            //Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Set Subject: header field
+            //Set Subject: header field
             message.setSubject(header);
-
-            // Create the message part
+            //Create the message part
             BodyPart messageBodyPart = new MimeBodyPart();
-
-            // Fill the message
+            //Fill the message
             messageBodyPart.setText(textMessage);
-
-            // Create a multipar message
+            //Create a multipar message
             Multipart multipart = new MimeMultipart();
-
-            // Set text message part
+            //Set text message part
             multipart.addBodyPart(messageBodyPart);
-
-            // Part two is attachment
+            //Part two is attachment
             messageBodyPart = new MimeBodyPart();
-            //String filename = "file.txt";
+
             DataSource source = new FileDataSource(pathToReport);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
             multipart.addBodyPart(messageBodyPart);
-
-            // Send the complete message parts
+            //Send the complete message parts
             message.setContent(multipart);
 
-            // Send message
+            //Send message
             Transport.send(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();

@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -52,15 +51,7 @@ public class TicketOfficeDao {
     public String insertEntity(String entityString, String table) {
         String result = null;
         entityString = entityString.trim();
-        if (entityString == null) {
-            return "Error. Empty input!";
-        }
-        int fieldCount = getEntityFieldCount(table);
         String[] arrEntityString = entityString.split(",");
-
-        if (arrEntityString == null || arrEntityString.length != fieldCount) {
-            return "Error. Empty input!";
-        }
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -80,17 +71,7 @@ public class TicketOfficeDao {
     public String updateEntity(String entityString, String table) {
         String result = null;
         entityString = entityString.trim();
-        if (entityString == null) {
-            return "Error. Empty input!";
-        }
-        int fieldCount = getEntityFieldCount(table);
-        if (!table.equals("vehicle")) fieldCount++;
-        if (table.equals("journary")) fieldCount++;
-        if (table.equals("user")) fieldCount--;
         String[] arrEntityString = entityString.split(",");
-        if (arrEntityString == null || arrEntityString.length != fieldCount) {
-            return "Error. Empty input!";
-        }
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -201,23 +182,6 @@ public class TicketOfficeDao {
         }
     }
 
-    public int getEntityFieldCount(String table) {
-        switch (table) {
-            case "vehicle":
-                return 7;
-            case "ticket":
-            case "journary":
-            case "receipt":
-                return 5;
-            case "passenger":
-                return 4;
-            case "user":
-                return 8;
-            default:
-                return 0;
-        }
-    }
-
     public List<IEntity> searchBySpecificParams(String table, String... param) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List result = null;
@@ -237,28 +201,31 @@ public class TicketOfficeDao {
         return result;
     }
 
-    private Criteria getNeededCriteriaForSearch(Session session, String table, String... param) {
+    private Criteria getNeededCriteriaForSearch(Session session, String table, String... param) throws Exception {
         switch (table) {
             case "vehicle":
                 return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("vehicleType", param[0]));
             case "journary":
-                try {
-                    Criteria criteria = session.createCriteria(getEntityClass(table)).add(Restrictions.like("departurePoint", "%" + param[0] + "%"));
-                    if (!param[1].equals(""))
-                        criteria.add(Restrictions.eq("dateAndTimeOfArrival", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(param[1])));
-                    return criteria;
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Criteria criteria = session.createCriteria(getEntityClass(table));
+                if (!param[0].equals(""))
+                    criteria.add(Restrictions.like("departurePoint", "%" + param[0] + "%"));
+                if (!param[1].equals(""))
+                    criteria.add(Restrictions.eq("dateAndTimeOfArrival", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S").parse(param[1])));
+                return criteria;
             case "receipt":
-                return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("passengerByPassengerId", searchEntity(param[0], table)));
+                criteria = session.createCriteria(getEntityClass(table));
+                if (!param[0].equals(""))
+                    criteria.add(Restrictions.eq("passengerByPassengerId", searchEntity(param[0], table)));
+                return criteria;
             case "ticket":
             case "passenger":
                 return session.createCriteria(getEntityClass(table)).add(Restrictions.eq("category", param[0]));
             case "user":
-                Criteria criteria = session.createCriteria(getEntityClass(table)).add(Restrictions.like("lastName", "%" + param[0] + "%"));
+                criteria = session.createCriteria(getEntityClass(table));
+                if (!param[0].trim().equals(""))
+                    criteria.add(Restrictions.like("lastName", "%" + param[0] + "%"));
                 if (!param[1].trim().equals(""))
-                    criteria.add(Restrictions.eq("firstName", "%" + param[1] + "%"));
+                    criteria.add(Restrictions.like("firstName", "%" + param[1] + "%"));
                 if (param[2] != null)
                     criteria.add(Restrictions.eq("role", param[2]));
                 return criteria;

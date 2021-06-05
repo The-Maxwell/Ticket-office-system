@@ -48,6 +48,7 @@ public class OperationServlet extends HttpServlet {
             case "Show":
                 if (!servletHelper.checkOnAccess(request, response) && request.getParameter("table").equals("user")) return;
                 List<IEntity> list = ticketOfficeService.selectEntities(request.getParameter("table"));
+                if(list == null || list.size() == 0) return;
                 request.setAttribute("entities", list);
                 request.setAttribute("table", request.getParameter("table"));
                 IEntity entity = list.get(0);
@@ -113,6 +114,10 @@ public class OperationServlet extends HttpServlet {
                         list = ticketOfficeService.searchBySpecificParams(table, request.getParameter("lastName"), request.getParameter("firstName"),
                                 request.getParameter("selRole"));
                         break;
+                }
+                if(list == null || list.size() == 0){
+                    path = "/work_with_db?act=Show&table=" + request.getParameter("table");
+                    break;
                 }
                 request.setAttribute("entities", list);
                 request.setAttribute("table", request.getParameter("table"));
