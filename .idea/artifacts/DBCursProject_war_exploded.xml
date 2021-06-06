@@ -84,7 +84,6 @@
           <element id="library" level="project" name="Maven: net.sf.jasperreports:jasperreports-fonts:6.17.0" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.2" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1.1" />
-          <element id="library" level="project" name="Maven: org.webjars.npm:crypto-js:4.0.0" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.15" />
         </element>
       </element>
