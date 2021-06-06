@@ -1,7 +1,7 @@
 package services.ticketoffice;
 
 import entities.IEntity;
-import utils.TicketOfficeDao;
+import business.TicketOfficeDao;
 
 import java.util.List;
 

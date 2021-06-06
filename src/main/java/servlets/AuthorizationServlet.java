@@ -3,7 +3,7 @@ package servlets;
 import entities.IEntity;
 import entities.UserEntity;
 import org.apache.commons.codec.digest.DigestUtils;
-import utils.TicketOfficeDao;
+import business.TicketOfficeDao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;

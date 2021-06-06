@@ -1,6 +1,5 @@
-package utils;
+package entities;
 
-import entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

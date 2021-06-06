@@ -1,4 +1,4 @@
-package utils;
+package business;
 
 import entities.*;
 import org.apache.commons.codec.digest.DigestUtils;

@@ -1,6 +1,6 @@
 package services.reports;
 
-import utils.ReportCreator;
+import business.ReportCreator;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,6 +1,5 @@
 package servlets;
 
-import entities.FormIEntityDataParser;
 import entities.IEntity;
 import entities.UserEntity;
 import services.ticketoffice.ITicketOfficeService;

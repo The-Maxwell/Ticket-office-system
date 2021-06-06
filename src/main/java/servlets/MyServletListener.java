@@ -1,6 +1,6 @@
 package servlets;
 
-import utils.HibernateUtil;
+import entities.HibernateUtil;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
