@@ -142,9 +142,4 @@ public class PassengerEntity implements IEntity {
     public String[] recieveColumnsName() {
         return new String[]{"Код пасажира","Прізвище","Ім'я","По батькові","Категорія"};
     }
-
-    @Override
-    public String recieveStringInfo() {
-        return String.valueOf(passengerCode)+","+lastName+","+firstName+","+surname+","+category;
-    }
 }

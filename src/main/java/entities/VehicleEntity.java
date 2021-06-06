@@ -159,10 +159,4 @@ public class VehicleEntity implements IEntity {
     public String[] recieveColumnsName() {
         return new String[]{"Код транспортного засобу", "Тип", "К-сть місць", "К-сть економ. місць", "К-сть серед. місць", "К-сть люкс. місць", "Транспортна компанія"};
     }
-
-    @Override
-    public String recieveStringInfo() {
-        return String.valueOf(vehicleCode) + "," + vehicleType + "," + String.valueOf(numberOfSeats) + "," + String.valueOf(numberOfEconomyClassSeats)
-                + "," + String.valueOf(numberOfMediumClassSeats) + "," + String.valueOf(numberOfLuxuryClassSeats) + "," + vechileCompany;
-    }
 }

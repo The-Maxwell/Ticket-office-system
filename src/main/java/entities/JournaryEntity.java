@@ -85,66 +85,6 @@ public class JournaryEntity implements IEntity{
         this.income = income;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        JournaryEntity that = (JournaryEntity) o;
-//
-//        if (journaryNumber != that.journaryNumber)
-//            return false;
-//        if (departurePoint != null ? !departurePoint.equals(that.departurePoint) : that.departurePoint != null)
-//            return false;
-//        if (destination != null ? !destination.equals(that.destination) : that.destination != null) return false;
-//        if (dateAndTimeOfArrival != null ? !dateAndTimeOfArrival.equals(that.dateAndTimeOfArrival) : that.dateAndTimeOfArrival != null)
-//            return false;
-//        if (dateAndTimeOfDeparture != null ? !dateAndTimeOfDeparture.equals(that.dateAndTimeOfDeparture) : that.dateAndTimeOfDeparture != null)
-//            return false;
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = journaryNumber;
-//        result = 31 * result + (departurePoint != null ? departurePoint.hashCode() : 0);
-//        result = 31 * result + (destination != null ? destination.hashCode() : 0);
-//        result = 31 * result + (dateAndTimeOfArrival != null ? dateAndTimeOfArrival.hashCode() : 0);
-//        result = 31 * result + (dateAndTimeOfDeparture != null ? dateAndTimeOfDeparture.hashCode() : 0);
-//        return result;
-//    }
-//@Override
-//public boolean equals(Object o) {
-//    if (this == o) return true;
-//    if (o == null || getClass() != o.getClass()) return false;
-//
-//    JournaryEntity that = (JournaryEntity) o;
-//
-//    if (journaryNumber != that.journaryNumber)
-//        return false;
-//    if (departurePoint != null ? !departurePoint.equals(that.departurePoint) : that.departurePoint != null)
-//        return false;
-//    if (destination != null ? !destination.equals(that.destination) : that.destination != null) return false;
-//    if (dateAndTimeOfArrival != null ? !dateAndTimeOfArrival.equals(that.dateAndTimeOfArrival) : that.dateAndTimeOfArrival != null)
-//        return false;
-//    if (dateAndTimeOfDeparture != null ? !dateAndTimeOfDeparture.equals(that.dateAndTimeOfDeparture) : that.dateAndTimeOfDeparture != null)
-//        return false;
-//    if (income != that.income)
-//        return false;
-//    return true;
-//}
-
-//    @Override
-//    public int hashCode() {
-//        int result = journaryNumber;
-//        result = 31 * result + (departurePoint != null ? departurePoint.hashCode() : 0);
-//        result = 31 * result + (destination != null ? destination.hashCode() : 0);
-//        result = 31 * result + (dateAndTimeOfArrival != null ? dateAndTimeOfArrival.hashCode() : 0);
-//        result = 31 * result + (dateAndTimeOfDeparture != null ? dateAndTimeOfDeparture.hashCode() : 0);
-//        return result;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -234,10 +174,5 @@ public class JournaryEntity implements IEntity{
     @Override
     public String[] recieveColumnsName() {
         return new String[]{"Номер рейсу","Місце відправки","Місце прибуття","Дата і час відправки","Дата і час прибуття","Номер транспортного засобу", "Дохід"};
-    }
-    @Override
-    public String recieveStringInfo() {
-        return String.valueOf(journaryNumber)+","+departurePoint+","+destination+","+String.valueOf(dateAndTimeOfArrival)+","+String.valueOf(dateAndTimeOfDeparture)
-                +","+String.valueOf(vehicleByVechileId.getVehicleCode())+ "," +String.valueOf(income);
     }
 }

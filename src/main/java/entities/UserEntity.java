@@ -163,10 +163,6 @@ public class UserEntity implements IEntity{
         return new String[]{"ID користувача","Прізвище","Ім'я","По батькові","Email","Вік","Роль","Телефонний номер"};
     }
 
-    @Override
-    public String recieveStringInfo() {
-        return String.valueOf(id)+","+lastName+","+firstName+","+surname+","+email+","+age+","+role + "," + phoneNumber;
-    }
     public UserEntity(){
 
     }

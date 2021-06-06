@@ -158,10 +158,4 @@ public class ReceiptEntity implements IEntity{
     public String[] recieveColumnsName() {
         return new String[]{"Код чека","Дата і час продажі","Дата і час бронювання","Загальна ціна","Код пасажира", "Код працівника"};
     }
-
-    @Override
-    public String recieveStringInfo() {
-        return String.valueOf(receiptCode)+","+String.valueOf(dataAndTimeOfSale)+","+String.valueOf(dataAndTimeOfBooking)+","
-                +String.valueOf(totalPrice)+","+String.valueOf(passengerByPassengerId.getPassengerCode())+","+String.valueOf(userByUserId.getId());
-    }
 }
