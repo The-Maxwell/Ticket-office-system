@@ -78,13 +78,13 @@ public class PDFViewerServlet extends HttpServlet {
         String path = null;
         switch (report) {
             case "VehicheReport":
-                path = ReportsServiceImpl.lastVehicheReportPath;
+                path = reportsService.getLastVehicheReportPath();
                 break;
             case "VehicheJournaryTicketReport":
-                path = ReportsServiceImpl.lastVehicheJournaryTicketReportPath;
+                path = reportsService.getLastVehicheJournaryTicketReportPath();
                 break;
             case "CategoryReport":
-                path = ReportsServiceImpl.lastCategoryReportPath;
+                path = reportsService.getLastCategoryReportPath();
                 break;
         }
         if (path == null)

@@ -7,6 +7,8 @@ public interface IReportsService {
     String createVehicleReport();
     String createVehicheJournaryTicketReport();
     String createCategoryReport();
-    void saveLastReportsPath(String reportName);
     String getLastReportsPath(String reportName);
+    String getLastVehicheReportPath();
+    String getLastVehicheJournaryTicketReportPath();
+    String getLastCategoryReportPath();
 }
