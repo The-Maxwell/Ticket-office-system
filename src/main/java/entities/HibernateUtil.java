@@ -28,7 +28,6 @@ public class HibernateUtil {
                 .setProperty( "hibernate.dialect", "org.hibernate.dialect.MySQLDialect" )
                 .setProperty( "hibernate.show_sql","true" )
                 .setProperty( "hibernate.current_session_context_class", "thread" )
-                //It may cause some errors
                 .setProperty( "hibernate.enable_lazy_load_no_trans", "true" )
                 .addPackage( "entities" )
                 .addAnnotatedClass(JournaryEntity.class)
