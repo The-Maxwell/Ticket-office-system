@@ -116,7 +116,7 @@ public class OperationServlet extends HttpServlet {
                 }
                 if(list == null || list.size() == 0){
                     path = "/work_with_db?act=Show&table=" + request.getParameter("table");
-                    break;
+                    return;
                 }
                 request.setAttribute("entities", list);
                 request.setAttribute("table", request.getParameter("table"));
